@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\LoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,9 +14,21 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('admin.index');
-});
+// Route::get('/', function () {
+//     return view('admin.index');
+// });
 Route::get('/login', function () {
     return view('login');
 });
+Route::get('/admin', function () {
+    return view('admin.index');
+});
+Route::get('/pegawai', function () {
+    return view('admin.pegawai.index');
+});
+
+
+Route::post('/login', [LoginController::class,'login']
+);
+
+// Route::get('admin', function(){ return view('admin.index');})->middleware(('checkLevel:admin'));
