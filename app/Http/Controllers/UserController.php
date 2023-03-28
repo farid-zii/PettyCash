@@ -18,8 +18,9 @@ class UserController extends Controller
     public function index()
     {
         return view('admin.user.index',[
-            'user'=>User::latest()->get(),
-            'title'=>'user'
+            'user'=>User::first()->get(),
+            'title'=>'User',
+            'active'=>'User',
         ]);
     }
 
@@ -41,7 +42,16 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $credentials=$request->validate([
+            'name'=>'required',
+            'password'=>'required|min:5',
+            'email'=>'required|email:dns',
+            'level'=>'required',
+        ]);
+
+        $credentials['password']= bcrypt($credentials['password']);
+        User::create($credentials);
+        return redirect('/admin/user')->with('success', 'Registrasion success, Please login your account');
     }
 
     /**
@@ -86,6 +96,7 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        User::destroy($id);
+        return redirect('/admin/user')->with('pesan', 'Data Berhasil Dihapus');
     }
 }

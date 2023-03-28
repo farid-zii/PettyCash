@@ -18,7 +18,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-white {{ Request::is('pegawai') ? 'active bg-gradient-info' : '' }} " href="/pegawai">
+          <a class="nav-link text-white {{ Request::is('pegawai') ? 'active bg-gradient-info' : '' }} " href="/admin/pegawai">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">table_view</i>
             </div>
@@ -58,7 +58,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-white {{ Request::is('User') ? 'active bg-gradient-info' : '' }} " href="/user">
+          <a class="nav-link text-white {{ ($active=='User') ? 'active bg-gradient-info' : '' }} " href="/admin/user">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">person</i>
             </div>
