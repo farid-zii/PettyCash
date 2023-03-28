@@ -1,14 +1,14 @@
 @extends('admin.layouts.main')
 
 @section('isi')
-    <h1>
+
+    <div class="container-fluid py-4">
+        <h1>
         HALAMAN Admin
     </h1>
 
     <br>
     <h4>halo {{auth()->user()->name}}</h4>
-
-    <div class="container-fluid py-4">
       <div class="row">
         <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
           <div class="card">
@@ -100,6 +100,7 @@
             </div>
           </div>
         </div>
+
         <div class="col-lg-4 col-md-6 mt-4 mb-4">
           <div class="card z-index-2  ">
             <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2 bg-transparent">
@@ -120,6 +121,7 @@
             </div>
           </div>
         </div>
+
         <div class="col-lg-4 mt-4 mb-3">
           <div class="card z-index-2 ">
             <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2 bg-transparent">

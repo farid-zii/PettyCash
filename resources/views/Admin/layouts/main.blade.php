@@ -4,7 +4,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title></title>
+    <title>Admin</title>
+    <link rel="shortcut icon" type="text/css" href="img/profits.png">
     <link rel="stylesheet" type="text/css"
         href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
     <!-- Nucleo Icons -->
@@ -16,6 +17,8 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
     <!-- CSS Files -->
     <link id="pagestyle" href="../css/material-dashboard.css?v=3.0.4" rel="stylesheet" />
+    {{-- JQuery --}}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 </head>
 
 <body class="g-sidenav-show  bg-gray-200">
@@ -31,12 +34,12 @@
 
     </main>
     <div class="js">
-        <script src="js/core/popper.min.js"></script>
-        <script src="js/core/bootstrap.min.js"></script>
-        <script src="js/plugins/perfect-scrollbar.min.js"></script>
-        <script src="js/plugins/smooth-scrollbar.min.js"></script>
-        <script src="js/plugins/chartjs.min.js"></script>
-        <link href="/css/bootstrap.min.css" rel="stylesheet">
+        <script src="../js/core/popper.min.js"></script>
+        <script src="../js/core/bootstrap.min.js"></script>
+        <script src="../js/plugins/perfect-scrollbar.min.js"></script>
+        <script src="../js/plugins/smooth-scrollbar.min.js"></script>
+        <script src="../js/plugins/chartjs.min.js"></script>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
         <script>
             var ctx = document.getElementById("chart-bars").getContext("2d");
 
@@ -298,8 +301,8 @@
         <!-- Github buttons -->
         <script async defer src="https://buttons.github.io/buttons.js"></script>
         <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
-        <script src="js/material-dashboard.min.js?v=3.0.4"></script>
-        <script src="js/bootstrap.bundle.min.js"></script>
+        <script src="../js/material-dashboard.min.js?v=3.0.4"></script>
+        <script src="../js/bootstrap.bundle.min.js"></script>
     </div>
 </body>
 

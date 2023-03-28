@@ -7,6 +7,9 @@ use App\Http\Controllers\Admin;
 use App\Http\Controllers\Hrd;
 use App\Http\Controllers\Finance;
 use App\Http\Controllers\Direktur;
+use App\Http\Controllers\Home;
+use App\Http\Controllers\PegawaiController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,22 +22,42 @@ use App\Http\Controllers\Direktur;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-Route::get('/login', function () {
-    return view('login');
-});
-// Route::get('/admin', function () {
-//     return view('admin.index');
+// Route::get('/', function () {
+//     return view('login');
 // });
-Route::get('/hrd', function () {
-    return view('hrd.index');
-});
-Route::get('/pegawai', function () {
-    return view('admin.pegawai.index');
+Route::get('/', [LoginController::class,'index']);
+
+Route::post('/login', [LoginController::class,'login']
+);
+
+
+/////////////////////////////////
+//          ADMIN             //
+///////////////////////////////
+Route::middleware(['auth', 'checkLevel:admin'])->group(function () {
+    Route::get('/admin/dashboard', [Home::class,'admin']);
+    Route::get('/admin/pegawai', [PegawaiController::class,'admin']);
+    Route::get('/admin/user', [UserController::class,'index']);
+    // Route::get('/pegawai', function () {
+    //     return view('admin.pegawai.index');
+    // });
 });
 
+/////////////////////////////////
+//           HRD              //
+///////////////////////////////
+Route::middleware(['auth', 'checkLevel:hrd'])->group(function () {
+    Route::get('/hrd', function () {
+        return view('hrd.index');
+    });
+    Route::get('/pegawai', function () {
+        return view('hrd.pegawai.index');
+    });
+});
+
+/////////////////////////////////
+//          FINANCE           //
+///////////////////////////////
 Route::middleware(['auth', 'checkLevel:admin'])->group(function () {
     Route::get('/admin', function () {
         return view('admin.index');
@@ -44,8 +67,16 @@ Route::middleware(['auth', 'checkLevel:admin'])->group(function () {
     });
 });
 
-
-Route::post('/login', [LoginController::class,'login']
-);
+/////////////////////////////////
+//          DIREKTUR          //
+///////////////////////////////
+Route::middleware(['auth', 'checkLevel:admin'])->group(function () {
+    Route::get('/admin', function () {
+        return view('admin.index');
+    });
+    Route::get('/pegawai', function () {
+        return view('admin.pegawai.index');
+    });
+});
 
 // Route::get('admin', function(){ return view('admin.index');})->middleware(('checkLevel:admin'));

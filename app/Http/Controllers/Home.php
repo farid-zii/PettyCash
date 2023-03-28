@@ -2,27 +2,34 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Pegawai;
-use App\Http\Requests\StorePegawaiRequest;
-use App\Http\Requests\UpdatePegawaiRequest;
+use Illuminate\Http\Request;
+use App\Models\User;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Facade;
 
-class PegawaiController extends Controller
+
+class Home extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function admin()
+    {
+        return view('admin.index');
+    }
+    public function hrd()
     {
 
     }
-    public function admin()
+    public function finance()
     {
-        return view('admin.pegawai.index',[
-            'title'=>'Pegawai',
-            "active"=>"pegawai"
-        ]);
+
+    }
+    public function direktur()
+    {
+
     }
 
     /**
@@ -38,10 +45,10 @@ class PegawaiController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StorePegawaiRequest  $request
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StorePegawaiRequest $request)
+    public function store(Request $request)
     {
         //
     }
@@ -49,10 +56,10 @@ class PegawaiController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Pegawai  $pegawai
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Pegawai $pegawai)
+    public function show($id)
     {
         //
     }
@@ -60,10 +67,10 @@ class PegawaiController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Pegawai  $pegawai
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Pegawai $pegawai)
+    public function edit($id)
     {
         //
     }
@@ -71,11 +78,11 @@ class PegawaiController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdatePegawaiRequest  $request
-     * @param  \App\Models\Pegawai  $pegawai
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdatePegawaiRequest $request, Pegawai $pegawai)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -83,10 +90,10 @@ class PegawaiController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Pegawai  $pegawai
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Pegawai $pegawai)
+    public function destroy($id)
     {
         //
     }
