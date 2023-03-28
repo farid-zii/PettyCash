@@ -25,9 +25,9 @@ Route::get('/', function () {
 Route::get('/login', function () {
     return view('login');
 });
-Route::get('/admin', function () {
-    return view('admin.index');
-});
+// Route::get('/admin', function () {
+//     return view('admin.index');
+// });
 Route::get('/hrd', function () {
     return view('hrd.index');
 });
@@ -35,8 +35,13 @@ Route::get('/pegawai', function () {
     return view('admin.pegawai.index');
 });
 
-Route::middleware(['auth', 'check'])->group(function () {
-
+Route::middleware(['auth', 'checkLevel:admin'])->group(function () {
+    Route::get('/admin', function () {
+        return view('admin.index');
+    });
+    Route::get('/pegawai', function () {
+        return view('admin.pegawai.index');
+    });
 });
 
 
