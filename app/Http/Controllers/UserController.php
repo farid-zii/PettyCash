@@ -31,7 +31,11 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.user.create', [
+            'user' => User::first()->get(),
+            'title' => 'User',
+            'active' => 'User',
+        ]);
     }
 
     /**
@@ -45,7 +49,7 @@ class UserController extends Controller
         $credentials=$request->validate([
             'name'=>'required',
             'password'=>'required|min:5',
-            'email'=>'required|email:dns',
+            'email'=>'required|email:dns|min:10',
             'level'=>'required',
         ]);
 

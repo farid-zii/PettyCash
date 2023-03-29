@@ -18,7 +18,8 @@ class Home extends Controller
     public function admin()
     {
         return view('admin.index',[
-            'title'=>'Dashboard'
+            'title'=>'Dashboard',
+            'active'=>'Dashboard',
         ]);
     }
     public function hrd()

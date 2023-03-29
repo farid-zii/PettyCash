@@ -11,7 +11,7 @@
                     </div>
                 </div>
                 <div class="card-body px-0 pb-2">
-
+                    {{--  --}}
                     @if (session()->has('success'))
                     <div class="alert alert-success alert-dismissible fade show" style="width: 50%;margin:0 auto;"
                         role="alert">
@@ -27,10 +27,11 @@
                         </strong>
                     </div>
                     @endif
-
+                    {{--  --}}
                     <div class="mx-3">
                         <button class="btn bg-gradient-danger w-15 my-4 mb-2">Cetak Pdf</button>
                         <button class="btn bg-gradient-success w-15 my-4 mb-2">Cetak Excel</button>
+                        {{-- <a href="/admin/user/create"  class="btn bg-gradient-info w-15 my-4 mb-2 float-sm-end">Entry</a> --}}
                         <button class="btn bg-gradient-info w-15 my-4 mb-2 float-sm-end" data-bs-toggle="modal"
                             data-bs-target="#staticBackdrop">Entry</button>
                     </div>
@@ -78,23 +79,19 @@
                                     <td class="align-middle text-center">
                                         <span
                                             class="text-secondary text-xs font-weight-bold">{{$data->created_at->diffforHumans()}}</span>
+                                            {{-- class="text-secondary text-xs font-weight-bold">{{$data->created_at->format('Y-m-d')}}</span> --}}
                                     </td>
                                     <td class="bg-info text-center">
                                         <div class="d-flex">
-                                            <a href="javascript:;" class="btn btn-light font-weight-bold m-auto"
-                                                data-toggle="tooltip" data-original-title="Edit user">
-                                                Edit
-                                            </a>
-                                            <form action="/admin/user/{{$data->id}}" method="post">
-                                            @method('DELETE')
-                                            @csrf
-                                                <button class="btn btn-warning font-weight-bold m-auto" type="submit" onclick="return confirm('Yakin akan menghapus data ?')">Delete</button>
+                                            <button class="btn btn-light font-weight-bold m-auto" data-bs-toggle="modal"
+                                                data-bs-target="#data-{{$data->id}}">Edit</button>
+                                            <form action="/admin/user/{{$data->id}}" method="post" class="pe-3">
+                                                @method('DELETE')
+                                                @csrf
+                                                <button class="btn btn-warning font-weight-bold m-auto" type="submit"
+                                                    onclick="return confirm('Yakin akan menghapus data ?')">Delete</button>
                                             </form>
                                         </div>
-                                        {{-- <a href="javascript:;" class="btn btn-warning font-weight-bold"
-                                            data-toggle="tooltip" data-original-title="Edit user">
-                                            Delete
-                                        </a> --}}
                                     </td>
                                 </tr>
                                 @endforeach
@@ -154,7 +151,53 @@
 </div>
 
 {{-- EDIT --}}
+@foreach ($user as $data )
+<div class="modal fade" dty id="data-{{$data->id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Edit User</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="post" action="/admin/user">
+                <div class="modal-body">
+                    @csrf
+                    <label class="text-xl text-dark font-weight-bolder">Nama</label>
+                    <div class="mb-2">
+                        <input type="text" class="form-control" placeholder="Enter your name" name="name"
+                            value="{{$data->name}}">
+                    </div>
+                    <label class="text-xl text-dark font-weight-bolder">Email</label>
+                    <div class="mb-2">
+                        <input type="email" class="form-control" id="email"placeholder="Enter your email address" name="email" value="{{$data->email}}">
+                    </div>
+                    <label class="text-xl text-dark font-weight-bolder">Level</label>
+                    <div class="mb-2">
+                        <select class="form-select" aria-label="Default select example" name='level'>
+                            <option value="admin">ADMIN</option>
+                            <option value="hrd">HRD</option>
+                            <option value="finance">FINANCE</option>
+                            <option value="direktur">DIREKTUR</option>
+                        </select>
+                    </div>
+                    <label class="text-xl text-dark font-weight-bolder">Passowrd</label>
+                    <div class="mb-2">
+                        <input type="password" class="form-control" placeholder="*******" name="password">
+                    </div>
 
+                </div>
+                <div class="footer px-4 mb-2">
+                    <button type="submit" class="btn btn-primary float-sm-start col-md-2 mt-4">Save</button>
+                    <button type="button" class="btn btn-danger float-sm-end col-md-2 mt-4"
+                        data-bs-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@endforeach
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous">

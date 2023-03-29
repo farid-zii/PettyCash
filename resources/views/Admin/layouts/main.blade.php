@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,19 +8,30 @@
     <link rel="stylesheet" type="text/css"
         href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
     <!-- Nucleo Icons -->
-    <link href="../css/nucleo-icons.css" rel="stylesheet" />
-    <link href="../css/nucleo-svg.css" rel="stylesheet" />
+    <link href="/../css/nucleo-icons.css" rel="stylesheet" />
+    <link href="/../css/nucleo-svg.css" rel="stylesheet" />
     <!-- Font Awesome Icons -->
     <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
     <!-- Material Icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
     <!-- CSS Files -->
-    <link id="pagestyle" href="../css/material-dashboard.css?v=3.0.4" rel="stylesheet" />
+    <link id="pagestyle" href="/../css/material-dashboard.css?v=3.0.4" rel="stylesheet" />
     {{-- JQuery --}}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="/../css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="/../css/style.css" rel="stylesheet">
 </head>
 
-<body class="g-sidenav-show  bg-gray-200">
+<body class="g-sidenav-show  bg-gray-300">
 
     @include('admin.layouts.sidebar')
 
@@ -34,12 +44,12 @@
 
     </main>
     <div class="js">
-        <script src="../js/core/popper.min.js"></script>
-        <script src="../js/core/bootstrap.min.js"></script>
-        <script src="../js/plugins/perfect-scrollbar.min.js"></script>
-        <script src="../js/plugins/smooth-scrollbar.min.js"></script>
+        <script src="/./js/core/popper.min.js"></script>
+        <script src="/./js/core/bootstrap.min.js"></script>
+        <script src="/./js/plugins/perfect-scrollbar.min.js"></script>
+        <script src="/./js/plugins/smooth-scrollbar.min.js"></script>
         <script src="../js/plugins/chartjs.min.js"></script>
-        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="/./css/bootstrap.min.css" rel="stylesheet">
         <script>
             var ctx = document.getElementById("chart-bars").getContext("2d");
 
@@ -301,8 +311,8 @@
         <!-- Github buttons -->
         <script async defer src="https://buttons.github.io/buttons.js"></script>
         <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
-        <script src="../js/material-dashboard.min.js?v=3.0.4"></script>
-        <script src="../js/bootstrap.bundle.min.js"></script>
+        <script src="/../js/material-dashboard.min.js?v=3.0.4"></script>
+        <script src="/../js/bootstrap.bundle.min.js"></script>
     </div>
 </body>
 
