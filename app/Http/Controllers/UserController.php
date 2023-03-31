@@ -95,7 +95,15 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $update=$request->validate([
+            'name'=>"required",
+            'email'=>"required",
+            'level'=>'required',
+            'password'=>'required'
+        ]);
+        $update['password']=bcrypt($update['password']);
+        User::Where('id', $id)->update($update);
+        return redirect('admin/user')->with('Edit','Your editting success');
     }
 
     /**

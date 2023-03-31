@@ -29,12 +29,12 @@
                     @endif
                     {{--  --}}
                     <div class="mx-3">
-                        <button class="btn bg-gradient-danger w-15 my-4 mb-2">Cetak Pdf</button>
+                        <button class="btn bg-gradient-danger w-15 my-4 mb-2"><i class="bi bi-file-earmark-pdf-fill"></i>Cetak Pdf</button>
                         {{-- <button class="btn bg-gradient-success w-15 my-4 mb-2">Cetak Excel</button> --}}
-                        <a href="/export-data" blank class="btn bg-gradient-success w-15 my-4 mb-2">Cetak Excel</a>
+                        <a href="/export-data" blank class="btn bg-gradient-success w-15 my-4 mb-2"><i class="bi bi-file-earmark-spreadsheet-fill"></i> Cetak Excel</a>
                         {{-- <a href="/admin/user/create"  class="btn bg-gradient-info w-15 my-4 mb-2 float-sm-end">Entry</a> --}}
                         <button class="btn bg-gradient-info w-15 my-4 mb-2 float-sm-end" data-bs-toggle="modal"
-                            data-bs-target="#staticBackdrop">Entry</button>
+                            data-bs-target="#staticBackdrop">Entry <i class="bi bi-plus-square-fill"></i></button>
                     </div>
                     <div class="table-responsive p-0">
                         <table class="table align-items-center mb-0">
@@ -52,7 +52,7 @@
                                     <th
                                         class="text-center text-uppercase text-light text-xs font-weight-bolder opacity-7">
                                         Dibuat</th>
-                                    <th style="width: 18%"
+                                    <th style="width: 10%"
                                         class="text-center text-uppercase text-light text-xs font-weight-bolder opacity-7">
                                         Action</th>
                                 </tr>
@@ -86,12 +86,12 @@
                                     <td class="bg-info text-center">
                                         <div class="d-flex">
                                             <button class="btn btn-warning font-weight-bold m-auto" data-bs-toggle="modal"
-                                                data-bs-target="#data-{{$data->id}}">Edit</button>
-                                            <form action="/admin/user/{{$data->id}}" method="post" class="pe-3">
+                                                data-bs-target="#data-{{$data->id}}"><i class="bi bi-pencil-square"></i></button>
+                                            <form action="/admin/user/{{$data->id}}" method="post" class="">
                                                 @method('DELETE')
                                                 @csrf
                                                 <button class="btn btn-danger font-weight-bold m-auto" type="submit"
-                                                    onclick="return confirm('Yakin akan menghapus data ?')">Delete</button>
+                                                    onclick="return confirm('Yakin akan menghapus data ?')"><i class="bi bi-trash3-fill"></i></button>
                                             </form>
                                         </div>
                                     </td>
@@ -138,7 +138,7 @@
                     </div>
                     <label class="text-xl text-dark font-weight-bolder">Passowrd</label>
                     <div class="mb-2">
-                        <input type="password" class="form-control" placeholder="*******" name="password">
+                        <input type="date" class="form-control" placeholder="*******" name="password">
                     </div>
 
                 </div>
@@ -162,7 +162,8 @@
                 <h1 class="modal-title fs-5" id="staticBackdropLabel">Edit User</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form method="post" action="/admin/user">
+            <form method="post" action="/admin/user/{{$data->id}}">
+                @method('PUT')
                 <div class="modal-body">
                     @csrf
                     <label class="text-xl text-dark font-weight-bolder">Nama</label>
