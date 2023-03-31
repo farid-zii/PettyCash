@@ -80,16 +80,17 @@
                                     <td class="align-middle text-center">
                                         <span
                                             class="text-secondary text-xs font-weight-bold">{{$data->created_at->diffforHumans()}}</span>
-                                            {{-- class="text-secondary text-xs font-weight-bold">{{$data->created_at->format('Y-m-d')}}</span> --}}
+                                        {{-- class="text-secondary text-xs font-weight-bold">{{$data->created_at->format('Y-m-d')}}</span>
+                                        --}}
                                     </td>
                                     <td class="bg-info text-center">
                                         <div class="d-flex">
-                                            <button class="btn btn-light font-weight-bold m-auto" data-bs-toggle="modal"
+                                            <button class="btn btn-warning font-weight-bold m-auto" data-bs-toggle="modal"
                                                 data-bs-target="#data-{{$data->id}}">Edit</button>
                                             <form action="/admin/user/{{$data->id}}" method="post" class="pe-3">
                                                 @method('DELETE')
                                                 @csrf
-                                                <button class="btn btn-warning font-weight-bold m-auto" type="submit"
+                                                <button class="btn btn-danger font-weight-bold m-auto" type="submit"
                                                     onclick="return confirm('Yakin akan menghapus data ?')">Delete</button>
                                             </form>
                                         </div>
@@ -171,7 +172,8 @@
                     </div>
                     <label class="text-xl text-dark font-weight-bolder">Email</label>
                     <div class="mb-2">
-                        <input type="email" class="form-control" id="email"placeholder="Enter your email address" name="email" value="{{$data->email}}">
+                        <input type="email" class="form-control" id="email" placeholder="Enter your email address"
+                            name="email" value="{{$data->email}}">
                     </div>
                     <label class="text-xl text-dark font-weight-bolder">Level</label>
                     <div class="mb-2">
@@ -189,7 +191,7 @@
 
                 </div>
                 <div class="footer px-4 mb-2">
-                    <button type="submit" class="btn btn-primary float-sm-start col-md-2 mt-4">Save</button>
+                    <button type="submit" class="btn btn-warning float-sm-start col-md-2 mt-4">Edit</button>
                     <button type="button" class="btn btn-danger float-sm-end col-md-2 mt-4"
                         data-bs-dismiss="modal">Close</button>
                 </div>
