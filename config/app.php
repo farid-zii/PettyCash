@@ -194,13 +194,7 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-<<<<<<< Updated upstream
         Maatwebsite\Excel\ExcelServiceProvider::class,
-=======
-        // Maatwebsite\Excel\ExcelServiceProvider::class,
-        Maatwebsite\Excel\ExcelServiceProvider::class,
-
->>>>>>> Stashed changes
     ],
 
     /*
@@ -216,11 +210,7 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         // 'ExampleClass' => App\Example\ExampleClass::class,
-<<<<<<< Updated upstream
         'Excel'=> Maatwebsite\Excel\Facades\Excel::class,
-=======
-        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
->>>>>>> Stashed changes
     ])->toArray(),
 
 ];
