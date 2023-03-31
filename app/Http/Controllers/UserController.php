@@ -7,16 +7,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Facade;
 use App\Exports\UserExport;
+use PDF;
 use Maatwebsite\Excel\Facades\Excel;
 
 
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         return view('admin.user.index',[
@@ -24,6 +20,19 @@ class UserController extends Controller
             'title'=>'User',
             'active'=>'User',
         ]);
+    }
+
+    public function pdf(){
+        // $pdf= PDF::loadView('admin.user.excel',[
+        //     'data'=>User::orderBy('name')->get()
+        // ]);
+        // $nama= User::where('id','=','1')->get('name');
+        $pdf= PDF::loadView('admin.user.excel',[
+            'data'=>User::orderBy('name')->get()
+        ]);
+        // return $pdf->download('user.pdf');
+        return $pdf->setPaper('a4','landscape')->stream('user.pdf');
+        //Membuat ukuran a4 dengan layout lanscape ---- nama pdf
     }
 
     public function excel(){
