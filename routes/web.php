@@ -38,6 +38,7 @@ Route::middleware(['auth', 'checkLevel:admin'])->group(function () {
     Route::get('/admin/dashboard', [Home::class,'admin']);
     Route::get('/admin/pegawai', [PegawaiController::class,'admin']);
      Route::resource('/admin/user', UserController::class);
+    //  Route::get('/export-data', [UserController::class,'excel']);
     // Route::get('/admin/user', [UserController::class,'index']);
     // Route::post('/admin/user', [UserController::class,'store']);
     // Route::post('/admin/user/{{$id}}', [UserController::class,'destroy']);

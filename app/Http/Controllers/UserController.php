@@ -6,6 +6,8 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Facade;
+use App\Exports\UserExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 
 class UserController extends Controller
@@ -22,6 +24,10 @@ class UserController extends Controller
             'title'=>'User',
             'active'=>'User',
         ]);
+    }
+
+    public function excel(){
+        return Excel::download(new UserExport, 'users.xlsx');
     }
 
     /**

@@ -30,7 +30,8 @@
                     {{--  --}}
                     <div class="mx-3">
                         <button class="btn bg-gradient-danger w-15 my-4 mb-2">Cetak Pdf</button>
-                        <button class="btn bg-gradient-success w-15 my-4 mb-2">Cetak Excel</button>
+                        {{-- <button class="btn bg-gradient-success w-15 my-4 mb-2">Cetak Excel</button> --}}
+                        <a href="/export-data" class="btn bg-gradient-success w-15 my-4 mb-2">Cetak Excel</a>
                         {{-- <a href="/admin/user/create"  class="btn bg-gradient-info w-15 my-4 mb-2 float-sm-end">Entry</a> --}}
                         <button class="btn bg-gradient-info w-15 my-4 mb-2 float-sm-end" data-bs-toggle="modal"
                             data-bs-target="#staticBackdrop">Entry</button>
