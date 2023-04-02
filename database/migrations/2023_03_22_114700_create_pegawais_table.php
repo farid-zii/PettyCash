@@ -15,6 +15,17 @@ return new class extends Migration
     {
         Schema::create('pegawais', function (Blueprint $table) {
             $table->id();
+            $table->string('nama');
+            $table->string('nip')->unique();
+            $table->string('tgl_lahir');
+            $table->enum('j_kelamin',['Laki-laki','Perempuan']);
+            $table->string('j_kelamin');
+            $table->string('Agama');
+            $table->foreignId('departemen_id');
+            $table->foreignId('jabatan_id');
+            $table->foreignId('pangkat_id');
+            $table->foreignId('category_id');
+
             $table->timestamps();
         });
     }

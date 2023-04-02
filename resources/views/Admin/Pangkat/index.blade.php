@@ -27,7 +27,7 @@
                         </strong>
                     </div>
                     @endif
-                    {{--  --}}
+
                     <div class="mx-3">
                         <a href="/pangkat-pdf" target="blank" class="btn bg-gradient-danger w-15 my-4 mb-2"><i class="bi bi-file-earmark-pdf-fill"></i>Cetak Pdf</a>
                         {{-- <button class="btn bg-gradient-success w-15 my-4 mb-2">Cetak Excel</button> --}}
