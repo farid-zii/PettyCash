@@ -15,6 +15,9 @@ return new class extends Migration
     {
         Schema::create('pengajuans', function (Blueprint $table) {
             $table->id();
+            $table->string('kode',10);
+            $table->double('nominal',10);
+            $table->date('tanggal');
             $table->timestamps();
         });
     }

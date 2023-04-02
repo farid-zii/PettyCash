@@ -18,6 +18,14 @@
           </a>
         </li>
         <li class="nav-item">
+          <a class="nav-link text-white {{ ($active=='Pangkat') ? 'active bg-gradient-info' : '' }}" href="/admin/pangkat">
+            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="material-icons opacity-10">dashboard</i>
+            </div>
+            <span class="nav-link-text ms-1">Pangkat</span>
+          </a>
+        </li>
+        <li class="nav-item">
           <a class="nav-link text-white {{ Request::is('pegawai') ? 'active bg-gradient-info' : '' }} " href="/admin/pegawai">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">table_view</i>
@@ -34,7 +42,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-white {{ Request::is('Saldo') ? 'active bg-gradient-info' : '' }}" href="../pages/virtual-reality.html">
+          <a class="nav-link text-white {{ ($active=='Saldo') ? 'active bg-gradient-info' : '' }}" href="/admin/saldo">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">view_in_ar</i>
             </div>
@@ -42,7 +50,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-white {{ Request::is('jabatan') ? 'active bg-gradient-info' : '' }}" href="../pages/rtl.html">
+          <a class="nav-link text-white {{ ($active=='Departemen') ? 'active bg-gradient-info' : '' }}" href="/admin/departemen">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">format_textdirection_r_to_l</i>
             </div>
@@ -50,7 +58,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-white {{ Request::is('Jabatan') ? 'active bg-gradient-info' : '' }}" href="../pages/notifications.html">
+          <a class="nav-link text-white {{ ($active=='Jabatan') ? 'active bg-gradient-info' : '' }}" href="/admin/jabatan">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">notifications</i>
             </div>

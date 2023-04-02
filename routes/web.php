@@ -10,6 +10,8 @@ use App\Http\Controllers\Direktur;
 use App\Http\Controllers\Home;
 use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\SaldoController;
+use App\Http\Controllers\PangkatController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,7 +38,11 @@ Route::post('/login', [LoginController::class,'login']
 ///////////////////////////////
 Route::middleware(['auth', 'checkLevel:admin'])->group(function () {
     Route::get('/admin/dashboard', [Home::class,'admin']);
-    Route::get('/admin/pegawai', [PegawaiController::class,'admin']);
+     Route::resource('/admin/pangkat', PangkatController::class);
+     Route::resource('/admin/saldo', SaldoController::class);
+     Route::post('/admin/saldo', [SaldoController::class,'store']);
+
+     /// USER ///
      Route::resource('/admin/user', UserController::class);
      Route::get('/export-data', [UserController::class,'excel']);
      Route::get('/user-pdf', [UserController::class,'pdf']);

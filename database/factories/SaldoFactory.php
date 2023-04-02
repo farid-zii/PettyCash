@@ -16,8 +16,10 @@ class SaldoFactory extends Factory
      */
     public function definition()
     {
-        return [
-            //
-        ];
+        // return [
+        //     'saldo'=>'200000',
+        //     'nominal'=>'10000',
+        //     'hasil'=>'190000'
+        // ];
     }
 }

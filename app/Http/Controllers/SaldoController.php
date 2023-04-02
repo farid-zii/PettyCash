@@ -15,7 +15,12 @@ class SaldoController extends Controller
      */
     public function index()
     {
-        //
+        return view('admin.saldo.index', [
+            'data' => Saldo::get(),
+            'saldo' => Saldo::get(),
+            'title' => 'Saldo',
+            'active' => 'Saldo',
+        ]);
     }
 
     /**
@@ -25,7 +30,7 @@ class SaldoController extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**
@@ -36,7 +41,13 @@ class SaldoController extends Controller
      */
     public function store(StoreSaldoRequest $request)
     {
-        //
+        $insert = $request->validate([
+            'saldo'=>'required',
+            'nominal'=>'required',
+        ]);
+        $insert['hasil']= $insert['saldo']-$insert['nominal'];
+        Saldo::create($insert);
+        return redirect('/admin/saldo');
     }
 
     /**

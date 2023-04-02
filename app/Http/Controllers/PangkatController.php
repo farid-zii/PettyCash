@@ -15,7 +15,11 @@ class PangkatController extends Controller
      */
     public function index()
     {
-        //
+        return view('Admin.Pangkat.index',[
+            'pangkat'=>Pangkat::latest()->get(),
+            'active'=>'Pangkat',
+            'title'=>'Pangkat',
+        ]);
     }
 
     /**
@@ -25,7 +29,7 @@ class PangkatController extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**
@@ -36,7 +40,13 @@ class PangkatController extends Controller
      */
     public function store(StorePangkatRequest $request)
     {
-        //
+        $validete=$request->validate([
+            "kode"=>'required',
+            'nama'=>'required'
+        ]);
+
+        Pangkat::create($validete);
+        return redirect('/admin/pangkat')->with('add','Create Data Success');
     }
 
     /**
@@ -58,7 +68,7 @@ class PangkatController extends Controller
      */
     public function edit(Pangkat $pangkat)
     {
-        //
+
     }
 
     /**
@@ -68,9 +78,15 @@ class PangkatController extends Controller
      * @param  \App\Models\Pangkat  $pangkat
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdatePangkatRequest $request, Pangkat $pangkat)
+    public function update(UpdatePangkatRequest $request, $id)
     {
-        //
+        $update = $request->validate([
+            'kode'=>'required',
+            'nama'=>'required',
+        ]);
+
+        Pangkat::where('id',$id)->update($update);
+        return redirect('/admin/pangkat')->with('edit','Update Data Success');
     }
 
     /**
@@ -79,8 +95,9 @@ class PangkatController extends Controller
      * @param  \App\Models\Pangkat  $pangkat
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Pangkat $pangkat)
+    public function destroy($id)
     {
-        //
+        Pangkat::destroy($id);
+        return redirect('/admin/pangkat')->with('pesan', 'Data Berhasil Dihapus');
     }
 }

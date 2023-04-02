@@ -13,7 +13,7 @@ class StorePangkatRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
