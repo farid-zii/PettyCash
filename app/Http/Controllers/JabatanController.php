@@ -45,7 +45,7 @@ class JabatanController extends Controller
             'kode'=>'required',
         ]);
 
-        Jabatan::cretate($validate);
+        Jabatan::create($validate);
         return redirect('/admin/jabatan')->with('add','Create Data Success');
     }
 
@@ -78,14 +78,14 @@ class JabatanController extends Controller
      * @param  \App\Models\Jabatan  $jabatan
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateJabatanRequest $request, Jabatan $jabatan,$id)
+    public function update(UpdateJabatanRequest $request,$id)
     {
         $update=$request->validate([
             'nama'=>'required',
             'kode'=>'required',
         ]);
         Jabatan::where('id',$id)->update($update);
-        return redirect('/admin/jabatan')->with('edit','Update Data Success');
+        return redirect('/admin/jabatan')->with('edit','Update Data '.$update['nama'].' Success');
     }
 
     /**

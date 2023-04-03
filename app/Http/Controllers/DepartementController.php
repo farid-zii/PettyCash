@@ -15,7 +15,11 @@ class DepartementController extends Controller
      */
     public function index()
     {
-        //
+        return view('admin.departemen.index',[
+            "departemen"=>Departement::get(),
+            "active"=>"Departemen",
+            "title"=>"Departemen",
+        ]);
     }
 
     /**
@@ -36,7 +40,13 @@ class DepartementController extends Controller
      */
     public function store(StoreDepartementRequest $request)
     {
-        //
+        $validate=$request->validate([
+            "nama"=>'required',
+            "kode"=>'required',
+        ]);
+
+        Departement::create($validate);
+        return redirect('/admin/departemen')->with('add','Create Data '.$validate['nama'].' Success');
     }
 
     /**
@@ -68,9 +78,14 @@ class DepartementController extends Controller
      * @param  \App\Models\Departement  $departement
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateDepartementRequest $request, Departement $departement)
+    public function update(UpdateDepartementRequest $request,$id)
     {
-        //
+        $update=$request->validate([
+            'nama'=>'required',
+            'kode'=>'required'
+        ]);
+        Departement::where('id',$id)->update($update);
+        return redirect('/admin/departemen')->with('edit', 'Edit Data ' . $update['nama'] . ' Success');
     }
 
     /**
@@ -79,8 +94,9 @@ class DepartementController extends Controller
      * @param  \App\Models\Departement  $departement
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Departement $departement)
+    public function destroy(Departement $departement,$id)
     {
-        //
+        Departement::destroy($id);
+        return redirect('/admin/departemen')->with('delete', 'Delete Data Success');
     }
 }

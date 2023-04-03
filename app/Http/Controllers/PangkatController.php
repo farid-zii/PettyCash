@@ -41,7 +41,7 @@ class PangkatController extends Controller
     public function store(StorePangkatRequest $request)
     {
         $validete=$request->validate([
-            "kode"=>'required',
+            "kode"=> 'required|min:2|max:5',
             'nama'=>'required'
         ]);
 
@@ -81,7 +81,7 @@ class PangkatController extends Controller
     public function update(UpdatePangkatRequest $request, $id)
     {
         $update = $request->validate([
-            'kode'=>'required',
+            'kode'=> 'required|min:2|max:5',
             'nama'=>'required',
         ]);
 

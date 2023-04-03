@@ -15,7 +15,7 @@
                     @if (session()->has('success'))
                     <div class="alert alert-success alert-dismissible fade show" style="width: 50%;margin:0 auto;"
                         role="alert">
-                        <strong>{{session('success')}}</strong>
+                        <strong>{{session('add')}}</strong>
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                     @endif
@@ -29,9 +29,9 @@
                     @endif
                     {{--  --}}
                     <div class="mx-3">
-                        <a href="/saldo-pdf" target="blank" class="btn bg-gradient-danger w-15 my-4 mb-2"><i class="bi bi-file-earmark-pdf-fill"></i>Cetak Pdf</a>
+                        <a href="/departemen-pdf" target="blank" class="btn bg-gradient-danger w-15 my-4 mb-2"><i class="bi bi-file-earmark-pdf-fill"></i>Cetak Pdf</a>
                         {{-- <button class="btn bg-gradient-success w-15 my-4 mb-2">Cetak Excel</button> --}}
-                        <a href="/saldo-data" blank class="btn bg-gradient-success w-15 my-4 mb-2"><i class="bi bi-file-earmark-spreadsheet-fill"></i> Cetak Excel</a>
+                        <a href="/departemen-data" blank class="btn bg-gradient-success w-15 my-4 mb-2"><i class="bi bi-file-earmark-spreadsheet-fill"></i> Cetak Excel</a>
                         {{-- <a href="/admin/user/create"  class="btn bg-gradient-info w-15 my-4 mb-2 float-sm-end">Entry</a> --}}
                         <button class="btn bg-gradient-info w-15 my-4 mb-2 float-sm-end" data-bs-toggle="modal"
                             data-bs-target="#staticBackdrop">Entry <i class="bi bi-plus-square-fill"></i></button>
@@ -45,43 +45,35 @@
                                         No</th>
                                     <th style="width: 15%"
                                         class="text-center text-uppercase text-light text-xs font-weight-bolder opacity-7">
-                                        SALDO</th>
+                                        Departemen</th>
                                     <th
                                         class="text-center text-uppercase text-light text-xs font-weight-bolder opacity-7 ps-2">
-                                        PEMAKAIAN/PENAMBAHAN</th>
-                                    <th
-                                        class="text-center text-uppercase text-light text-xs font-weight-bolder opacity-7">
-                                        SISA</th>
+                                        Kode</th>
                                     <th style="width: 10%"
                                         class="text-center text-uppercase text-light text-xs font-weight-bolder opacity-7">
                                         Action</th>
                                 </tr>
                             </thead>
                             <tbody class="">
-                                @foreach ($data as $data )
+                                @foreach ($departemen as $data )
                                 <tr>
                                     <td class="text-center">{{$loop->iteration}}</td>
                                     <td class="" style="width: 15%">
                                         <div class="d-flex px-2 py-1">
                                             <div class="d-flex flex-column">
-                                                <h6 class="mb-0 text-sm">@currency($data->saldo)</h6>
+                                                <h6 class="mb-0 text-sm">{{$data->nama}}</h6>
                                             </div>
                                         </div>
                                     </td>
                                     <td class="text-center">
-                                        <p class="text-xs font-weight-bold mb-0"> @currency($data->nominal)</p>
+                                        <p class="text-xs font-weight-bold mb-0"> {{$data->kode}}</p>
                                     </td>
-                                    <td class="align-middle text-center">
-                                        <span
-                                            class="text-secondary text-xs font-weight-bold">@currency($data->hasil)</span>
-                                        {{-- class="text-secondary text-xs font-weight-bold">{{$data->created_at->format('Y-m-d')}}</span>
-                                        --}}
-                                    </td>
+
                                     <td class="bg-info text-center">
                                         <div class="d-flex">
                                             <button class="btn btn-warning font-weight-bold m-auto" data-bs-toggle="modal"
                                                 data-bs-target="#data-{{$data->id}}"><i class="bi bi-pencil-square"></i></button>
-                                            <form action="/admin/saldo/{{$data->id}}" method="post" class="">
+                                            <form action="/admin/departemen/{{$data->id}}" method="post" class="">
                                                 @method('DELETE')
                                                 @csrf
                                                 <button class="btn btn-danger font-weight-bold m-auto" type="submit"
@@ -107,24 +99,24 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="staticBackdropLabel">Create Saldo</h1>
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Create Departemen</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form method="post" action="/admin/saldo">
+            <form method="post" action="/admin/departemen">
                 @method('POST')
                 @csrf
                 <div class="modal-body">
                     <label class="text-xl text-dark font-weight-bolder">Nama</label>
                     <div class="mb-2">
-                        <input type="number" class="form-control" placeholder="Enter your name" name="saldo">
+                        <input type="text" class="form-control" placeholder="" name="nama">
                     </div>
-                    <label class="text-xl text-dark font-weight-bolder">nominal</label>
+                    <label class="text-xl text-dark font-weight-bolder">Kode</label>
                     <div class="mb-2">
-                        <input type="number" class="form-control" placeholder="Enter your nominal address" name="nominal">
+                        <input type="text" class="form-control" placeholder="Enter your nominal address" name="kode">
                     {{-- </div>
                     <label class="text-xl text-dark font-weight-bolder">Jumlah</label>
                     <div class="mb-2">
-                        <input type="number" class="form-control" placeholder="" name="hasil">
+                        <input type="text" class="form-control" placeholder="" name="hasil">
                     </div> --}}
 
                 </div>
@@ -139,32 +131,30 @@
 </div>
 
 {{-- EDIT --}}
-@foreach ($saldo as $data)
-<div class="modal fade" dty id="data-{{$data->id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+@foreach ($departemen as $data)
+<div class="modal fade" dty data-bs-backdrop="data-{{$data->id}}" id="static" data-bs-keyboard="false" tabindex="-1"
     aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="staticBackdropLabel">Edit Saldo</h1>
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Edit Jabatan</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form method="post" action="/admin/saldo/{{$data->id}}">
+            <form method="post" action="/admin/jabatan/{{$data->id}}">
                 @method('PUT')
                 <div class="modal-body">
                     @csrf
-                    <label class="text-xl text-dark font-weight-bolder">Saldo</label>
+                    <label class="text-xl text-dark font-weight-bolder">Nama</label>
                     <div class="mb-2">
-                        <input type="number" class="form-control" placeholder="Enter your name" name="saldo"
-                            value="{{$data->saldo}}">
+                        <input type="text" class="form-control" placeholder="" name="nama"
+                            value="{{$data->nama}}">
                     </div>
-                    <label class="text-xl text-dark font-weight-bolder">Nominal</label>
+                    <label class="text-xl text-dark font-weight-bolder">Kode</label>
                     <div class="mb-2">
-                        <input type="number" class="form-control" id="nominal" placeholder=""
-                            name="nominal" value="{{$data->nominal}}">
-                    </div>
-                    <label class="text-xl text-dark font-weight-bolder">Jumlah</label>
-                    <div class="mb-2">
-                        <input type="number" class="form-control" placeholder="" name="hasil">
+                        <input type="text" class="form-control @error('kode')
+                            is-invalid
+                        @enderror" id="nominal" placeholder=""
+                            name="kode" value="{{$data->kode}}">
                     </div>
 
                 </div>

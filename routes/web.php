@@ -12,6 +12,8 @@ use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\SaldoController;
 use App\Http\Controllers\PangkatController;
+use App\Http\Controllers\JabatanController;
+use App\Http\Controllers\DepartementController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,19 +41,15 @@ Route::post('/login', [LoginController::class,'login']
 Route::middleware(['auth', 'checkLevel:admin'])->group(function () {
     Route::get('/admin/dashboard', [Home::class,'admin']);
      Route::resource('/admin/pangkat', PangkatController::class);
+     Route::resource('/admin/jabatan', JabatanController::class);
+     Route::resource('/admin/departemen', DepartementController::class);
      Route::resource('/admin/saldo', SaldoController::class);
      Route::post('/admin/saldo', [SaldoController::class,'store']);
-
-     /// USER ///
+     #region /// USER ///
      Route::resource('/admin/user', UserController::class);
      Route::get('/export-data', [UserController::class,'excel']);
      Route::get('/user-pdf', [UserController::class,'pdf']);
-    // Route::get('/admin/user', [UserController::class,'index']);
-    // Route::post('/admin/user', [UserController::class,'store']);
-    // Route::post('/admin/user/{{$id}}', [UserController::class,'destroy']);
-    // Route::get('/pegawai', function () {
-    //     return view('admin.pegawai.index');
-    // });
+     #endregion
 });
 
 /////////////////////////////////
