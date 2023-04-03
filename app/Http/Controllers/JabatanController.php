@@ -15,7 +15,11 @@ class JabatanController extends Controller
      */
     public function index()
     {
-        //
+        return view('admin.jabatan.index',[
+            'jabatan'=>Jabatan::orderBy('id')->get(),
+            'active'=>'Jabatan',
+            'title'=>'Jabatan'
+        ]);
     }
 
     /**
@@ -25,7 +29,7 @@ class JabatanController extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**
@@ -36,7 +40,13 @@ class JabatanController extends Controller
      */
     public function store(StoreJabatanRequest $request)
     {
-        //
+        $validate = $request->validate([
+            'nama'=>'required',
+            'kode'=>'required',
+        ]);
+
+        Jabatan::cretate($validate);
+        return redirect('/admin/jabatan')->with('add','Create Data Success');
     }
 
     /**
@@ -58,7 +68,7 @@ class JabatanController extends Controller
      */
     public function edit(Jabatan $jabatan)
     {
-        //
+
     }
 
     /**
@@ -68,9 +78,14 @@ class JabatanController extends Controller
      * @param  \App\Models\Jabatan  $jabatan
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateJabatanRequest $request, Jabatan $jabatan)
+    public function update(UpdateJabatanRequest $request, Jabatan $jabatan,$id)
     {
-        //
+        $update=$request->validate([
+            'nama'=>'required',
+            'kode'=>'required',
+        ]);
+        Jabatan::where('id',$id)->update($update);
+        return redirect('/admin/jabatan')->with('edit','Update Data Success');
     }
 
     /**
@@ -79,8 +94,9 @@ class JabatanController extends Controller
      * @param  \App\Models\Jabatan  $jabatan
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Jabatan $jabatan)
+    public function destroy(Jabatan $jabatan,$id)
     {
-        //
+        Jabatan::destroy($id);
+        return redirect('/admin/jabatan')->with('delete','Delete Data Success');
     }
 }

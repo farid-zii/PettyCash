@@ -98,6 +98,6 @@ class PangkatController extends Controller
     public function destroy($id)
     {
         Pangkat::destroy($id);
-        return redirect('/admin/pangkat')->with('pesan', 'Data Berhasil Dihapus');
+        return redirect('/admin/pangkat')->with('delete', 'Delete Data Success');
     }
 }

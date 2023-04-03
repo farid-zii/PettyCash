@@ -25,7 +25,6 @@ return new class extends Migration
             $table->foreignId('jabatan_id');
             $table->foreignId('pangkat_id');
             $table->foreignId('category_id');
-
             $table->timestamps();
         });
     }
