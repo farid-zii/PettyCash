@@ -16,7 +16,7 @@ class PangkatController extends Controller
     public function index()
     {
         return view('Admin.Pangkat.index',[
-            'pangkat'=>Pangkat::latest()->get(),
+            'pangkat'=>Pangkat::latest()->paginate(7),
             'active'=>'Pangkat',
             'title'=>'Pangkat',
         ]);
@@ -40,13 +40,22 @@ class PangkatController extends Controller
      */
     public function store(StorePangkatRequest $request)
     {
+        $pesan=[
+            'required'=> ':attribute Wajib diisi !',
+            'min'=> ':attribute Harus diisi min :min karakter !',
+            'max'=> ':attribute Harus diisi max :max karakter !',
+        ];
         $validete=$request->validate([
             "kode"=> 'required|min:2|max:5',
             'nama'=>'required'
-        ]);
+        ],$pesan);
 
-        Pangkat::create($validete);
-        return redirect('/admin/pangkat')->with('add','Create Data Success');
+        if(Pangkat::create($validete)==true){
+            return redirect('/admin/pangkat')->with('add','Entry Data Success');
+        }
+        else {
+            return redirect('/admin/pangkat');
+        }
     }
 
     /**

@@ -34,6 +34,22 @@
     <link href="/../css/style.css" rel="stylesheet">
     {{-- icon --}}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+
+    <style>
+        .timeout{
+            animation-name: timeout;
+            animation-duration: 5s;
+        }
+
+        @keyframes timeout{
+            0%{
+
+            }
+            100%{
+                display: hidden;
+            }
+        }
+    </style>
 </head>
 
 <body class="g-sidenav-show  bg-gray-300">

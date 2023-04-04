@@ -17,7 +17,8 @@ class PangkatFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'nama'=> fake()->word(),
+            'kode'=> fake()->lexify()
         ];
     }
 }

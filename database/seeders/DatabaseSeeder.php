@@ -5,6 +5,7 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\User;
+use App\Models\Pangkat;
 
 class DatabaseSeeder extends Seeder
 {
@@ -16,12 +17,13 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // User::factory(4)->create();
+        Pangkat::factory(8)->create();
 
         \App\Models\User::factory()->create([
             'name' => 'Admin',
             'level' => 'admin',
             'password' => bcrypt('123456'),
-            'email' => 'admin@example.com',
+            'email' => 'admin@test.com',
         ]);
     }
 }
