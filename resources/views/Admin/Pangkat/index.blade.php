@@ -141,13 +141,8 @@
                     </div>
                     <label class="text-xl text-dark font-weight-bolder ">Kode</label>
                     <div class="mb-2">
-                        <input type="text" class="form-control " placeholder="" required name="kode">
+                        <input type="text" class="form-control " placeholder="" id='kode' required name="kode" value="{{old('kode')}}">
                     </div>
-                    {{-- <label class="text-xl text-dark font-weight-bolder">Jumlah</label>
-                    <div class="mb-2">
-                        <input type="number" class="form-control" placeholder="" name="hasil">
-                    </div> --}}
-
                 </div>
                 <div class="footer px-4 mb-2">
                     <button type="submit" class="btn btn-primary float-sm-start col-md-2 mt-4">Save</button>
@@ -199,8 +194,8 @@
     aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header bg-danger">
-                <h1 class="modal-title fs-5 fw-bolder" id="staticBackdropLabel">Delete Pangkat</h1>
+            <div class="modal-header bg-gradient-danger">
+                <h1 class="modal-title fs-5 fw-bolder text-light" id="staticBackdropLabel">Delete Pangkat</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form method="post" action="/admin/pangkat/{{$data->id}}">
@@ -217,7 +212,7 @@
                     </div>
                 </div>
                 <div class="footer px-4 mb-2">
-                    <button type="submit" class="btn btn-danger float-sm-start col-md-2 mt-4">delete</button>
+                    <button type="submit" class="btn btn-danger float-sm-start col-md-2 mt-4 me-3">delete</button>
                     <button type="button" class="btn btn-info float-sm-end col-md-2 mt-4"
                         data-bs-dismiss="modal">Close</button>
                 </div>

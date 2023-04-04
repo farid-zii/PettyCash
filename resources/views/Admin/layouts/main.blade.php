@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -22,6 +23,7 @@
     {{-- Ajax --}}
     <meta name="csrf-token" content="{{csrf_token()}}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/fontawesome/css/all.css">
 
     <!-- Libraries Stylesheet -->
     <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
@@ -36,19 +38,23 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
 
     <style>
-        .timeout{
+        * {
+            margin: 0px
+        }
+
+        .timeout {
             animation-name: timeout;
             animation-duration: 5s;
         }
 
-        @keyframes timeout{
-            0%{
+        @keyframes timeout {
+            0% {}
 
-            }
-            100%{
+            100% {
                 display: hidden;
             }
         }
+
     </style>
 </head>
 
@@ -57,13 +63,25 @@
     @include('admin.layouts.sidebar')
 
     <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
-         @include('admin.layouts.navbar')
+        @include('admin.layouts.navbar')
 
-         <div>
+        <div>
             @yield('isi')
-         </div>
 
+
+            <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl bg-info" id="navbarBlur"
+                data-scroll="true" style="border-bottom-left-radius:0px;border-bottom-right-radius:0px; ">
+                <div class="container-fluid py-1 px-3">
+                    <h1>Footer</h1>
+                </div>
+            </nav>
+        </div>
     </main>
+    {{-- <footer>
+        <div class="footer bg-primary">
+            <h1>Footer</h1>
+        </div>
+    </footer> --}}
     <div class="js">
         <script src="/./js/core/popper.min.js"></script>
         <script src="/./js/core/bootstrap.min.js"></script>
