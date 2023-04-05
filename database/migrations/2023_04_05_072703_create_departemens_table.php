@@ -13,10 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('kategori_pgws', function (Blueprint $table) {
+        Schema::create('departemens', function (Blueprint $table) {
             $table->id();
-            $table->string('nama');
-            $table->string('kode',5)->unique();
             $table->timestamps();
         });
     }
@@ -28,6 +26,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('kategori_pgws');
+        Schema::dropIfExists('departemens');
     }
 };

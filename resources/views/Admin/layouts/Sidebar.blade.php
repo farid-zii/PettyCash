@@ -71,7 +71,7 @@
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="fa-solid fa-building" style="color: #ffffff;"></i>
             </div>
-            <span class="nav-link-text ms-1">Departement</span>
+            <span class="nav-link-text ms-1">Departemen</span>
           </a>
         </li>
         <li class="nav-item">

@@ -42,7 +42,7 @@ class PangkatController extends Controller
 
         if($nama==true){
             Pangkat::create($validate);
-            return redirect('/admin/pangkat')->with('add','Entry Data'.$validate['nama'].' Success');
+            return redirect('/admin/pangkat')->with('add','Entry Data '.$validate['nama'].' Success');
         }
         else {
             return redirect('/admin/pangkat');

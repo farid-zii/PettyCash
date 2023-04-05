@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Jabatan;
-use App\Http\Requests\StoreJabatanRequest;
-use App\Http\Requests\UpdateJabatanRequest;
+use App\Models\Departemen;
+use Illuminate\Http\Request;
 
-class JabatanController extends Controller
+class DepartemenController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,10 +14,10 @@ class JabatanController extends Controller
      */
     public function index()
     {
-        return view('admin.jabatan.index',[
-            'jabatan'=>Jabatan::orderBy('id')->paginate(7),
-            'active'=>'Jabatan',
-            'title'=>'Jabatan'
+        return view('Admin.departemen.index', [
+            'departemen' => Departemen::latest()->paginate(7),
+            'active' => 'Departemen',
+            'title' => 'Departemen',
         ]);
     }
 
@@ -35,10 +34,10 @@ class JabatanController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreJabatanRequest  $request
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreJabatanRequest $request)
+    public function store(Request $request)
     {
         $pesan = [
             'required' => ':attribute Wajib diisi !',
@@ -50,27 +49,27 @@ class JabatanController extends Controller
             'nama' => 'required'
         ], $pesan);
 
-        $nama = Jabatan::where('kode', '=', $validate['kode'])->get('kode');
+        $nama = Departemen::where('kode', '=', $validate['kode'])->get('kode');
 
         if ($nama == false) {
-            return redirect('/admin/jabatan')->with('failed', 'Kode ' . $validate['kode'] . ' Sudah ada');
+            return redirect('/admin/departemen')->with('failed', 'Kode ' . $validate['kode'] . ' Sudah ada');
         }
 
         if ($nama == true) {
-            Jabatan::create($validate);
-            return redirect('/admin/jabatan')->with('add', 'Entry Data ' . $validate['nama'] . ' Success');
+            Departemen::create($validate);
+            return redirect('/admin/departemen')->with('add', 'Entry Data ' . $validate['nama'] . ' Success');
         } else {
-            return redirect('/admin/jabatan');
+            return redirect('/admin/departemen');
         }
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Jabatan  $jabatan
+     * @param  \App\Models\Departemen  $departemen
      * @return \Illuminate\Http\Response
      */
-    public function show(Jabatan $jabatan)
+    public function show(Departemen $departemen)
     {
         //
     }
@@ -78,10 +77,10 @@ class JabatanController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Jabatan  $jabatan
+     * @param  \App\Models\Departemen  $departemen
      * @return \Illuminate\Http\Response
      */
-    public function edit(Jabatan $jabatan)
+    public function edit(Departemen $departemen,$id)
     {
 
     }
@@ -89,11 +88,11 @@ class JabatanController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateJabatanRequest  $request
-     * @param  \App\Models\Jabatan  $jabatan
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Departemen  $departemen
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateJabatanRequest $request,$id)
+    public function update(Request $request, $id)
     {
         $pesan = [
             'required' => ':attribute Wajib diisi !',
@@ -107,34 +106,34 @@ class JabatanController extends Controller
         ], $pesan);
 
 
-        $samaKode = Jabatan::where('kode', '=', $update['kode'])->get('kode');
-        $samaId = Jabatan::where('id', '=', $id)->get('kode');
+        $samaKode = Departemen::where('kode', '=', $update['kode'])->get('kode');
+        $samaId = Departemen::where('id', '=', $id)->get('kode');
 
         //jika kode tidak sama dengan kode lama -> sama dengan kode yang ada -> update
         if ($samaId != $samaKode) {
             if ($samaId == $samaKode) {
-                Jabatan::where('id', $id)->update($update);
-                return redirect('/admin/jabatan')->with('edit', 'Update Data ' . $update['nama'] . ' Successa');
+                Departemen::where('id', $id)->update($update);
+                return redirect('/admin/departemen')->with('edit', 'Update Data ' . $update['nama'] . ' Successa');
             }
-            return redirect('/admin/jabatan')->with('failed', 'Kode ' . $update['kode'] . ' Sudah ada ');
+            return redirect('/admin/departemen')->with('failed', 'Kode ' . $update['kode'] . ' Sudah ada ');
         }
         //Jika kode
         elseif ($samaKode == true) {
-            Jabatan::where('id', $id)->update($update);
-            return redirect('/admin/jabatan')->with('edit', 'Update Data ' . $update['nama'] . ' Success');
+            Departemen::where('id', $id)->update($update);
+            return redirect('/admin/departemen')->with('edit', 'Update Data ' . $update['nama'] . ' Success');
         }
-        return redirect('/admin/jabatan')->with('failed', 'Kode ' . $update['nama'] . ' Sudah ada ');
+        return redirect('/admin/departemen')->with('failed', 'Kode ' . $update['nama'] . ' Sudah ada ');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Jabatan  $jabatan
+     * @param  \App\Models\Departemen  $departemen
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        Jabatan::destroy($id);
-        return redirect('/admin/jabatan')->with('delete','Delete Data Success');
+        Departemen::destroy($id);
+        return redirect('/admin/departemen')->with('delete', 'Delete Data Success');
     }
 }

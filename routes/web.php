@@ -13,7 +13,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\SaldoController;
 use App\Http\Controllers\PangkatController;
 use App\Http\Controllers\JabatanController;
-use App\Http\Controllers\DepartementController;
+use App\Http\Controllers\DepartemenController;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,7 +42,7 @@ Route::middleware(['auth', 'checkLevel:admin'])->group(function () {
     Route::get('/admin/dashboard', [Home::class,'admin']);
      Route::resource('/admin/pangkat', PangkatController::class);
      Route::resource('/admin/jabatan', JabatanController::class);
-     Route::resource('/admin/departemen', DepartementController::class);
+     Route::resource('/admin/departemen', DepartemenController::class);
      Route::resource('/admin/saldo', SaldoController::class);
      Route::post('/admin/saldo', [SaldoController::class,'store']);
      #region /// USER ///
