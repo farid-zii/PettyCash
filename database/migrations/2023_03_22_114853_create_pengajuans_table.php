@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('pengajuans', function (Blueprint $table) {
             $table->id();
             $table->string('kode',10);
-            $table->foreign('pegawai_id');
+            $table->foreignId('pegawai_id');
             $table->text('text');
             $table->double('nominal',10);
             $table->timestamps();
