@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Saldo;
 use App\Http\Requests\StoreSaldoRequest;
 use App\Http\Requests\UpdateSaldoRequest;
+use Illuminate\Support\Facades\DB;
+use PhpParser\Node\Expr\Cast\Double;
 
 class SaldoController extends Controller
 {
@@ -16,8 +18,7 @@ class SaldoController extends Controller
     public function index()
     {
         return view('admin.saldo.index', [
-            'data' => Saldo::get(),
-            'saldo' => Saldo::get(),
+            'datas' => Saldo::paginate(7),
             'title' => 'Saldo',
             'active' => 'Saldo',
         ]);
@@ -41,12 +42,15 @@ class SaldoController extends Controller
      */
     public function store(StoreSaldoRequest $request)
     {
-        $insert = $request->validate([
-            'saldo'=>'required',
-            'nominal'=>'required',
+        $saldo= $request->saldo;
+        $nominal= $request->nominal;
+        $hasil = $saldo-$nominal;
+        // DB::insert('insert into saldos (saldo, nominal, hasil) values (?, ?, ?)', [$saldo, $nominal,$hasil]);
+        DB::table('saldos')->insert([
+            'saldo'=>$saldo,
+            'nominal'=>$nominal,
+            'hasil'=>$hasil
         ]);
-        $insert['hasil']= $insert['saldo']-$insert['nominal'];
-        Saldo::create($insert);
         return redirect('/admin/saldo');
     }
 

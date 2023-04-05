@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('saldos', function (Blueprint $table) {
             $table->id();
             $table->double('saldo',10);
-            $table->foreignId('nominal',10)->nullable();
+            $table->double('nominal',10)->nullable();
             $table->double('hasil',10)->nullable();
             $table->timestamps();
         });
