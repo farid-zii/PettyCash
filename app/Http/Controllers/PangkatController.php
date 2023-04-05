@@ -45,12 +45,18 @@ class PangkatController extends Controller
             'min'=> ':attribute Harus diisi min :min karakter !',
             'max'=> ':attribute Harus diisi max :max karakter !',
         ];
-        $validete=$request->validate([
+        $validate=$request->validate([
             "kode"=> 'required|min:2|max:5',
             'nama'=>'required'
         ],$pesan);
 
-        if(Pangkat::create($validete)==true){
+        $nama=Pangkat::where('kode','=',$validate['kode'])->get('kode');
+
+        if($nama==true){
+            return redirect('/admin/pangkat')->with('failed', 'Kode '.$validate['kode'].' Sudah ada');
+        }
+
+        if(Pangkat::create($validate)==true){
             return redirect('/admin/pangkat')->with('add','Entry Data Success');
         }
         else {
@@ -89,13 +95,40 @@ class PangkatController extends Controller
      */
     public function update(UpdatePangkatRequest $request, $id)
     {
+        $pesan = [
+            'required' => ':attribute Wajib diisi !',
+            'min' => ':attribute Harus diisi min :min karakter !',
+            'max' => ':attribute Harus diisi max :max karakter !',
+        ];
+
         $update = $request->validate([
             'kode'=> 'required|min:2|max:5',
             'nama'=>'required',
-        ]);
+        ],$pesan);
 
-        Pangkat::where('id',$id)->update($update);
-        return redirect('/admin/pangkat')->with('edit','Update Data Success');
+        $nama = Pangkat::where('kode', '!=', $update['kode'])->get();
+        $sama = Pangkat::where('kode', '=', $update['kode'])->get('kode');
+
+        // $samaId = Pangkat::where('id','=', $id)->get();
+        $samaId = Pangkat::where('id','=', $id)->get('kode');
+        $sama3= $samaId==$sama;
+        //jika id sama -> kode tidak sama dengan
+        if($samaId==$sama){
+                Pangkat::where('id', $id)->update($update);
+                return redirect('/admin/pangkat')->with('edit', 'Update Data ' . $update['nama'] . ' Success');
+            // }
+            // return redirect('/admin/pangkat')->with('failed', 'Kode ' . $sama . ' Sudah ada ');
+        }
+        // if($sama==false){
+        //     return redirect('/admin/pangkat')->with('failed', 'Kode ' . $sama . ' Sudah ada ');
+        // }
+        elseif ($nama==true) {
+            Pangkat::where('id', $id)->update($update);
+            return redirect('/admin/pangkat')->with('edit', 'Update Data ' . $update['nama'] . ' Success');
+        }
+        else{
+        return redirect('/admin/pangkat')->with('failed','Kode '.$sama.' Sudah ada ');
+        }
     }
 
     /**

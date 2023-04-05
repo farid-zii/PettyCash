@@ -40,6 +40,13 @@
                     </div>
                     @endif
 
+                    @if (session()->has('failed'))
+                    <div class="alert alert-danger">
+                        <strong>Failed!!</strong>
+                        <strong>{{session('failed')}}</strong>
+                    </div>
+                    @endif
+
                     @if (count($errors)>0)
                     <div class="alert alert-danger">
                         <strong>Failed</strong>
@@ -127,7 +134,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header bg-info">
-                <h1 class="modal-title fs-5" id="staticBackdropLabel">Create Pangkat</h1>
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Entry Data {{$title}}</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
@@ -137,7 +144,7 @@
                 <div class="modal-body">
                     <label class="text-xl text-dark font-weight-bolder" required>Nama</label>
                     <div class="mb-2">
-                        <input type="text" class="form-control" placeholder="" name="nama">
+                        <input type="text" class="form-control" placeholder="" name="nama" value="{{old('kode')}}">
                     </div>
                     <label class="text-xl text-dark font-weight-bolder ">Kode</label>
                     <div class="mb-2">
@@ -148,6 +155,7 @@
                     <button type="submit" class="btn btn-primary float-sm-start col-md-2 mt-4">Save</button>
                     <button type="button" class="btn btn-danger float-sm-end col-md-2 mt-4"
                         data-bs-dismiss="modal">Close</button>
+                    <button type="reset" class="btn btn-dark float-sm-end col-md-2 mt-4 me-3">Reset</button>
                 </div>
             </form>
         </div>
@@ -161,7 +169,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header bg-warning">
-                <h1 class="modal-title fs-5" id="staticBackdropLabel">Edit Pangkat</h1>
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Edit Data {{$title}}</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form method="post" action="/admin/pangkat/{{$data->id}}">
@@ -195,7 +203,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header bg-gradient-danger">
-                <h1 class="modal-title fs-5 fw-bolder text-light" id="staticBackdropLabel">Delete Pangkat</h1>
+                <h1 class="modal-title fs-5 fw-bolder text-light" id="staticBackdropLabel">Delete Data {{$title}}</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form method="post" action="/admin/pangkat/{{$data->id}}">

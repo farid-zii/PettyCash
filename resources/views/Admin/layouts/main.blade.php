@@ -43,15 +43,15 @@
         }
 
         .timeout {
-            animation-name: timeout;
+            animation-name: hilang;
             animation-duration: 5s;
         }
 
-        @keyframes timeout {
+        @keyframes hilang {
             0% {}
 
             100% {
-                display: hidden;
+                display: none;
             }
         }
 

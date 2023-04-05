@@ -16,7 +16,7 @@ class JabatanController extends Controller
     public function index()
     {
         return view('admin.jabatan.index',[
-            'jabatan'=>Jabatan::orderBy('id')->get(),
+            'jabatan'=>Jabatan::orderBy('id')->paginate(7),
             'active'=>'Jabatan',
             'title'=>'Jabatan'
         ]);
@@ -40,13 +40,18 @@ class JabatanController extends Controller
      */
     public function store(StoreJabatanRequest $request)
     {
+        $pesan = [
+            'required' => ':attribute Wajib diisi !',
+            'min' => ':attribute Harus diisi min :min karakter !',
+            'max' => ':attribute Harus diisi max :max karakter !',
+        ];
         $validate = $request->validate([
-            'nama'=>'required',
-            'kode'=>'required',
-        ]);
+            "kode" => 'required|min:2|max:5',
+            'nama' => 'required'
+        ], $pesan);
 
         Jabatan::create($validate);
-        return redirect('/admin/jabatan')->with('add','Create Data Success');
+        return redirect('/admin/jabatan')->with('add', 'Entry Data' . $validate['nama'] . ' Success');
     }
 
     /**
@@ -94,7 +99,7 @@ class JabatanController extends Controller
      * @param  \App\Models\Jabatan  $jabatan
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Jabatan $jabatan,$id)
+    public function destroy($id)
     {
         Jabatan::destroy($id);
         return redirect('/admin/jabatan')->with('delete','Delete Data Success');
