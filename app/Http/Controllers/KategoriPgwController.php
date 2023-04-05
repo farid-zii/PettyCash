@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\CategoryPegawai;
-use App\Http\Requests\StoreCategoryPegawaiRequest;
-use App\Http\Requests\UpdateCategoryPegawaiRequest;
+use App\Models\KategoriPgw;
+use Illuminate\Http\Request;
 
-class CategoryPegawaiController extends Controller
+class KategoriPgwController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -31,10 +30,10 @@ class CategoryPegawaiController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreCategoryPegawaiRequest  $request
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreCategoryPegawaiRequest $request)
+    public function store(Request $request)
     {
         //
     }
@@ -42,10 +41,10 @@ class CategoryPegawaiController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\CategoryPegawai  $categoryPegawai
+     * @param  \App\Models\KategoriPgw  $kategoriPgw
      * @return \Illuminate\Http\Response
      */
-    public function show(CategoryPegawai $categoryPegawai)
+    public function show(KategoriPgw $kategoriPgw)
     {
         //
     }
@@ -53,10 +52,10 @@ class CategoryPegawaiController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\CategoryPegawai  $categoryPegawai
+     * @param  \App\Models\KategoriPgw  $kategoriPgw
      * @return \Illuminate\Http\Response
      */
-    public function edit(CategoryPegawai $categoryPegawai)
+    public function edit(KategoriPgw $kategoriPgw)
     {
         //
     }
@@ -64,11 +63,11 @@ class CategoryPegawaiController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateCategoryPegawaiRequest  $request
-     * @param  \App\Models\CategoryPegawai  $categoryPegawai
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\KategoriPgw  $kategoriPgw
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateCategoryPegawaiRequest $request, CategoryPegawai $categoryPegawai)
+    public function update(Request $request, KategoriPgw $kategoriPgw)
     {
         //
     }
@@ -76,10 +75,10 @@ class CategoryPegawaiController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\CategoryPegawai  $categoryPegawai
+     * @param  \App\Models\KategoriPgw  $kategoriPgw
      * @return \Illuminate\Http\Response
      */
-    public function destroy(CategoryPegawai $categoryPegawai)
+    public function destroy(KategoriPgw $kategoriPgw)
     {
         //
     }

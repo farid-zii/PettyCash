@@ -13,10 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('category_pegawais', function (Blueprint $table) {
+        Schema::create('kategori_pgws', function (Blueprint $table) {
             $table->id();
-            $table->string('kode','5')->unique();
-            $table->string('nama','20');
+            $table->string('nama');
+            $table->string('kode',5)->unique();
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('category_pegawais');
+        Schema::dropIfExists('kategori_pgws');
     }
 };

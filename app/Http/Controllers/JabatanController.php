@@ -50,8 +50,18 @@ class JabatanController extends Controller
             'nama' => 'required'
         ], $pesan);
 
-        Jabatan::create($validate);
-        return redirect('/admin/jabatan')->with('add', 'Entry Data' . $validate['nama'] . ' Success');
+        $nama = Jabatan::where('kode', '=', $validate['kode'])->get('kode');
+
+        if ($nama == false) {
+            return redirect('/admin/jabatan')->with('failed', 'Kode ' . $validate['kode'] . ' Sudah ada');
+        }
+
+        if ($nama == true) {
+            Jabatan::create($validate);
+            return redirect('/admin/jabatan')->with('add', 'Entry Data' . $validate['nama'] . ' Success');
+        } else {
+            return redirect('/admin/jabatan');
+        }
     }
 
     /**
@@ -85,12 +95,35 @@ class JabatanController extends Controller
      */
     public function update(UpdateJabatanRequest $request,$id)
     {
-        $update=$request->validate([
-            'nama'=>'required',
-            'kode'=>'required',
-        ]);
-        Jabatan::where('id',$id)->update($update);
-        return redirect('/admin/jabatan')->with('edit','Update Data '.$update['nama'].' Success');
+        $pesan = [
+            'required' => ':attribute Wajib diisi !',
+            'min' => ':attribute Harus diisi min :min karakter !',
+            'max' => ':attribute Harus diisi max :max karakter !',
+        ];
+
+        $update = $request->validate([
+            'kode' => 'required|min:2|max:5',
+            'nama' => 'required',
+        ], $pesan);
+
+
+        $samaKode = Jabatan::where('kode', '=', $update['kode'])->get('kode');
+        $samaId = Jabatan::where('id', '=', $id)->get('kode');
+
+        //jika kode tidak sama dengan kode lama -> sama dengan kode yang ada -> update
+        if ($samaId != $samaKode) {
+            if ($samaId == $samaKode) {
+                Jabatan::where('id', $id)->update($update);
+                return redirect('/admin/jabatan')->with('edit', 'Update Data ' . $update['nama'] . ' Successa');
+            }
+            return redirect('/admin/jabatan')->with('failed', 'Kode ' . $update['kode'] . ' Sudah ada ');
+        }
+        //Jika kode
+        elseif ($samaKode == true) {
+            Jabatan::where('id', $id)->update($update);
+            return redirect('/admin/jabatan')->with('edit', 'Update Data ' . $update['nama'] . ' Success');
+        }
+        return redirect('/admin/jabatan')->with('failed', 'Kode ' . $update['nama'] . ' Sudah ada ');
     }
 
     /**

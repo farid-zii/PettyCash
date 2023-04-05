@@ -26,10 +26,10 @@ use App\Http\Controllers\DepartementController;
 |
 */
 
-// Route::get('/', function () {
-//     return view('login');
-// });
-Route::get('/', [LoginController::class,'index']);
+Route::get('/', function () {
+    return view('login');
+});
+Route::get('/login', [LoginController::class,'index'])->name('login');
 
 Route::post('/login', [LoginController::class,'login']
 );
@@ -87,5 +87,3 @@ Route::middleware(['auth', 'checkLevel:direktur'])->group(function () {
         return view('admin.pegawai.index');
     });
 });
-
-// Route::get('admin', function(){ return view('admin.index');})->middleware(('checkLevel:admin'));
