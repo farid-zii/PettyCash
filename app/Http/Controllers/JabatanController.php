@@ -52,24 +52,17 @@ class JabatanController extends Controller
 
         $nama = Jabatan::where('kode', '=', $validate['kode'])->get('kode');
 
-        if ($nama == false) {
+        if ($nama == true) {
             return redirect('/admin/jabatan')->with('failed', 'Kode ' . $validate['kode'] . ' Sudah ada');
         }
 
-        if ($nama == true) {
+        if ($nama == false) {
             Jabatan::create($validate);
             return redirect('/admin/jabatan')->with('add', 'Entry Data ' . $validate['nama'] . ' Success');
         } else {
             return redirect('/admin/jabatan');
         }
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Jabatan  $jabatan
-     * @return \Illuminate\Http\Response
-     */
     public function show(Jabatan $jabatan)
     {
         //

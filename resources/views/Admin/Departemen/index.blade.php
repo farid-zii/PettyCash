@@ -12,7 +12,7 @@
                     </div>
                 </div>
                 <div class="card-body px-0 pb-2">
-                    {{--  --}}
+<?php #region ERROR  ?>
                     @if (session()->has('add'))
                     <div class="alert alert-success alert-dismissible fade show timeout"
                         style="width: 30%;margin-left:70%;" role="alert">
@@ -57,12 +57,12 @@
                         </ul>
                     </div>
                     @endif
-
+<?php #endregion ?>
                     <div class="mx-3">
-                        <a href="/pangkat-pdf" target="blank" class="btn bg-gradient-danger w-15 my-4 mb-2"><i
+                        <a href="/departemen-pdf" target="blank" class="btn bg-gradient-danger w-15 my-4 mb-2"><i
                                 class="bi bi-file-earmark-pdf-fill"></i>Cetak Pdf</a>
                         {{-- <button class="btn bg-gradient-success w-15 my-4 mb-2">Cetak Excel</button> --}}
-                        <a href="/pangkat-data" blank class="btn bg-gradient-success w-16 my-4 mb-2"><i
+                        <a href="/departemen-data" blank class="btn bg-gradient-success w-16 my-4 mb-2"><i
                                 class="bi bi-file-earmark-spreadsheet-fill"></i> Cetak Excel</a>
                         {{-- <a href="/admin/user/create"  class="btn bg-gradient-info w-15 my-4 mb-2 float-sm-end">Entry</a> --}}
                         <button class="btn bg-gradient-info w-15 my-4 mb-2 float-sm-end" data-bs-toggle="modal"
@@ -77,7 +77,7 @@
                                         No</th>
                                     <th style=""
                                         class="text-uppercase text-light text-xs font-weight-bolder opacity-7">
-                                        NAMA PANGKAT</th>
+                                        NAMA {{$title}}</th>
                                     <th
                                         class="text-uppercase text-light text-xs font-weight-bolder opacity-7">
                                         KODE</th>
@@ -87,8 +87,8 @@
                                 </tr>
                             </thead>
                             <tbody class="">
-                                @if($departemen->count())
-                                @foreach ($departemen as $data )
+                                @if($datas->count())
+                                @foreach ($datas as $data )
                                 <tr>
                                     <td class="">{{$loop->iteration}}</td>
                                     <td class="" style="">
@@ -118,7 +118,7 @@
                         </table>
 
                         <div class="d-flex justify-content-end">
-                                {{$departemen->links('vendor.pagination.bootstrap-5')}}
+                                {{$datas->links('vendor.pagination.bootstrap-5')}}
                         </div>
                     </div>
                 </div>
@@ -138,7 +138,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
-            <form method="post" action="/admin/pangkat">
+            <form method="post" action="/admin/departemen">
                 @method('POST')
                 @csrf
                 <div class="modal-body">
@@ -163,7 +163,7 @@
 </div>
 
 {{-- EDIT --}}
-@foreach ($departemen as $data)
+@foreach ($datas as $data)
 <div class="modal fade" dty id="data-{{$data->id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
     aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -172,7 +172,7 @@
                 <h1 class="modal-title fs-5" id="staticBackdropLabel">Edit Data {{$title}}</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form method="post" action="/admin/pangkat/{{$data->id}}">
+            <form method="post" action="/admin/departemen/{{$data->id}}">
                 @method('PUT')
                 <div class="modal-body">
                     @csrf
@@ -197,7 +197,7 @@
 </div>
 @endforeach
 {{-- Delete --}}
-@foreach ($departemen as $data)
+@foreach ($datas as $data)
 <div class="modal fade" dty id="delete-{{$data->id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
     aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -206,7 +206,7 @@
                 <h1 class="modal-title fs-5 fw-bolder text-light" id="staticBackdropLabel">Delete Data {{$title}}</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form method="post" action="/admin/pangkat/{{$data->id}}">
+            <form method="post" action="/admin/departemen/{{$data->id}}">
                 @method('Delete')
                 <div class="modal-body">
                     @csrf

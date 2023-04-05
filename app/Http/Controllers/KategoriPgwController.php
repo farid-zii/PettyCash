@@ -14,7 +14,11 @@ class KategoriPgwController extends Controller
      */
     public function index()
     {
-        //
+        return view('Admin.Kategori.index', [
+            'datas' => KategoriPgw::latest()->paginate(7),
+            'active' => 'Kategori',
+            'title' => 'Kategori',
+        ]);
     }
 
     /**
@@ -24,7 +28,7 @@ class KategoriPgwController extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**
@@ -35,7 +39,28 @@ class KategoriPgwController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $pesan = [
+            'required' => ':attribute Wajib diisi !',
+            'min' => ':attribute Harus diisi min :min karakter !',
+            'max' => ':attribute Harus diisi max :max karakter !',
+        ];
+        $validate = $request->validate([
+            "kode" => 'required|min:2|max:5',
+            'nama' => 'required'
+        ], $pesan);
+
+        $nama = KategoriPgw::where('kode', '=', $validate['kode'])->get('kode');
+
+        if ($nama == true) {
+            return redirect('/admin/KategoriPgw')->with('failed', 'Kode ' . $validate['kode'] . ' Sudah ada');
+        }
+
+        if ($nama == false) {
+            KategoriPgw::create($validate);
+            return redirect('/admin/KategoriPgw')->with('add', 'Entry Data ' . $validate['nama'] . ' Success');
+        } else {
+            return redirect('/admin/KategoriPgw');
+        }
     }
 
     /**
@@ -67,9 +92,37 @@ class KategoriPgwController extends Controller
      * @param  \App\Models\KategoriPgw  $kategoriPgw
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, KategoriPgw $kategoriPgw)
+    public function update(Request $request, $id)
     {
-        //
+        $pesan = [
+            'required' => ':attribute Wajib diisi !',
+            'min' => ':attribute Harus diisi min :min karakter !',
+            'max' => ':attribute Harus diisi max :max karakter !',
+        ];
+
+        $update = $request->validate([
+            'kode' => 'required|min:2|max:5',
+            'nama' => 'required',
+        ], $pesan);
+
+
+        $samaKode = KategoriPgw::where('kode', '=', $update['kode'])->get('kode');
+        $samaId = KategoriPgw::where('id', '=', $id)->get('kode');
+
+        //jika kode tidak sama dengan kode lama -> sama dengan kode yang ada -> update
+        if ($samaId != $samaKode) {
+            if ($samaId == $samaKode) {
+                KategoriPgw::where('id', $id)->update($update);
+                return redirect('/admin/KategoriPgw')->with('edit', 'Update Data ' . $update['nama'] . ' Successa');
+            }
+            return redirect('/admin/KategoriPgw')->with('failed', 'Kode ' . $update['kode'] . ' Sudah ada ');
+        }
+        //Jika kode
+        elseif ($samaKode == true) {
+            KategoriPgw::where('id', $id)->update($update);
+            return redirect('/admin/kategoriPgw')->with('edit', 'Update Data ' . $update['nama'] . ' Success');
+        }
+        return redirect('/admin/kategoriPgw')->with('failed', 'Kode ' . $update['nama'] . ' Sudah ada ');
     }
 
     /**
@@ -78,8 +131,9 @@ class KategoriPgwController extends Controller
      * @param  \App\Models\KategoriPgw  $kategoriPgw
      * @return \Illuminate\Http\Response
      */
-    public function destroy(KategoriPgw $kategoriPgw)
+    public function destroy($id)
     {
-        //
+        KategoriPgw::destroy($id);
+        return redirect('/admin/kategoriPgw')->with('delete', 'Delete Data Success');
     }
 }

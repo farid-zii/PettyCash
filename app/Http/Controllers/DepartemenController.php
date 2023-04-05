@@ -15,7 +15,7 @@ class DepartemenController extends Controller
     public function index()
     {
         return view('Admin.departemen.index', [
-            'departemen' => Departemen::latest()->paginate(7),
+            'datas' => Departemen::latest()->paginate(7),
             'active' => 'Departemen',
             'title' => 'Departemen',
         ]);
@@ -51,11 +51,11 @@ class DepartemenController extends Controller
 
         $nama = Departemen::where('kode', '=', $validate['kode'])->get('kode');
 
-        if ($nama == false) {
+        if ($nama == true) {
             return redirect('/admin/departemen')->with('failed', 'Kode ' . $validate['kode'] . ' Sudah ada');
         }
 
-        if ($nama == true) {
+        if ($nama == false) {
             Departemen::create($validate);
             return redirect('/admin/departemen')->with('add', 'Entry Data ' . $validate['nama'] . ' Success');
         } else {

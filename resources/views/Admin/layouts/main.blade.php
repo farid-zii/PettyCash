@@ -67,8 +67,6 @@
 
         <div>
             @yield('isi')
-
-
             <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl bg-info" id="navbarBlur"
                 data-scroll="true" style="border-bottom-left-radius:0px;border-bottom-right-radius:0px; ">
                 <div class="container-fluid py-1 px-3">
