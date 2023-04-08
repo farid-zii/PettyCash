@@ -12,7 +12,7 @@
                     </div>
                 </div>
                 <div class="card-body px-0 pb-2">
-<?php #region ERROR  ?>
+                    <?php #region ERROR  ?>
                     @if (session()->has('add'))
                     <div class="alert alert-success alert-dismissible fade show timeout"
                         style="width: 30%;margin-left:70%;" role="alert">
@@ -57,7 +57,7 @@
                         </ul>
                     </div>
                     @endif
-<?php #endregion ?>
+                    <?php #endregion ?>
                     <div class="mx-3">
                         <a href="/saldo-pdf" target="blank" class="btn bg-gradient-danger w-15 my-4 mb-2"><i
                                 class="bi bi-file-earmark-pdf-fill"></i>Cetak Pdf</a>
@@ -72,17 +72,13 @@
                         <table class="table table-bordered border-dark" style="">
                             <thead>
                                 <tr class="bg-dark" style="font-color:white;">
-                                    <th
-                                        class="text-uppercase text-light text-xs font-weight-bolder opacity-7">
+                                    <th class="text-uppercase text-light text-xs font-weight-bolder opacity-7">
                                         No</th>
-                                    <th style=""
-                                        class="text-uppercase text-light text-xs font-weight-bolder opacity-7">
+                                    <th style="" class="text-uppercase text-light text-xs font-weight-bolder opacity-7">
                                         saldo {{$title}}</th>
-                                    <th
-                                        class="text-uppercase text-light text-xs font-weight-bolder opacity-7">
+                                    <th class="text-uppercase text-light text-xs font-weight-bolder opacity-7">
                                         nominal</th>
-                                    <th
-                                        class="text-uppercase text-light text-xs font-weight-bolder opacity-7">
+                                    <th class="text-uppercase text-light text-xs font-weight-bolder opacity-7">
                                         hasil</th>
                                     <th style="width: 10%"
                                         class="text-uppercase text-light text-xs font-weight-bolder opacity-7">
@@ -95,13 +91,13 @@
                                 <tr>
                                     <td class="">{{$loop->iteration}}</td>
                                     <td class="" style="">
-                                        <p class="align-middle">{{$data->saldo}}</p>
+                                        <p class="align-middle">@rp($data->saldo)</p>
                                     </td>
                                     <td class="">
-                                        <p class="align-middle"> {{$data->nominal}}</p>
+                                        <p class="align-middle"> @rp($data->nominal)</p>
                                     </td>
                                     <td class="">
-                                        <p class="align-middle"> {{$data->hasil}}</p>
+                                        <p class="align-middle"> @rp($data->hasil)</p>
                                     </td>
                                     <td class="bg-info">
                                         <div class="d-flex">
@@ -124,7 +120,7 @@
                         </table>
 
                         <div class="d-flex justify-content-end">
-                                {{$datas->links('vendor.pagination.bootstrap-5')}}
+                            {{$datas->links('vendor.pagination.bootstrap-5')}}
                         </div>
                     </div>
                 </div>
@@ -149,12 +145,15 @@
                 @csrf
                 <div class="modal-body">
                     <label class="text-xl text-dark font-weight-bolder" required>saldo</label>
-                    <div class="mb-2">
-                        <input type="text" class="form-control" placeholder="" name="saldo" value="{{old('saldo')}}">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon1">@</span>
+                        <input type="number" class="form-control" name="saldo" value="0"
+                            aria-describedby="basic-addon1">
                     </div>
                     <label class="text-xl text-dark font-weight-bolder ">nominal</label>
                     <div class="mb-2">
-                        <input type="text" class="form-control " placeholder="" id='nominal' required name="nominal" value="{{old('nominal')}}">
+                        <input type="number" class="form-control " placeholder="" id='nominal' required name="nominal"
+                            value="{{old('nominal')}}">
                     </div>
                 </div>
                 <div class="footer px-4 mb-2">
@@ -188,7 +187,8 @@
                     </div>
                     <label class="text-xl text-dark font-weight-bolder">nominal</label>
                     <div class="mb-2">
-                        <input type="text" class="form-control" required placeholder="" name="nominal" value="{{$data->nominal}}">
+                        <input type="text" class="form-control" required placeholder="" name="nominal"
+                            value="{{$data->nominal}}">
                     </div>
 
                 </div>

@@ -26,7 +26,6 @@ use App\Http\Controllers\DepartemenController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
 Route::get('/', function () {
     return view('login');
 });
@@ -42,6 +41,7 @@ Route::post('/login', [LoginController::class,'login']
 Route::middleware(['auth', 'checkLevel:admin'])->group(function () {
     Route::get('/admin/dashboard', [Home::class,'admin']);
      Route::resource('/admin/pangkat', PangkatController::class);
+     Route::resource('/admin/pegawai', PegawaiController::class);
      Route::resource('/admin/jabatan', JabatanController::class);
      Route::resource('/admin/kategoriPgw', KategoriPgwController::class);
      Route::resource('/admin/departemen', DepartemenController::class);

@@ -59,10 +59,10 @@
                     @endif
 <?php #endregion ?>
                     <div class="mx-3">
-                        <a href="/departemen-pdf" target="blank" class="btn bg-gradient-danger w-15 my-4 mb-2"><i
+                        <a href="/KategoriPgw-pdf" target="blank" class="btn bg-gradient-danger w-15 my-4 mb-2"><i
                                 class="bi bi-file-earmark-pdf-fill"></i>Cetak Pdf</a>
                         {{-- <button class="btn bg-gradient-success w-15 my-4 mb-2">Cetak Excel</button> --}}
-                        <a href="/departemen-data" blank class="btn bg-gradient-success w-16 my-4 mb-2"><i
+                        <a href="/KategoriPgw-data" blank class="btn bg-gradient-success w-16 my-4 mb-2"><i
                                 class="bi bi-file-earmark-spreadsheet-fill"></i> Cetak Excel</a>
                         {{-- <a href="/admin/user/create"  class="btn bg-gradient-info w-15 my-4 mb-2 float-sm-end">Entry</a> --}}
                         <button class="btn bg-gradient-info w-15 my-4 mb-2 float-sm-end" data-bs-toggle="modal"
@@ -138,7 +138,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
-            <form method="post" action="/admin/departemen">
+            <form method="post" action="/admin/KategoriPgw">
                 @method('POST')
                 @csrf
                 <div class="modal-body">
@@ -172,7 +172,7 @@
                 <h1 class="modal-title fs-5" id="staticBackdropLabel">Edit Data {{$title}}</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form method="post" action="/admin/departemen/{{$data->id}}">
+            <form method="post" action="/admin/KategoriPgw/{{$data->id}}">
                 @method('PUT')
                 <div class="modal-body">
                     @csrf
@@ -206,7 +206,7 @@
                 <h1 class="modal-title fs-5 fw-bolder text-light" id="staticBackdropLabel">Delete Data {{$title}}</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form method="post" action="/admin/departemen/{{$data->id}}">
+            <form method="post" action="/admin/KategoriPgw/{{$data->id}}">
                 @method('Delete')
                 <div class="modal-body">
                     @csrf

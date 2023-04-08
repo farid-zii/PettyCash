@@ -17,14 +17,13 @@ return new class extends Migration
             $table->id();
             $table->string('nama');
             $table->string('nip')->unique();
-            $table->string('tgl_lahir');
-            // $table->enum('j_kelamin',['Laki-laki','Perempuan']);
+            $table->date('tgl_lahir');
             $table->string('j_kelamin');
-            $table->string('Agama');
+            $table->string('agama');
             $table->foreignId('departemen_id');
             $table->foreignId('jabatan_id');
             $table->foreignId('pangkat_id');
-            $table->foreignId('category_id');
+            $table->foreignId('kategoriPgw_id');
             $table->timestamps();
         });
     }

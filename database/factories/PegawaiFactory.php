@@ -17,7 +17,15 @@ class PegawaiFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'nama'=>fake()->name(),
+            'nip'=>fake()->postcode(),
+            'j_kelamin'=> fake()->randomElement(['Laki-laki', 'Perempuan']),
+            'agama'=> fake()->randomElement(['Islam', 'Atheis']),
+            'tgl_lahir'=>fake()->date(),
+            'pangkat_id'=>mt_rand(1,8),
+            'departemen_id'=>mt_rand(1,8),
+            'jabatan_id'=>mt_rand(1,8),
+            'kategoriPgw_id'=>mt_rand(1,8),
         ];
     }
 }

@@ -9,4 +9,8 @@ class Jabatan extends Model
 {
     use HasFactory;
     protected $guarded = [];
+    public function pegawai()
+    {
+        $this->hasMany(Pegawai::class);
+    }
 }

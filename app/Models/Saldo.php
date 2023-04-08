@@ -12,4 +12,8 @@ class Saldo extends Model
     protected $fillable =[
         'saldo','nominal'
     ];
+
+    public function pegawai(){
+        $this->belongsToMany(Pegawai::class);
+    }
 }

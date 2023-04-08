@@ -10,4 +10,8 @@ class Pangkat extends Model
     use HasFactory;
 
     protected $guarded=[];
+    public function pegawai()
+    {
+        return $this->hasMany(Pegawai::class);
+    }
 }

@@ -36,11 +36,11 @@ class PangkatController extends Controller
 
         $nama=Pangkat::where('kode','=',$validate['kode'])->get('kode');
 
-        if($nama==true){
+        if($nama==false){
             return redirect('/admin/pangkat')->with('failed', 'Kode '.$validate['kode'].' Sudah ada');
         }
 
-        if($nama==false){
+        if($nama==true){
             Pangkat::create($validate);
             return redirect('/admin/pangkat')->with('add','Entry Data '.$validate['nama'].' Success');
         }

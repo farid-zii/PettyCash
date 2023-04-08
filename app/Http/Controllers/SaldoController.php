@@ -18,7 +18,7 @@ class SaldoController extends Controller
     public function index()
     {
         return view('admin.saldo.index', [
-            'datas' => Saldo::paginate(7),
+            'datas' => Saldo::orderBy('id','DESC')->paginate(7),
             'title' => 'Saldo',
             'active' => 'Saldo',
         ]);
@@ -45,12 +45,20 @@ class SaldoController extends Controller
         $saldo= $request->saldo;
         $nominal= $request->nominal;
         $hasil = $saldo-$nominal;
-        // DB::insert('insert into saldos (saldo, nominal, hasil) values (?, ?, ?)', [$saldo, $nominal,$hasil]);
+        DB::insert('insert into saldos (saldo, nominal, hasil) values (?, ?, ?)', [$saldo, $nominal,$hasil]);
         DB::table('saldos')->insert([
             'saldo'=>$saldo,
             'nominal'=>$nominal,
             'hasil'=>$hasil
         ]);
+        // Saldo::insert([
+        //     'saldo' => $saldo,
+        //     'nominal' => $nominal,
+        //     'hasil' => $hasil
+        // ]);
+        // Saldo::insert([
+        //     'saldo'=>$hasil
+        // ]);
         return redirect('/admin/saldo');
     }
 
@@ -88,14 +96,9 @@ class SaldoController extends Controller
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Saldo  $saldo
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Saldo $saldo)
+    public function destroy($id)
     {
-        //
+        Saldo::destroy($id);
+        return redirect('/admin/saldo')->with('delete', 'Delete Data Success');
     }
 }
