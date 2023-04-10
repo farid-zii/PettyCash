@@ -13,50 +13,8 @@
                 </div>
                 <div class="card-body px-0 pb-2">
 
-<?php #region ALERT ?>
+@include('admin.notif')
 
-                    @if (session()->has('add'))
-                    <div class="alert alert-success alert-dismissible fade show"
-                        style="width: 30%;margin-left:70%;" role="alert">
-                        <strong>{{session('add')}}</strong>
-                        <button type="button" class="btn-close btn-danger" data-bs-dismiss="alert" aria-label="Close"><i
-                                class="bi bi-x-lg"></i></button>
-                    </div>
-
-                    @elseif (session()->has('edit'))
-                    <div class="alert alert-warning alert-dismissible fade show"
-                        style="width: 30%;margin-left:70%;" role="alert">
-                        <strong>{{session('edit')}}</strong>
-                        <button type="button" class="btn-close btn-danger" data-bs-dismiss="alert" aria-label="Close"><i
-                                class="bi bi-x-lg"></i></button>
-                    </div>
-
-                    @elseif (session()->has('delete'))
-                    <div class="alert alert-danger alert-dismissible fade show"
-                        style="width: 30%;margin-left:70%;" role="alert">
-                        <strong>{{session('delete')}}</strong>
-                        <button type="button" class="btn-close btn-danger" data-bs-dismiss="alert" aria-label="Close"><i
-                                class="bi bi-x-lg"></i></button>
-                    </div>
-
-                    @elseif (session()->has('failed'))
-                    <div class="alert alert-danger">
-                        <strong>Failed!!</strong>
-                        <strong>{{session('failed')}}</strong>
-                    </div>
-                    @endif
-
-                    @if (count($errors)>0)
-                    <div class="alert alert-danger">
-                        <strong>Failed</strong>
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                            <li>{{$error}}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                    @endif
-<?php #endregion ?>
                     <div class="mx-3">
                         <a href="/jabatan-pdf" target="blank" class="btn bg-gradient-danger w-15 my-4 mb-2"><i
                                 class="bi bi-file-earmark-pdf-fill"></i>Cetak Pdf</a>
@@ -128,107 +86,13 @@
 
 
 <!-- CREATE -->
-<div class="modal fade" dty id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-    aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header bg-info">
-                <h1 class="modal-title fs-5" id="staticBackdropLabel">Entry Data {{$title}}</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-
-            <form method="post" action="/admin/jabatan">
-                @method('POST')
-                @csrf
-                <div class="modal-body">
-                    <label class="text-xl text-dark font-weight-bolder" required>Nama</label>
-                    <div class="mb-2">
-                        <input type="text" class="form-control" placeholder="" name="nama">
-                    </div>
-                    <label class="text-xl text-dark font-weight-bolder ">Kode</label>
-                    <div class="mb-2">
-                        <input type="text" class="form-control " placeholder="" id='kode' required name="kode" value="{{old('kode')}}">
-                    </div>
-                </div>
-                <div class="footer px-4 mb-2">
-                    <button type="submit" class="btn btn-primary float-sm-start col-md-2 mt-4">Save</button>
-                    <button type="button" class="btn btn-danger float-sm-end col-md-2 mt-4"
-                        data-bs-dismiss="modal">Close</button>
-                    <button type="reset" class="btn btn-dark float-sm-end col-md-2 mt-4 me-3">Reset</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
+@include('admin.jabatan.create')
 
 {{-- EDIT --}}
-@foreach ($jabatan as $data)
-<div class="modal fade" dty id="data-{{$data->id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-    aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header bg-warning">
-                <h1 class="modal-title fs-5" id="staticBackdropLabel">Edit Data {{$title}}</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <form method="post" action="/admin/jabatan/{{$data->id}}">
-                @method('PUT')
-                <div class="modal-body">
-                    @csrf
-                    <label class="text-xl text-dark font-weight-bolder">Nama</label>
-                    <div class="mb-2">
-                        <input type="text" class="form-control" required name="nama" value="{{$data->nama}}">
-                    </div>
-                    <label class="text-xl text-dark font-weight-bolder">Kode</label>
-                    <div class="mb-2">
-                        <input type="text" class="form-control" required placeholder="" name="kode" value="{{$data->kode}}">
-                    </div>
-
-                </div>
-                <div class="footer px-4 mb-2">
-                    <button type="submit" class="btn btn-warning float-sm-start col-md-2 mt-4">Edit</button>
-                    <button type="button" class="btn btn-danger float-sm-end col-md-2 mt-4"
-                        data-bs-dismiss="modal">Close</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-@endforeach
+@include('admin.jabatan.edit')
 
 {{-- Delete --}}
-@foreach ($jabatan as $data)
-<div class="modal fade" dty id="delete-{{$data->id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-    aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header bg-gradient-danger">
-                <h1 class="modal-title fs-5 fw-bolder text-light" id="staticBackdropLabel">Delete Data {{$title}}</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <form method="post" action="/admin/jabatan/{{$data->id}}">
-                @method('Delete')
-                <div class="modal-body">
-                    @csrf
-                    <div class="form-group">
-                        <label class="text-xl text-dark font-weight-bolder">Nama</label>
-                        <input class="form-control col-mb-3" disabled value="{{$data->nama}}">
-                    </div>
-                    <div class="form-group">
-                        <label class="text-xl text-dark font-weight-bolder">Kode</label>
-                        <input class="form-control col-mb-3" disabled value="{{$data->kode}}">
-                    </div>
-                </div>
-                <div class="footer px-4 mb-2">
-                    <button type="submit" class="btn btn-danger float-sm-start col-md-2 mt-4 me-3">delete</button>
-                    <button type="button" class="btn btn-info float-sm-end col-md-2 mt-4"
-                        data-bs-dismiss="modal">Close</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-@endforeach
+@include('admin.jabatan.delete')
 
 
 @endsection

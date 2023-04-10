@@ -1,6 +1,4 @@
-@section('modal')
-{{-- EDIT --}}
-@foreach ($departemen as $data)
+@foreach ($datas as $data)
 <div class="modal fade" dty id="data-{{$data->id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
     aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -9,7 +7,7 @@
                 <h1 class="modal-title fs-5" id="staticBackdropLabel">Edit Data {{$title}}</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form method="post" action="/admin/pangkat/{{$data->id}}">
+            <form method="post" action="/admin/departemen/{{$data->id}}">
                 @method('PUT')
                 <div class="modal-body">
                     @csrf
@@ -33,4 +31,3 @@
     </div>
 </div>
 @endforeach
-@endsection

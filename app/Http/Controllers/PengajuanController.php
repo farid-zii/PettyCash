@@ -36,7 +36,7 @@ class PengajuanController extends Controller
      */
     public function store(StorePengajuanRequest $request)
     {
-        //
+        //jika waktu pembuatan beda sama sekarang maka $i=0
     }
 
     /**
