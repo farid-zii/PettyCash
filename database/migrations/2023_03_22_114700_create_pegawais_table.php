@@ -17,6 +17,8 @@ return new class extends Migration
             $table->id();
             $table->string('nama');
             $table->string('nip')->unique();
+            $table->string('email')->unique();
+            $table->string('profil')->nullable();
             $table->date('tgl_lahir');
             $table->string('j_kelamin');
             $table->string('agama');

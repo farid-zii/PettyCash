@@ -17,9 +17,13 @@ class Pegawai extends Model
     public function saldo(){
         return $this->belongsToMany(Saldo::class);
     }
-    public function kategori()
+    public function aa()
     {
         return $this->belongsTo(KategoriPgw::class);
+    }
+    public function kategori()
+    {
+        return $this->belongsTo(KategoriPgw::class, 'kategoriPgw_id');
     }
     public function pangkat()
     {

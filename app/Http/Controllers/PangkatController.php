@@ -34,13 +34,13 @@ class PangkatController extends Controller
             'nama'=>'required'
         ],$pesan);
 
-        $nama=Pangkat::where('kode','=',$validate['kode'])->get('kode');
+        $nama=Pangkat::where('kode','=',$validate['kode'])->get();
 
-        if($nama==false){
+        if($nama==true){
             return redirect('/admin/pangkat')->with('failed', 'Kode '.$validate['kode'].' Sudah ada');
         }
 
-        if($nama==true){
+        if($nama==false){
             Pangkat::create($validate);
             return redirect('/admin/pangkat')->with('add','Entry Data '.$validate['nama'].' Success');
         }
@@ -72,24 +72,21 @@ class PangkatController extends Controller
             'nama'=>'required',
         ],$pesan);
 
-
         $samaKode = Pangkat::where('kode', '=', $update['kode'])->get('kode');
-        $samaId = Pangkat::where('id','=', $id)->get('kode');
+        $bedaKode = Pangkat::where('kode', '!=', $update['kode'])->get('kode');
 
-        //jika kode tidak sama dengan kode lama -> sama dengan kode yang ada -> update
-        if($samaId!=$samaKode){
-            if($samaId==$samaKode){
+        if($samaKode==true){
+            if($bedaKode==true){
                 Pangkat::where('id', $id)->update($update);
-                return redirect('/admin/pangkat')->with('edit', 'Update Data ' . $update['nama'] . ' Successa');
-             }
-             return redirect('/admin/pangkat')->with('failed', 'Kode ' . $update['kode'] . ' Sudah ada ');
+                return redirect('/admin/pangkat')->with('edit', 'Update Data ' . $update['nama'] . ' Success');
+              }
+              return redirect('/admin/pangkat')->with('failed', 'Kode ' . $update['kode'] . ' Sudah ada ');
         }
-        //Jika kode
-        elseif ($samaKode==true) {
+
+        elseif ($samaKode==false) {
             Pangkat::where('id', $id)->update($update);
             return redirect('/admin/pangkat')->with('edit', 'Update Data ' . $update['nama'] . ' Success');
         }
-        return redirect('/admin/pangkat')->with('failed','Kode '. $update['nama'].' Sudah ada ');
 
     }
 

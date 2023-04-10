@@ -19,6 +19,7 @@ class PegawaiFactory extends Factory
         return [
             'nama'=>fake()->name(),
             'nip'=>fake()->postcode(),
+            'email'=>fake()->email(),
             'j_kelamin'=> fake()->randomElement(['Laki-laki', 'Perempuan']),
             'agama'=> fake()->randomElement(['Islam', 'Atheis']),
             'tgl_lahir'=>fake()->date(),

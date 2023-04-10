@@ -11,6 +11,8 @@ use App\Models\KategoriPgw;
 use App\Models\Pangkat;
 use App\Models\Saldo;
 
+use DB;
+
 class PegawaiController extends Controller
 {
     /**
@@ -20,6 +22,8 @@ class PegawaiController extends Controller
      */
     public function index()
     {
+    //   $namaP= DB::select('select pangkats.nama from pegawais left join pangkats on pegawais.pangkat_id = pangkats.id');
+
         return view('admin.pegawai.index',[
             "pegawai"=>Pegawai::latest()->paginate(7),
             "kategori"=>KategoriPgw::get(),
@@ -27,7 +31,7 @@ class PegawaiController extends Controller
             "departemen"=>Departemen::get(),
             "pangkat"=>Pangkat::get(),
             'title'=>'Pegawai',
-            "active"=>"pegawai"
+            "active"=>"Pegawai",
         ]);
     }
     public function admin()
@@ -53,20 +57,47 @@ class PegawaiController extends Controller
      */
     public function store(StorePegawaiRequest $request)
     {
+
         $validate=$request->validate([
             'nama'=>'required',
             'nip'=>'required',
             'tgl_lahir'=>'required',
             'agama'=>'required',
+            'email'=>'required|email:dns',
+            'profil'=>'max:2048',
             'j_kelamin'=>'required',
-            'id_kategori'=>'required',
-            'id_pangkat'=>'required',
-            'id_jabatan'=>'required',
-            'id_departemen'=>'required',
+            'kategoriPgw_id'=>'required',
+            'pangkat_id'=>'required',
+            'jabatan_id'=>'required',
+            'departemen_id'=>'required',
         ]);
 
-        Pegawai::insert($validate);
-        $tgl = Pegawai::get('created_at')->date_format('Y-m-d');
+
+        // $gambar = $request->file('profil');
+        // $nama_file = time() . "_" . $gambar->getClientOriginalName();
+        // $tujuan_upload = 'profil_Pegawai';
+        // $gambar->move($tujuan_upload, $nama_file);
+
+        Pegawai::create($validate);
+        if ($request->hasFile('profil')) {
+            $request->file('profile')->store('profilPegawai');
+            $validate['profil'] = $request->file('profil')->getClientOriginalName();
+            $validate['profil']->save();
+        }
+        return back()->with('add','Entry data Success');
+
+        // Pegawai::create([
+        //     'nama' => 'required',
+        //     'nip' => 'required',
+        //     'tgl_lahir' => 'required',
+        //     'agama' => 'required',
+        //     'profil' => $gambar,
+        //     'j_kelamin' => 'required',
+        //     'kategoriPgw_id' => 'required',
+        //     'pangkat_id' => 'required',
+        //     'jabatan_id' => 'required',
+        //     'departemen_id' => 'required',
+        // ]);
 
 
     }
@@ -90,7 +121,7 @@ class PegawaiController extends Controller
      */
     public function edit(Pegawai $pegawai)
     {
-        //
+
     }
 
     /**
@@ -102,7 +133,7 @@ class PegawaiController extends Controller
      */
     public function update(UpdatePegawaiRequest $request, Pegawai $pegawai)
     {
-        //
+
     }
 
     /**
@@ -111,8 +142,9 @@ class PegawaiController extends Controller
      * @param  \App\Models\Pegawai  $pegawai
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Pegawai $pegawai)
+    public function destroy($id)
     {
-        //
+        Pegawai::destroy($id);
+        return back()->with('delete', 'Delete Data Success');
     }
 }

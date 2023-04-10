@@ -107,20 +107,17 @@ class KategoriPgwController extends Controller
 
 
         $samaKode = KategoriPgw::where('kode', '=', $update['kode'])->get('kode');
-        $samaId = KategoriPgw::where('id', '=', $id)->get('kode');
+        $bedaKode = KategoriPgw::where('kode', '!=', $update['kode'])->get('kode');
 
-        //jika kode tidak sama dengan kode lama -> sama dengan kode yang ada -> update
-        if ($samaId != $samaKode) {
-            if ($samaId == $samaKode) {
+        if ($samaKode == true) {
+            if ($bedaKode == true) {
                 KategoriPgw::where('id', $id)->update($update);
-                return redirect('/admin/KategoriPgw')->with('edit', 'Update Data ' . $update['nama'] . ' Successa');
+                return redirect('/admin/KategoriPgw')->with('edit', 'Update Data ' . $update['nama'] . ' Success');
             }
             return redirect('/admin/KategoriPgw')->with('failed', 'Kode ' . $update['kode'] . ' Sudah ada ');
-        }
-        //Jika kode
-        elseif ($samaKode == true) {
+        } elseif ($samaKode == false) {
             KategoriPgw::where('id', $id)->update($update);
-            return redirect('/admin/kategoriPgw')->with('edit', 'Update Data ' . $update['nama'] . ' Success');
+            return redirect('/admin/KategoriPgw')->with('edit', 'Update Data ' . $update['nama'] . ' Success');
         }
         return redirect('/admin/kategoriPgw')->with('failed', 'Kode ' . $update['nama'] . ' Sudah ada ');
     }

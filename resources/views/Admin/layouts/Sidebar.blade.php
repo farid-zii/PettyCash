@@ -42,7 +42,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-white {{ Request::is('pegawai') ? 'active bg-gradient-info' : '' }} " href="/admin/pegawai">
+          <a class="nav-link text-white {{ ($active=='Pegawai') ? 'active bg-gradient-info' : '' }} " href="/admin/pegawai">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="fa-solid fa-users" style="color: #ffffff;"></i>
             </div>

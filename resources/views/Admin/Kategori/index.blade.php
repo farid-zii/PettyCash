@@ -91,8 +91,6 @@
 
 {{-- EDIT --}}
 @include('Admin.kategori.edit')
-
-@endforeach
 {{-- Delete --}}
 @include('Admin.kategori.delete')
 

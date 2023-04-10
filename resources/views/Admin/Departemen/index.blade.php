@@ -92,6 +92,4 @@
 {{-- Delete --}}
 @include('Admin.Departemen.delete')
 
-
-
 @endsection

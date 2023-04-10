@@ -107,20 +107,17 @@ class DepartemenController extends Controller
 
 
         $samaKode = Departemen::where('kode', '=', $update['kode'])->get('kode');
-        $samaId = Departemen::where('id', '=', $id)->get('kode');
+        $bedaKode = Departemen::where('kode', '!=', $update['kode'])->get('kode');
 
-        //jika kode tidak sama dengan kode lama -> sama dengan kode yang ada -> update
-        if ($samaId != $samaKode) {
-            if ($samaId == $samaKode) {
+        if ($samaKode == true) {
+            if ($bedaKode == true) {
                 Departemen::where('id', $id)->update($update);
-                return redirect('/admin/departemen')->with('edit', 'Update Data ' . $update['nama'] . ' Successa');
+                return redirect('/admin/Departemen')->with('edit', 'Update Data ' . $update['nama'] . ' Success');
             }
-            return redirect('/admin/departemen')->with('failed', 'Kode ' . $update['kode'] . ' Sudah ada ');
-        }
-        //Jika kode
-        elseif ($samaKode == true) {
+            return redirect('/admin/Departemen')->with('failed', 'Kode ' . $update['kode'] . ' Sudah ada ');
+        } elseif ($samaKode == false) {
             Departemen::where('id', $id)->update($update);
-            return redirect('/admin/departemen')->with('edit', 'Update Data ' . $update['nama'] . ' Success');
+            return redirect('/admin/Departemen')->with('edit', 'Update Data ' . $update['nama'] . ' Success');
         }
         return redirect('/admin/departemen')->with('failed', 'Kode ' . $update['nama'] . ' Sudah ada ');
     }

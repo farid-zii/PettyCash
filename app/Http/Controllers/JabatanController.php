@@ -101,20 +101,17 @@ class JabatanController extends Controller
 
 
         $samaKode = Jabatan::where('kode', '=', $update['kode'])->get('kode');
-        $samaId = Jabatan::where('id', '=', $id)->get('kode');
+        $bedaKode = Jabatan::where('kode', '!=', $update['kode'])->get('kode');
 
-        //jika kode tidak sama dengan kode lama -> sama dengan kode yang ada -> update
-        if ($samaId != $samaKode) {
-            if ($samaId == $samaKode) {
+        if ($samaKode == true) {
+            if ($bedaKode == true) {
                 Jabatan::where('id', $id)->update($update);
-                return redirect('/admin/jabatan')->with('edit', 'Update Data ' . $update['nama'] . ' Successa');
+                return redirect('/admin/Jabatan')->with('edit', 'Update Data ' . $update['nama'] . ' Success');
             }
-            return redirect('/admin/jabatan')->with('failed', 'Kode ' . $update['kode'] . ' Sudah ada ');
-        }
-        //Jika kode
-        elseif ($samaKode == true) {
+            return redirect('/admin/Jabatan')->with('failed', 'Kode ' . $update['kode'] . ' Sudah ada ');
+        } elseif ($samaKode == false) {
             Jabatan::where('id', $id)->update($update);
-            return redirect('/admin/jabatan')->with('edit', 'Update Data ' . $update['nama'] . ' Success');
+            return redirect('/admin/Jabatan')->with('edit', 'Update Data ' . $update['nama'] . ' Success');
         }
         return redirect('/admin/jabatan')->with('failed', 'Kode ' . $update['nama'] . ' Sudah ada ');
     }

@@ -13,7 +13,7 @@
                 <div class="modal-body">
                     <label class="text-xl text-dark font-weight-bolder" required>Nama</label>
                     <div class="mb-2">
-                        <input type="text" class="form-control" placeholder="" name="nama" value="{{old('kode')}}">
+                        <input type="text" class="form-control" placeholder="" name="nama" value="{{old('nama')}}">
                     </div>
                     <label class="text-xl text-dark font-weight-bolder ">Kode</label>
                     <div class="mb-2">
