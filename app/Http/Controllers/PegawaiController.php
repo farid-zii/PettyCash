@@ -43,7 +43,53 @@ class PegawaiController extends Controller
      */
     public function store(StorePegawaiRequest $request)
     {
+<<<<<<< Updated upstream
         //
+=======
+
+        $validate=$request->validate([
+            'nama'=>'required',
+            'nip'=>'required',
+            'tgl_lahir'=>'required',
+            'agama'=>'required',
+            'email'=>'required|email:dns',
+            'profil'=>'max:2048',
+            'j_kelamin'=>'required',
+            'kategoriPgw_id'=>'required',
+            'pangkat_id'=>'required',
+            'jabatan_id'=>'required',
+            'departemen_id'=>'required',
+        ]);
+
+
+        // $gambar = $request->file('profil');
+        // $nama_file = time() . "_" . $gambar->getClientOriginalName();
+        // $tujuan_upload = 'profil_Pegawai';
+        // $gambar->move($tujuan_upload, $nama_file);
+
+        $a=Pegawai::create($validate);
+        if ($request->hasFile('profil')) {
+            $request->file('profil')->store('profilPegawai');
+            $validate['profil'] = $request->file('profil')->getClientOriginalName();
+            DB::select('update pegawais set profil = '. $validate['profil'].' where nip = '.$validate['nip'] );
+        }
+        return back()->with('add','Entry data Success');
+
+        // Pegawai::create([
+        //     'nama' => 'required',
+        //     'nip' => 'required',
+        //     'tgl_lahir' => 'required',
+        //     'agama' => 'required',
+        //     'profil' => $gambar,
+        //     'j_kelamin' => 'required',
+        //     'kategoriPgw_id' => 'required',
+        //     'pangkat_id' => 'required',
+        //     'jabatan_id' => 'required',
+        //     'departemen_id' => 'required',
+        // ]);
+
+
+>>>>>>> Stashed changes
     }
 
     /**
