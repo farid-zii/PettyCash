@@ -12,52 +12,9 @@
                     </div>
                 </div>
                 <div class="card-body px-0 pb-2">
-                    <?php #region ERROR  ?>
-                    @if (session()->has('add'))
-                    <div class="alert alert-success alert-dismissible fade show timeout"
-                        style="width: 30%;margin-left:70%;" role="alert">
-                        <strong>{{session('add')}}</strong>
-                        <button type="button" class="btn-close btn-danger" data-bs-dismiss="alert" aria-label="Close"><i
-                                class="bi bi-x-lg"></i></button>
-                    </div>
-                    @endif
 
-                    @if (session()->has('edit'))
-                    <div class="alert alert-warning alert-dismissible fade show timeout"
-                        style="width: 30%;margin-left:70%;" role="alert">
-                        <strong>{{session('edit')}}</strong>
-                        <button type="button" class="btn-close btn-danger" data-bs-dismiss="alert" aria-label="Close"><i
-                                class="bi bi-x-lg"></i></button>
-                    </div>
-                    @endif
+                    @include('Admin.notif')
 
-                    @if (session()->has('delete'))
-                    <div class="alert alert-danger alert-dismissible fade show timeout"
-                        style="width: 30%;margin-left:70%;" role="alert">
-                        <strong>{{session('delete')}}</strong>
-                        <button type="button" class="btn-close btn-danger" data-bs-dismiss="alert" aria-label="Close"><i
-                                class="bi bi-x-lg"></i></button>
-                    </div>
-                    @endif
-
-                    @if (session()->has('failed'))
-                    <div class="alert alert-danger">
-                        <strong>Failed!!</strong>
-                        <strong>{{session('failed')}}</strong>
-                    </div>
-                    @endif
-
-                    @if (count($errors)>0)
-                    <div class="alert alert-danger">
-                        <strong>Failed</strong>
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                            <li>{{$error}}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                    @endif
-                    <?php #endregion ?>
                     <div class="mx-3">
                         <a href="/saldo-pdf" target="blank" class="btn bg-gradient-danger w-15 my-4 mb-2"><i
                                 class="bi bi-file-earmark-pdf-fill"></i>Cetak Pdf</a>
@@ -88,7 +45,7 @@
                             <tbody class="">
                                 @if($datas->count())
                                 @foreach ($datas as $data )
-                                <tr>
+                                <tr class="@if ($data->status == 'Tambah') bg-gradient-success  @else bg-danger @endif">
                                     <td class="">{{$loop->iteration}}</td>
                                     <td class="" style="">
                                         <p class="align-middle">@rp($data->saldo)</p>
@@ -147,13 +104,19 @@
                     <label class="text-xl text-dark font-weight-bolder" required>saldo</label>
                     <div class="input-group mb-3">
                         <span class="input-group-text" id="basic-addon1">@</span>
-                        <input type="number" class="form-control" name="saldo" value="0"
+                        <input type="number" class="form-control" name="saldo" value="{{$datas[0]->hasil}}"
                             aria-describedby="basic-addon1">
                     </div>
                     <label class="text-xl text-dark font-weight-bolder ">nominal</label>
                     <div class="mb-2">
                         <input type="number" class="form-control " placeholder="" id='nominal' required name="nominal"
                             value="{{old('nominal')}}">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="text-xl text-dark font-weight-bolder">Tambah</label>
+                        <input type="radio" value="Tambah" name="status">
+                        <label class="text-xl text-dark font-weight-bolder">Kurang</label>
+                        <input type="radio" value="Kurang" name="status">
                     </div>
                 </div>
                 <div class="footer px-4 mb-2">

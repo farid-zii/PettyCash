@@ -44,13 +44,28 @@ class SaldoController extends Controller
     {
         $saldo= $request->saldo;
         $nominal= $request->nominal;
-        $hasil = $saldo-$nominal;
-        DB::insert('insert into saldos (saldo, nominal, hasil) values (?, ?, ?)', [$saldo, $nominal,$hasil]);
-        DB::table('saldos')->insert([
-            'saldo'=>$saldo,
-            'nominal'=>$nominal,
-            'hasil'=>$hasil
-        ]);
+        $status= $request->status;
+
+        // DB::insert('insert into saldos (saldo, nominal, hasil) values (?, ?, ?)', [$saldo, $nominal,$hasil]);
+        if($status=='Tambah'){
+            $hasil = $saldo + $nominal;
+            DB::table('saldos')->insert([
+                'saldo'=>$saldo,
+                'nominal'=>$nominal,
+                'hasil'=>$hasil,
+                'status' => $status,
+            ]);
+        }
+        else{
+            $hasil = $saldo - $nominal;
+            DB::table('saldos')->insert([
+                'saldo'=>$saldo,
+                'nominal'=>$nominal,
+                'hasil'=>$hasil,
+                'status'=>$status,
+            ]);
+        }
+
         // Saldo::insert([
         //     'saldo' => $saldo,
         //     'nominal' => $nominal,
