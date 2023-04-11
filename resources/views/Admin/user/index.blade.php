@@ -138,7 +138,7 @@
                     </div>
                     <label class="text-xl text-dark font-weight-bolder">Passowrd</label>
                     <div class="mb-2">
-                        <input type="date" class="form-control" placeholder="*******" name="password">
+                        <input type="password" class="form-control" placeholder="*******" name="password">
                     </div>
 
                 </div>

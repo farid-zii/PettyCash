@@ -73,10 +73,10 @@
                                 <tr>
                                     <td class="">{{$loop->iteration}}</td>
                                     <td class="" style="">
-                                        <p class="align-middle">{{$data->nama}}</p>
+                                        <img src="profilPegawai/{{$data->profil}}">
                                     </td>
                                     <td class="" style="">
-                                        <img src="profilPegawai/{{$data->profil}}">
+                                        <p class="align-middle">{{$data->nama}}</p>
                                     </td>
                                     <td class="">
                                         <p class="align-middle"> {{$data->nip}}</p>

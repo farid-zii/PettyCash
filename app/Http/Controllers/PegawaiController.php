@@ -80,7 +80,7 @@ class PegawaiController extends Controller
 
         Pegawai::create($validate);
         if ($request->hasFile('profil')) {
-            $request->file('profile')->store('profilPegawai');
+            $request->file('profil')->store('profilPegawai');
             $validate['profil'] = $request->file('profil')->getClientOriginalName();
             $validate['profil']->save();
         }
