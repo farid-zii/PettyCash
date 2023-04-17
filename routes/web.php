@@ -15,6 +15,7 @@ use App\Http\Controllers\PangkatController;
 use App\Http\Controllers\JabatanController;
 use App\Http\Controllers\KategoriPgwController;
 use App\Http\Controllers\DepartemenController;
+use App\Http\Controllers\PengajuanController;
 
 /*
 |--------------------------------------------------------------------------
@@ -51,6 +52,7 @@ Route::middleware(['auth', 'checkLevel:admin'])->group(function () {
      Route::resource('/admin/user', UserController::class);
      Route::get('/export-data', [UserController::class,'excel']);
      Route::get('/user-pdf', [UserController::class,'pdf']);
+     Route::get('/a', [PengajuanController::class,'index']);
      #endregion
 });
 

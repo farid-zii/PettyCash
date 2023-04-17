@@ -73,7 +73,7 @@
                                 <tr>
                                     <td class="">{{$loop->iteration}}</td>
                                     <td class="" style="">
-                                        <img src="profilPegawai/{{$data->profil}}">
+                                        <img class="avatar avatar-sm me-3 border-radius-lg" src="@if($data->profil!= null) ../profil_Pegawai/{{$data->profil}} @else https://cdn-icons-png.flaticon.com/512/3135/3135715.png  @endif ">
                                     </td>
                                     <td class="" style="">
                                         <p class="align-middle">{{$data->nama}}</p>

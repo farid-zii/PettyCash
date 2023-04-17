@@ -64,7 +64,7 @@ class PegawaiController extends Controller
             'tgl_lahir'=>'required',
             'agama'=>'required',
             'email'=>'required|email:dns',
-            'profil'=>'max:2048',
+            'profil'=>'max:4096',
             'j_kelamin'=>'required',
             'kategoriPgw_id'=>'required',
             'pangkat_id'=>'required',
@@ -76,30 +76,24 @@ class PegawaiController extends Controller
         // $gambar = $request->file('profil');
         // $nama_file = time() . "_" . $gambar->getClientOriginalName();
         // $tujuan_upload = 'profil_Pegawai';
-        // $gambar->move($tujuan_upload, $nama_file);
+        // $gambar->move(public_path($tujuan_upload), $nama_file);
+        // $file_extention= $gambar->extension();
+        // $nama_gambar = date('ydmhis').'.'.$file_extention;
+        // $gambar->move(public_path('profilPegawai'),$nama_gambar);
+
+        // $validate['profil']==$gambar;
+        if ($request->hasFile('profil')) {
+            //jika request memiliki file dengan name profil maka -->
+            $nama= $request->file('profil')->getClientOriginalName();
+            $request->file('profil')->move(public_path('img/profil_Pegawai'),$nama);
+            //Memindahkan file ke public/profil_pegawai dengan nama asli file
+            $validate['profil'] = $nama;
+            //Mengubah nama file menjadi nama asli sesuai nama file di direktori
+        }
+
 
         Pegawai::create($validate);
-        if ($request->hasFile('profil')) {
-            $request->file('profil')->store('profilPegawai');
-            $validate['profil'] = $request->file('profil')->getClientOriginalName();
-            $validate['profil']->save();
-        }
         return back()->with('add','Entry data Success');
-
-        // Pegawai::create([
-        //     'nama' => 'required',
-        //     'nip' => 'required',
-        //     'tgl_lahir' => 'required',
-        //     'agama' => 'required',
-        //     'profil' => $gambar,
-        //     'j_kelamin' => 'required',
-        //     'kategoriPgw_id' => 'required',
-        //     'pangkat_id' => 'required',
-        //     'jabatan_id' => 'required',
-        //     'departemen_id' => 'required',
-        // ]);
-
-
     }
 
     /**
