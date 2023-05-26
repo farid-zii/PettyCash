@@ -31,42 +31,64 @@
                     <div class="mx-3">
                         <a href="/pangkat-pdf" target="blank" class="btn bg-gradient-danger w-15 my-4 mb-2"><i class="bi bi-file-earmark-pdf-fill"></i>Cetak Pdf</a>
                         {{-- <button class="btn bg-gradient-success w-15 my-4 mb-2">Cetak Excel</button> --}}
-                        <a href="/pangkat-data" blank class="btn bg-gradient-success w-15 my-4 mb-2"><i class="bi bi-file-earmark-spreadsheet-fill"></i> Cetak Excel</a>
+                        <a href="/export-data" blank class="btn bg-gradient-success w-15 my-4 mb-2"><i class="bi bi-file-earmark-spreadsheet-fill"></i> Cetak Excel</a>
                         {{-- <a href="/admin/user/create"  class="btn bg-gradient-info w-15 my-4 mb-2 float-sm-end">Entry</a> --}}
                         <button class="btn bg-gradient-info w-15 my-4 mb-2 float-sm-end" data-bs-toggle="modal"
                             data-bs-target="#staticBackdrop">Entry <i class="bi bi-plus-square-fill"></i></button>
                     </div>
                     <div class="table-responsive p-0">
-                        <table class="table align-items-center mb-0">
+                        <table class="table align-items-center mb-0 table-bordered border-dark">
                             <thead>
                                 <tr class="bg-dark">
                                     <th
-                                        class="text-center text-uppercase text-light text-xs font-weight-bolder opacity-7">
-                                        No</th>
-                                    <th style="width: 15%"
-                                        class="text-center text-uppercase text-light text-xs font-weight-bolder opacity-7">
-                                        NAMA PANGKAT</th>
+                                        class=" text-uppercase text-light text-xs font-weight-bolder opacity-7">
+                                        Kode</th>
                                     <th
-                                        class="text-center text-uppercase text-light text-xs font-weight-bolder opacity-7 ps-2">
-                                        KODE</th>
-                                    <th style="width: 10%"
+                                        class="text-uppercase text-light text-xs font-weight-bolder opacity-7">
+                                        Nama</th>
+                                    <th
+                                        class="text-uppercase text-light text-xs font-weight-bolder opacity-7">
+                                        Keterangan</th>
+                                    <th
+                                        class="text-uppercase text-light text-xs font-weight-bolder opacity-7 ">
+                                        Nominal</th>
+                                    <th style=""
+                                        class="text-uppercase text-light text-xs font-weight-bolder opacity-7 ">
+                                        Rekening Tujuan</th>
+                                    <th colspan="2"
+                                        class="text-center text-uppercase text-light text-xs font-weight-bolder opacity-7">
+                                        Approve</th>
+                                    <th
                                         class="text-center text-uppercase text-light text-xs font-weight-bolder opacity-7">
                                         Action</th>
                                 </tr>
                             </thead>
                             <tbody class="">
-                                @foreach ($pangkat as $data )
                                 <tr>
-                                    <td class="text-center">{{$loop->iteration}}</td>
-                                    <td class="" style="width: 15%">
-                                        <div class="d-flex px-2 py-1">
-                                            <div class="d-flex flex-column">
-                                                <h6 class="mb-0 text-sm">{{$data->nama}}</h6>
-                                            </div>
-                                        </div>
-                                    </td>
+                                    <td class="">202305001</td>
+                                    <td class="">Pandaman</td>
+                                    <td class=""></td>
+                                    <td class="">40000</td>
+                                    <td class=""><p class="text-xs font-weight-bold mb-0">31231231231314r</p>
+                        <p class="text-xs text-secondary mb-0">BCA</p></td>
+                                    <td class="text-center">✔</td>
+                                    <td class="text-center">❌</td>
+
+                                </tr>
+                                {{-- @foreach ($pangkat as $data )
+                                <tr>
                                     <td class="text-center">
                                         <p class="text-xs font-weight-bold mb-0"> {{$data->kode}}</p>
+                                    </td>
+                                    <td class="text-center">
+                                        <p class="text-xs font-weight-bold mb-0"> {{$data->keterangan}}</p>
+                                    </td>
+                                    <td class="text-center">
+                                        <p class="text-xs font-weight-bold mb-0"> {{$data->nominal}}</p>
+                                    </td>
+                                    <td class="text-center">
+                                        <p class="text-xs font-weight-bold mb-0"> Setuju</p>
+                                        <p class="text-xs font-weight-bold mb-0"> Tidak</p>
                                     </td>
                                     <td class="bg-info text-center">
                                         <div class="d-flex">
@@ -81,7 +103,7 @@
                                         </div>
                                     </td>
                                 </tr>
-                                @endforeach
+                                @endforeach --}}
                             </tbody>
                         </table>
                     </div>
@@ -93,44 +115,10 @@
 
 
 <!-- CREATE -->
-<div class="modal fade" dty id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-    aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="staticBackdropLabel">Create Pangkat</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <form method="post" action="/admin/pangkat">
-                @method('POST')
-                @csrf
-                <div class="modal-body">
-                    <label class="text-xl text-dark font-weight-bolder">Nama</label>
-                    <div class="mb-2">
-                        <input type="text" class="form-control" placeholder="" name="nama">
-                    </div>
-                    <label class="text-xl text-dark font-weight-bolder">Kode</label>
-                    <div class="mb-2">
-                        <input type="text" class="form-control" placeholder="Enter your nominal address" name="kode">
-                    </div>
-                    {{-- <label class="text-xl text-dark font-weight-bolder">Jumlah</label>
-                    <div class="mb-2">
-                        <input type="number" class="form-control" placeholder="" name="hasil">
-                    </div> --}}
-
-                </div>
-                <div class="footer px-4 mb-2">
-                    <button type="submit" class="btn btn-primary float-sm-start col-md-2 mt-4">Save</button>
-                    <button type="button" class="btn btn-danger float-sm-end col-md-2 mt-4"
-                        data-bs-dismiss="modal">Close</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
+@include('admin.pengajuan.create')
 
 {{-- EDIT --}}
-@foreach ($pangkat as $data)
+{{-- @foreach ($pangkat as $data)
 <div class="modal fade" dty id="data-{{$data->id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
     aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -164,6 +152,6 @@
         </div>
     </div>
 </div>
-@endforeach
+@endforeach --}}
 
 @endsection

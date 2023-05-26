@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Admin</title>
+    <title>PettyCash || </title>
     <link rel="shortcut icon" type="text/css" href="img/profits.png">
     <link rel="stylesheet" type="text/css"
         href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
@@ -41,12 +41,8 @@
 
     <style>
         * {
-            margin: 0px
-        }
-
-        .timeout {
-            animation-name: hilang;
-            animation-duration: 5s;
+            margin: 0px;
+            font-family: 'Times New Roman', Times, serif;
         }
 
         @keyframes hilang {
@@ -62,7 +58,7 @@
 
 <body class="g-sidenav-show  bg-gray-300">
 
-    @include('admin.layouts.sidebar')
+    @include('Admin.layouts.sidebar')
 
     <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
         @include('admin.layouts.navbar')
@@ -95,6 +91,22 @@
         <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
         <script src="/../js/material-dashboard.min.js?v=3.0.4"></script>
         <script src="/../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var dropdown = document.getElementsByClassName("dropdown-btn");
+var i;
+
+for (i = 0; i < dropdown.length; i++) {
+  dropdown[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var dropdownContent = this.nextElementSibling;
+    if (dropdownContent.style.display === "block") {
+      dropdownContent.style.display = "none";
+    } else {
+      dropdownContent.style.display = "block";
+    }
+  });
+}
+        </script>
     </div>
 </body>
 

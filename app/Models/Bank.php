@@ -5,17 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Pengajuan extends Model
+class bank extends Model
 {
     use HasFactory;
 
+    protected $guarded= [];
     public function pegawai()
     {
-        return $this->belongsTo(Pegawai::class);
+        $this->hasMany(Pegawai::class);
     }
-    public function bank()
+    public function pengajuan()
     {
-        return $this->belongsTo(Bank::class);
+        $this->hasMany(Pengajuan::class);
     }
-
 }

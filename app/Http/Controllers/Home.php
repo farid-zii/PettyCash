@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Pegawai;
+use App\Models\Saldo;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
@@ -17,14 +19,46 @@ class Home extends Controller
      */
     public function admin()
     {
-        return view('admin.index',[
+        $saldo= Saldo::get();
+        $pegawai = Pegawai::get();
+
+        if($saldo!=''){
+        return view('admin2.index',[
             'title'=>'Dashboard',
             'active'=>'Dashboard',
+            'saldo'=>$saldo,
+            'pegawai'=>$pegawai
+        ]);
+        }
+
+        return view('admin2.index', [
+            'title' => 'Dashboard',
+            'active' => 'Dashboard',
+            'saldo' =>'',
+            'pegawai' => $pegawai
         ]);
     }
     public function hrd()
     {
+        $pegawai = Pegawai::get();
+        $saldo = Saldo::get();
 
+        if ($saldo != '') {
+            return view('admin.index', [
+                'title' => 'Dashboard',
+                'active' => 'Dashboard',
+                'saldo' => $saldo,
+                'pegawai' => $pegawai
+            ]);
+        }
+
+        return view('admin.index', [
+            'title' => 'Dashboard',
+            'active' => 'Dashboard',
+            'saldo'=>'',
+            'pegawai'=> $pegawai
+
+        ]);
     }
     public function finance()
     {

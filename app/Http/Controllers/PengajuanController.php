@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Pengajuan;
+use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\StorePengajuanRequest;
 use App\Http\Requests\UpdatePengajuanRequest;
 // use App\Models\Pengajuan;
@@ -18,7 +19,10 @@ class PengajuanController extends Controller
      */
     public function index()
     {
-
+        return view('admin.pengajuan.index',[
+            'active' => 'Pengajuan',
+            'title' => 'Pengajuan',
+        ]);
     }
 
     /**
@@ -28,7 +32,7 @@ class PengajuanController extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**
@@ -40,6 +44,17 @@ class PengajuanController extends Controller
     public function store(StorePengajuanRequest $request)
     {
         //jika waktu pembuatan beda sama sekarang maka $i=0
+        $validator = Validator::make($request->all(),[
+
+        ]);
+
+        if($validator->fails()){
+            return response()->json($validator->errors(), 200);
+        }
+
+        Pengajuan::create([
+
+        ]);
 
     }
 

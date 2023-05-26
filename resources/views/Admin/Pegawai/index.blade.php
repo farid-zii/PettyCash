@@ -13,7 +13,7 @@
                 </div>
                 <div class="card-body px-0 pb-2">
 
-@include('Admin.notif')
+{{-- @include('Admin.notif') --}}
 
                     <div class="mx-3">
                         <a href="/departemen-pdf" target="blank" class="btn bg-gradient-danger w-15 my-4 mb-2"><i
@@ -25,44 +25,26 @@
                         <button class="btn bg-gradient-info w-15 my-4 mb-2 float-sm-end" data-bs-toggle="modal"
                             data-bs-target="#staticBackdrop">Entry <i class="bi bi-plus-square-fill"></i></button>
                     </div>
-                    <div class="table-responsive px-3">
-                        <table class="table table-bordered border-dark" style="">
+                    <div class="table-responsive m-3">
+                        <table class="table align-items-center mb-0 table-bordered border-dark" style="">
                             <thead>
                                 <tr class="bg-dark" style="font-color:white;">
                                     <th
-                                        class="text-uppercase text-light text-xs font-weight-bolder opacity-7">
+                                        class="text-uppercase text-light text-xs font-weight-bolder opacity-7" style="width: 5%">
                                         No</th>
-                                    <th
-                                        class="text-uppercase text-light text-xs font-weight-bolder opacity-7">
-                                        Foto</th>
                                     <th style=""
                                         class="text-uppercase text-light text-xs font-weight-bolder opacity-7">
-                                        NAMA {{$title}}</th>
+                                        {{$title}}</th>
                                     <th
                                         class="text-uppercase text-light text-xs font-weight-bolder opacity-7">
                                         NIP</th>
-                                    <th style=""
-                                        class="text-uppercase text-light text-xs font-weight-bolder opacity-7">
-                                        KELAMIN</th>
                                     <th
                                         class="text-uppercase text-light text-xs font-weight-bolder opacity-7">
-                                        Tanggal Lahir</th>
-                                    <th style=""
-                                        class="text-uppercase text-light text-xs font-weight-bolder opacity-7">
-                                        Agama</th>
-                                    <th
-                                        class="text-uppercase text-light text-xs font-weight-bolder opacity-7">
-                                        Departemen</th>
+                                        UMUR</th>
                                     <th
                                         class="text-uppercase text-light text-xs font-weight-bolder opacity-7">
                                         Jabatan</th>
                                     <th
-                                        class="text-uppercase text-light text-xs font-weight-bolder opacity-7">
-                                        Pangkat</th>
-                                    <th
-                                        class="text-uppercase text-light text-xs font-weight-bolder opacity-7">
-                                        Kategori</th>
-                                    <th style="width: 10%"
                                         class="text-uppercase text-light text-xs font-weight-bolder opacity-7">
                                         Action</th>
                                 </tr>
@@ -71,42 +53,36 @@
                                 @if($pegawai->count())
                                 @foreach ($pegawai as $data )
                                 <tr>
-                                    <td class="">{{$loop->iteration}}</td>
-                                    <td class="" style="">
-                                        <img class="avatar avatar-sm me-3 border-radius-lg" src="@if($data->profil!= null) ../profil_Pegawai/{{$data->profil}} @else https://cdn-icons-png.flaticon.com/512/3135/3135715.png  @endif ">
-                                    </td>
-                                    <td class="" style="">
-                                        <p class="align-middle">{{$data->nama}}</p>
+                                    <td class="text-center">{{$loop->iteration}}</td>
+                                    <td>
+                                        <div class="d-flex px-2 py-1">
+                                        <div>
+                                            <img src="@if($data->profil!= '') ../profil_Pegawai/{{$data->profil}} @else https://cdn-icons-png.flaticon.com/512/3135/3135715.png  @endif " class="avatar avatar-sm me-3 border-radius-lg" alt="user1">
+                                        </div>
+                                        <div class="d-flex flex-column justify-content-center">
+                                            <h6 class="mb-0 text-sm">{{$data->nama}}</h6>
+                                            <p class="text-xs text-secondary mb-0">{{$data->email}}</p>
+                                        </div>
+                                        </div>
                                     </td>
                                     <td class="">
                                         <p class="align-middle"> {{$data->nip}}</p>
                                     </td>
                                     <td class="">
-                                        <p class="align-middle"> {{$data->j_kelamin}}</p>
+                                        <p class="align-middle"> {{$data->created_at->diffforHumans()}}</p>
                                     </td>
                                     <td class="">
-                                        <p class="align-middle"> {{$data->tgl_lahir}}</p>
-                                    </td>
-                                    <td class="">
-                                        <p class="align-middle"> {{$data->agama}}</p>
-                                    </td>
-                                    <td class="">
-                                        <p class="align-middle"> {{$data->departemen->nama}}</p>
-                                    </td>
-                                    <td class="">
-                                        <p class="align-middle"> {{$data->jabatan->nama}}</p>
-                                    </td>
-                                    <td class="">
-                                        <p class="align-middle"> {{$data->pangkat->nama}}</p>
-                                    </td>
-                                    <td class="">
-                                        <p class="align-middle"> {{$data->kategori->nama}}</p>
+                                        <p class="text-xs font-weight-bold mb-0">Manager</p>
+                                        <p class="text-xs text-secondary mb-0">Organization</p>
                                     </td>
                                     {{-- <td class="">
                                         <p class="align-middle"> {{$data->created_at->format('ymd')-$data->created_at->format('ymd')}}</p>
                                     </td> --}}
                                     <td class="bg-info">
                                         <div class="d-flex">
+                                            <button class="btn btn-warning font-weight-bold m-auto"
+                                                data-bs-toggle="modal" data-bs-target="#data-{{$data->id}}"><i
+                                                    class="bi bi-pencil-square"></i></button>
                                             <button class="btn btn-warning font-weight-bold m-auto"
                                                 data-bs-toggle="modal" data-bs-target="#data-{{$data->id}}"><i
                                                     class="bi bi-pencil-square"></i></button>

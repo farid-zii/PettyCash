@@ -6,7 +6,7 @@
         <span class="ms-1 font-weight-bold text-white fs-2 text-center">PettyCash</span>
       </a>
     </div>
-    <hr class="horizontal light mt-0 mb-2">
+    <hr class="light mt-0 mb-2">
     <div class="collapse navbar-collapse " id="sidenav-collapse-main">
       <ul class="navbar-nav">
         <li class="nav-item">

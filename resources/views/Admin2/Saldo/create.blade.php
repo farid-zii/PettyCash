@@ -1,3 +1,6 @@
+
+@section('modal')
+<!-- CREATE -->
 <div class="modal fade" dty id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
     aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -7,7 +10,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
-            <form method="post" action="/admin/departemen">
+            <form method="post" action="/admin/pangkat">
                 @method('POST')
                 @csrf
                 <div class="modal-body">
@@ -30,3 +33,4 @@
         </div>
     </div>
 </div>
+@endsection

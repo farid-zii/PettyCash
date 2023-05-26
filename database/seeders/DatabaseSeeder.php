@@ -28,11 +28,21 @@ class DatabaseSeeder extends Seeder
         Jabatan::factory(8)->create();
         Pegawai::factory(8)->create();
 
-        \App\Models\User::factory()->create([
+        \App\Models\User::factory()->create(
+            [
             'name' => 'Admin',
             'level' => 'admin',
             'password' => bcrypt('123456'),
             'email' => 'admin@test.com',
-        ]);
+        ],
+    );
+        \App\Models\User::factory()->create(
+            [
+            'name' => 'PettyCash Admin',
+            'level' => 'hrd',
+            'password' => bcrypt('123456'),
+            'email' => 'hrd@test.com',
+        ],
+    );
     }
 }

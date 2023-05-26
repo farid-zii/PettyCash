@@ -47,12 +47,21 @@
                                     <th
                                         class="text-uppercase text-light text-xs font-weight-bolder opacity-7">
                                         Tanggal Lahir</th>
+                                    <th style=""
+                                        class="text-uppercase text-light text-xs font-weight-bolder opacity-7">
+                                        Agama</th>
                                     <th
                                         class="text-uppercase text-light text-xs font-weight-bolder opacity-7">
                                         Departemen</th>
                                     <th
                                         class="text-uppercase text-light text-xs font-weight-bolder opacity-7">
                                         Jabatan</th>
+                                    <th
+                                        class="text-uppercase text-light text-xs font-weight-bolder opacity-7">
+                                        Pangkat</th>
+                                    <th
+                                        class="text-uppercase text-light text-xs font-weight-bolder opacity-7">
+                                        Kategori</th>
                                     <th style="width: 10%"
                                         class="text-uppercase text-light text-xs font-weight-bolder opacity-7">
                                         Action</th>
@@ -73,19 +82,31 @@
                                         <p class="align-middle"> {{$data->nip}}</p>
                                     </td>
                                     <td class="">
+                                        <p class="align-middle"> {{$data->j_kelamin}}</p>
+                                    </td>
+                                    <td class="">
+                                        <p class="align-middle"> {{$data->tgl_lahir}}</p>
+                                    </td>
+                                    <td class="">
+                                        <p class="align-middle"> {{$data->agama}}</p>
+                                    </td>
+                                    <td class="">
                                         <p class="align-middle"> {{$data->departemen->nama}}</p>
                                     </td>
                                     <td class="">
                                         <p class="align-middle"> {{$data->jabatan->nama}}</p>
+                                    </td>
+                                    <td class="">
+                                        <p class="align-middle"> {{$data->pangkat->nama}}</p>
+                                    </td>
+                                    <td class="">
+                                        <p class="align-middle"> {{$data->kategori->nama}}</p>
                                     </td>
                                     {{-- <td class="">
                                         <p class="align-middle"> {{$data->created_at->format('ymd')-$data->created_at->format('ymd')}}</p>
                                     </td> --}}
                                     <td class="bg-info">
                                         <div class="d-flex">
-                                            <button class="btn btn-warning font-weight-bold m-auto"
-                                                data-bs-toggle="modal" data-bs-target="#data-{{$data->id}}"><i
-                                                    class="bi bi-pencil-square"></i></button>
                                             <button class="btn btn-warning font-weight-bold m-auto"
                                                 data-bs-toggle="modal" data-bs-target="#data-{{$data->id}}"><i
                                                     class="bi bi-pencil-square"></i></button>

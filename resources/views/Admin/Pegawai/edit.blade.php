@@ -1,7 +1,7 @@
 @foreach ($pegawai as $data)
 <div class="modal fade" dty id="data-{{$data->id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
     aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header bg-warning">
                 <h1 class="modal-title fs-5" id="staticBackdropLabel">Edit Data {{$title}}</h1>
@@ -15,6 +15,11 @@
                         <input type="text" class="form-control" placeholder="" name="nama" value="{{$data->nama}}">
                     </div>
                     <div class="col-md-12">
+                        <label class="text-xl text-dark font-weight-bolder ">Tanggal Lahir</label>
+                        <input type="date" class="form-control " placeholder="" required name="tgl_lahir"
+                            value="{{$data->tgl_lahir}}">
+                    </div>
+                    <div class="col-md-12">
                         <label class="text-xl text-dark font-weight-bolder ">Nip</label>
                         <input type="number" class="form-control " placeholder="" id='nip' required name="nip"
                             value="{{$data->nip}}">
@@ -23,11 +28,6 @@
                         <label class="text-xl text-dark font-weight-bolder ">Email</label>
                         <input type="text" class="form-control " placeholder="" id='email' required name="email"
                             value="{{$data->email}}">
-                    </div>
-                    <div class="col-md-12">
-                        <label class="text-xl text-dark font-weight-bolder ">Tanggal Lahir</label>
-                        <input type="date" class="form-control " placeholder="" required name="tgl_lahir"
-                            value="{{$data->tgl_lahir}}">
                     </div>
                     <div class="col-md-12">
                         <label class="text-xl text-dark font-weight-bolder ">Photo Profile</label>
@@ -65,22 +65,6 @@
                         <label class="text-xl text-dark font-weight-bolder">Jabatan</label>
                         <select class="form-select" required name="jabatan_id">
                             @foreach ($jabatan as $item)
-                            <option selected value="{{$item->id}}">{{$item->nama}}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="col-md-6">
-                        <label class="text-xl text-dark font-weight-bolder">Pangkat</label>
-                        <select class="form-select" required name="pangkat_id">
-                            @foreach ($pangkat as $item)
-                            <option selected value="{{$item->id}}">{{$item->nama}}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="col-md-6">
-                        <label class="text-xl text-dark font-weight-bolder">Kategori Pegawai</label>
-                        <select class="form-select" required style="">
-                            @foreach ($kategori as $item)
                             <option selected value="{{$item->id}}">{{$item->nama}}</option>
                             @endforeach
                         </select>

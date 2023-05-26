@@ -46,7 +46,7 @@ Route::middleware(['auth', 'checkLevel:admin'])->group(function () {
      Route::resource('/admin/jabatan', JabatanController::class);
      Route::resource('/admin/kategoriPgw', KategoriPgwController::class);
      Route::resource('/admin/departemen', DepartemenController::class);
-     Route::resource('/admin/saldo', SaldoController::class);
+
      Route::post('/admin/saldo', [SaldoController::class,'store']);
      #region /// USER ///
      Route::resource('/admin/user', UserController::class);
@@ -60,9 +60,11 @@ Route::middleware(['auth', 'checkLevel:admin'])->group(function () {
 //           HRD              //
 ///////////////////////////////
 Route::middleware(['auth', 'checkLevel:hrd'])->group(function () {
-    Route::get('/hrd', function () {
-        return view('hrd.index');
-    });
+    Route::get('/admin/dashboard', [Home::class, 'hrd']);
+    Route::resource('/admin/pegawai', PegawaiController::class);
+    Route::resource('/admin/saldo', SaldoController::class);
+    Route::resource('/admin/pengajuan', PengajuanController::class);
+    Route::get('/export-data', [UserController::class, 'excel']);
     Route::get('/pegawai', function () {
         return view('hrd.pegawai.index');
     });

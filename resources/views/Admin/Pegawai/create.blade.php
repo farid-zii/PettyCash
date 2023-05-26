@@ -1,6 +1,6 @@
 <div class="modal fade" dty id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
     aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header bg-info">
                 <h1 class="modal-title fs-5" id="staticBackdropLabel">Entry Data {{$title}}</h1>
@@ -21,14 +21,14 @@
                             value="{{old('nip')}}">
                     </div>
                     <div class="col-md-12">
-                        <label class="text-xl text-dark font-weight-bolder ">Email</label>
-                        <input type="text" class="form-control " placeholder="" id='email' required name="email"
-                            value="{{old('email')}}">
-                    </div>
-                    <div class="col-md-12">
                         <label class="text-xl text-dark font-weight-bolder ">Tanggal Lahir</label>
                         <input type="date" class="form-control " placeholder="" required name="tgl_lahir"
                             value="{{old('tgl_lahir')}}">
+                    </div>
+                    <div class="col-md-12">
+                        <label class="text-xl text-dark font-weight-bolder ">Email</label>
+                        <input type="text" class="form-control " placeholder="" id='email' required name="email"
+                            value="{{old('email')}}">
                     </div>
                     <div class="col-md-12">
                         <label class="text-xl text-dark font-weight-bolder ">Photo Profile</label>
@@ -66,22 +66,6 @@
                         <label class="text-xl text-dark font-weight-bolder">Jabatan</label>
                         <select class="form-select" required name="jabatan_id">
                             @foreach ($jabatan as $item)
-                            <option selected value="{{$item->id}}">{{$item->nama}}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="col-md-6">
-                        <label class="text-xl text-dark font-weight-bolder">Pangkat</label>
-                        <select class="form-select" required name="pangkat_id">
-                            @foreach ($pangkat as $item)
-                            <option selected value="{{$item->id}}">{{$item->nama}}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="col-md-6">
-                        <label class="text-xl text-dark font-weight-bolder">Kategori Pegawai</label>
-                        <select class="form-select" required name="kategoriPgw_id">
-                            @foreach ($kategori as $item)
                             <option selected value="{{$item->id}}">{{$item->nama}}</option>
                             @endforeach
                         </select>

@@ -18,7 +18,7 @@ class DepartemenFactory extends Factory
     {
         return [
             'nama' => fake()->word(),
-            'kode' => fake()->lexify()
+            // 'kode' => fake()->lexify()
         ];
     }
 }

@@ -13,7 +13,7 @@
                 </div>
                 <div class="card-body px-0 pb-2">
 
-                    {{-- @include('Admin.notif') --}}
+                    @include('Admin.notif')
 
                     <div class="mx-3">
                         <a href="/saldo-pdf" target="blank" class="btn bg-gradient-danger w-15 my-4 mb-2"><i

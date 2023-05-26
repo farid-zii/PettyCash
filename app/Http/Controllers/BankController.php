@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\bank;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
-class LoginController extends Controller
+class BankController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,7 @@ class LoginController extends Controller
      */
     public function index()
     {
-        return view('login');
+        //
     }
 
     /**
@@ -22,30 +22,9 @@ class LoginController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function login(Request $request)
+    public function create()
     {
-        $credentials = $request->validate([
-            'email'=>'required',
-            'password'=>'required'
-        ]);
-
-        if(Auth::attempt($credentials)){
-            if(Auth::user()->level=='admin'){
-                return redirect('/admin/dashboard');
-            }
-            if(Auth::user()->level=='hrd'){
-                return redirect('/admin/dashboard');
-            }
-            if(Auth::user()->level=='finance'){
-                return redirect('/finance/dashboard');
-            }
-            if(Auth::user()->level=='direktur'){
-                return redirect('/direktur/dashboard');
-            }
-        }
-        else {
-            return redirect('/');
-        }
+        //
     }
 
     /**
@@ -62,10 +41,10 @@ class LoginController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\bank  $bank
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(bank $bank)
     {
         //
     }
@@ -73,10 +52,10 @@ class LoginController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\bank  $bank
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(bank $bank)
     {
         //
     }
@@ -85,10 +64,10 @@ class LoginController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Models\bank  $bank
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, bank $bank)
     {
         //
     }
@@ -96,10 +75,10 @@ class LoginController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Models\bank  $bank
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(bank $bank)
     {
         //
     }

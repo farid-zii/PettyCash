@@ -251,4 +251,3 @@ var ctx = document.getElementById("chart-bars").getContext("2d");
                 }
                 Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
             }
-

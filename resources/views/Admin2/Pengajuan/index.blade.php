@@ -42,16 +42,13 @@
                                 <tr class="bg-dark">
                                     <th
                                         class="text-center text-uppercase text-light text-xs font-weight-bolder opacity-7">
-                                        Kode</th>
+                                        No</th>
                                     <th style="width: 15%"
                                         class="text-center text-uppercase text-light text-xs font-weight-bolder opacity-7">
-                                        Keterangan</th>
+                                        NAMA PANGKAT</th>
                                     <th
                                         class="text-center text-uppercase text-light text-xs font-weight-bolder opacity-7 ps-2">
-                                        Nominal</th>
-                                    <th
-                                        class="text-center text-uppercase text-light text-xs font-weight-bolder opacity-7 ps-2">
-                                        Approve</th>
+                                        KODE</th>
                                     <th style="width: 10%"
                                         class="text-center text-uppercase text-light text-xs font-weight-bolder opacity-7">
                                         Action</th>
@@ -60,18 +57,16 @@
                             <tbody class="">
                                 @foreach ($pangkat as $data )
                                 <tr>
+                                    <td class="text-center">{{$loop->iteration}}</td>
+                                    <td class="" style="width: 15%">
+                                        <div class="d-flex px-2 py-1">
+                                            <div class="d-flex flex-column">
+                                                <h6 class="mb-0 text-sm">{{$data->nama}}</h6>
+                                            </div>
+                                        </div>
+                                    </td>
                                     <td class="text-center">
                                         <p class="text-xs font-weight-bold mb-0"> {{$data->kode}}</p>
-                                    </td>
-                                    <td class="text-center">
-                                        <p class="text-xs font-weight-bold mb-0"> {{$data->keterangan}}</p>
-                                    </td>
-                                    <td class="text-center">
-                                        <p class="text-xs font-weight-bold mb-0"> {{$data->nominal}}</p>
-                                    </td>
-                                    <td class="text-center">
-                                        <p class="text-xs font-weight-bold mb-0"> Setuju</p>
-                                        <p class="text-xs font-weight-bold mb-0"> Tidak</p>
                                     </td>
                                     <td class="bg-info text-center">
                                         <div class="d-flex">

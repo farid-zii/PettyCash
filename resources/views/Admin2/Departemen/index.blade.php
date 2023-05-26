@@ -35,24 +35,18 @@
                                     <th style=""
                                         class="text-uppercase text-light text-xs font-weight-bolder opacity-7">
                                         NAMA {{$title}}</th>
-                                    <th
-                                        class="text-uppercase text-light text-xs font-weight-bolder opacity-7">
-                                        KODE</th>
                                     <th style="width: 10%"
                                         class="text-uppercase text-light text-xs font-weight-bolder opacity-7">
                                         Action</th>
                                 </tr>
                             </thead>
-                            <tbody class="">
+                            <tbody class="" class="table-departemen">
                                 @if($datas->count())
                                 @foreach ($datas as $data )
-                                <tr>
+                                <tr id="index_{{$data->id}}">
                                     <td class="">{{$loop->iteration}}</td>
                                     <td class="" style="">
                                         <p class="align-middle">{{$data->nama}}</p>
-                                    </td>
-                                    <td class="">
-                                        <p class="align-middle"> {{$data->kode}}</p>
                                     </td>
                                     <td class="bg-info">
                                         <div class="d-flex">

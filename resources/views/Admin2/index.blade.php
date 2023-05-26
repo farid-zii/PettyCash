@@ -4,7 +4,7 @@
 
     <div class="container-fluid py-4">
         <h1>
-        HALAMAN HRD
+        HALAMAN Admin
     </h1>
 
     <br>
@@ -69,8 +69,12 @@
                 <i class="material-icons opacity-10">weekend</i>
               </div>
               <div class="text-end pt-1">
-                <p class="text-sm mb-0 text-capitalize">Sales</p>
-                <h4 class="mb-0">$103,430</h4>
+                <p class="text-sm mb-0 text-capitalize">Saldo</p>
+                @if($saldo == null)
+                <h4 class="mb-0">0000</h4>
+                @else
+                <h4 class="mb-0">@rp($saldo[0]->saldo)</h4>
+                @endif
               </div>
             </div>
             <hr class="dark horizontal my-0">

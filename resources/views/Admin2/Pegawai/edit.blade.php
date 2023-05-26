@@ -1,7 +1,7 @@
 @foreach ($pegawai as $data)
 <div class="modal fade" dty id="data-{{$data->id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
     aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header bg-warning">
                 <h1 class="modal-title fs-5" id="staticBackdropLabel">Edit Data {{$title}}</h1>
