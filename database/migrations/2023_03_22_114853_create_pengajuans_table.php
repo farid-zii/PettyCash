@@ -17,7 +17,9 @@ return new class extends Migration
             $table->id();
             $table->string('kode',10);
             $table->foreignId('pegawai_id');
+            $table->foreignId('bank_id');
             $table->text('text');
+            $table->string('norek');
             $table->double('nominal',10);
             $table->timestamps();
         });

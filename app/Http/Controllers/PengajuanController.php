@@ -45,7 +45,11 @@ class PengajuanController extends Controller
     {
         //jika waktu pembuatan beda sama sekarang maka $i=0
         $validator = Validator::make($request->all(),[
-
+            'nama' => 'required',
+            'keterangan' => 'required',
+            'nominal' => 'required',
+            'bank'=>'required',
+            'norek'=>'required',
         ]);
 
         if($validator->fails()){
@@ -53,7 +57,11 @@ class PengajuanController extends Controller
         }
 
         Pengajuan::create([
-
+            'nama' => $request->nama,
+            'keterangan' => $request->keterangan,
+            'nominal' => $request->nominal,
+            'bank'=> $request->bank,
+            'norek'=> $request->norek
         ]);
 
     }

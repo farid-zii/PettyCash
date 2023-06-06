@@ -197,6 +197,7 @@ return [
         Maatwebsite\Excel\ExcelServiceProvider::class,
         // Barryvdh\DomPDF\ServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
+        Alfa6661\AutoNumber\AutoNumberServiceProvider::class,
 
     ],
 

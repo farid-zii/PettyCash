@@ -66,8 +66,6 @@ class PegawaiController extends Controller
             'email'=>'required|email:dns',
             'profil'=>'max:4096',
             'j_kelamin'=>'required',
-            'kategoriPgw_id'=>'required',
-            'pangkat_id'=>'required',
             'jabatan_id'=>'required',
             'departemen_id'=>'required',
         ]);
@@ -104,7 +102,7 @@ class PegawaiController extends Controller
      */
     public function show(Pegawai $pegawai)
     {
-        //
+        
     }
 
     /**
@@ -125,9 +123,42 @@ class PegawaiController extends Controller
      * @param  \App\Models\Pegawai  $pegawai
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdatePegawaiRequest $request, Pegawai $pegawai)
+    public function update(UpdatePegawaiRequest $request, $id)
     {
+         $validate=$request->validate([
+            'nama'=>'required',
+            'nip'=>'required',
+            'tgl_lahir'=>'required',
+            'agama'=>'required',
+            'email'=>'required|email:dns',
+            'profil'=>'max:4096',
+            'j_kelamin'=>'required',
+            'jabatan_id'=>'required',
+            'departemen_id'=>'required',
+        ]);
 
+
+        // $gambar = $request->file('profil');
+        // $nama_file = time() . "_" . $gambar->getClientOriginalName();
+        // $tujuan_upload = 'profil_Pegawai';
+        // $gambar->move(public_path($tujuan_upload), $nama_file);
+        // $file_extention= $gambar->extension();
+        // $nama_gambar = date('ydmhis').'.'.$file_extention;
+        // $gambar->move(public_path('profilPegawai'),$nama_gambar);
+
+        // $validate['profil']==$gambar;
+        if ($request->hasFile('profil')) {
+            //jika request memiliki file dengan name profil maka -->
+            $nama= $request->file('profil')->getClientOriginalName();
+            $request->file('profil')->move(public_path('img/profil_Pegawai'),$nama);
+            //Memindahkan file ke public/profil_pegawai dengan nama asli file
+            $validate['profil'] = $nama;
+            //Mengubah nama file menjadi nama asli sesuai nama file di direktori
+        }
+
+
+        Pegawai::where('id',$id)->update($validate);
+        return back()->with('update','Update data Success');
     }
 
     /**

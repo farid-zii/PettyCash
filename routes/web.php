@@ -27,9 +27,9 @@ use App\Http\Controllers\PengajuanController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/', function () {
-    return view('login');
-});
+// Route::get('/', function () {
+//     return view('login');
+// });
 Route::get('/login', [LoginController::class,'index'])->name('login');
 
 Route::post('/login', [LoginController::class,'login']
@@ -40,7 +40,7 @@ Route::post('/login', [LoginController::class,'login']
 //          ADMIN             //
 ///////////////////////////////
 Route::middleware(['auth', 'checkLevel:admin'])->group(function () {
-    Route::get('/admin/dashboard', [Home::class,'admin']);
+    Route::get('/', [Home::class,'admin']);
      Route::resource('/admin/pangkat', PangkatController::class);
      Route::resource('/admin/pegawai', PegawaiController::class);
      Route::resource('/admin/jabatan', JabatanController::class);
@@ -60,7 +60,7 @@ Route::middleware(['auth', 'checkLevel:admin'])->group(function () {
 //           HRD              //
 ///////////////////////////////
 Route::middleware(['auth', 'checkLevel:hrd'])->group(function () {
-    Route::get('/admin/dashboard', [Home::class, 'hrd']);
+    Route::get('/', [Home::class, 'hrd']);
     Route::resource('/admin/pegawai', PegawaiController::class);
     Route::resource('/admin/saldo', SaldoController::class);
     Route::resource('/admin/pengajuan', PengajuanController::class);
