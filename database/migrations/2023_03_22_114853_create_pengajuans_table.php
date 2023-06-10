@@ -21,6 +21,8 @@ return new class extends Migration
             $table->text('text');
             $table->string('norek');
             $table->double('nominal',10);
+            $table->double('deposit',10)->nullable();
+            $table->double('saldo',10)->nullable();
             $table->timestamps();
         });
     }

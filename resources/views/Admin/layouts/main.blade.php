@@ -33,6 +33,10 @@
     <!-- Customized Bootstrap Stylesheet -->
     <link href="/../css/bootstrap.min.css" rel="stylesheet">
 
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
     <!-- Template Stylesheet -->
     <link href="/../css/style.css" rel="stylesheet">
     {{-- icon --}}
@@ -45,13 +49,25 @@
             font-family: 'Times New Roman', Times, serif;
         }
 
-        @keyframes hilang {
-            0% {}
+         #searchResult {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+        border: 1px solid #ccc;
+        background-color: #fff;
+        position: absolute;
+        z-index: 999;
+        width: 100%;
+    }
 
-            100% {
-                display: none;
-            }
-        }
+    #searchResult li {
+        padding: 10px;
+        cursor: pointer;
+    }
+
+    #searchResult li:hover {
+        background-color: #f5f5f5;
+    }
 
     </style>
 </head>

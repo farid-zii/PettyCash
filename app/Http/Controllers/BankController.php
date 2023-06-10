@@ -69,7 +69,7 @@ class BankController extends Controller
      */
     public function update(Request $request, bank $bank)
     {
-        //
+        
     }
 
     /**

@@ -9,8 +9,8 @@ use App\Models\Departemen;
 use App\Models\Jabatan;
 use App\Models\KategoriPgw;
 use App\Models\Pangkat;
-use App\Models\Saldo;
 
+use Illuminate\Http\Request;
 use DB;
 
 class PegawaiController extends Controller
@@ -34,9 +34,18 @@ class PegawaiController extends Controller
             "active"=>"Pegawai",
         ]);
     }
-    public function admin()
+    public function searchNama(Request $request)
     {
+        // if($request->ajax())
+        // $keyword = $request->input('keyword');
+        $keyword = $request->input('keyword');
 
+        $result =Pegawai::where('nama','like',$keyword.'%')
+                 ->pluck('nama')
+                 ->toArray();
+                // ->get();
+
+         return response()->json($result);
     }
 
     /**
@@ -70,15 +79,6 @@ class PegawaiController extends Controller
             'departemen_id'=>'required',
         ]);
 
-
-        // $gambar = $request->file('profil');
-        // $nama_file = time() . "_" . $gambar->getClientOriginalName();
-        // $tujuan_upload = 'profil_Pegawai';
-        // $gambar->move(public_path($tujuan_upload), $nama_file);
-        // $file_extention= $gambar->extension();
-        // $nama_gambar = date('ydmhis').'.'.$file_extention;
-        // $gambar->move(public_path('profilPegawai'),$nama_gambar);
-
         // $validate['profil']==$gambar;
         if ($request->hasFile('profil')) {
             //jika request memiliki file dengan name profil maka -->
@@ -102,7 +102,7 @@ class PegawaiController extends Controller
      */
     public function show(Pegawai $pegawai)
     {
-        
+
     }
 
     /**
