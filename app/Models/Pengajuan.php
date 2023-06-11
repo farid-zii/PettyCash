@@ -4,12 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Alfa6661/AutoNumber/AutoNumberTtaits;
+use Alfa6661\AutoNumber\AutoNumberTtaits;
 
 class Pengajuan extends Model
 {
     use HasFactory;
-    use AutoNumberTtaits;
+    // use AutoNumberTtaits;
+
+    protected $guarded = [
+    ];
 
     public function pegawai()
     {

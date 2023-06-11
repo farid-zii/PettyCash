@@ -3,14 +3,21 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="staticBackdropLabel">Create Pangkat</h1>
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Create Pengajuan</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form method="post" action="/admin/pangkat">
+            <form method="post" action="/pengajuan">
                 @method('POST')
                 @csrf
                 <div class="modal-body">
-                    <label class="text-xl text-dark font-weight-bolder">Nama</label>
+
+                    <div class="mb-1 col-4 float-sm-end">
+                        <select name="type" style="width: 100%;background: rgb(223, 219, 219);padding:5px;">
+                            <option value="pengajuan">Pengajuan</option>
+                            <option value="penambahan">Penambahan</option>
+                        </select>
+                    </div>
+                    <label class="text-xl text-dark font-weight-bolder col-6">Nama</label>
                     <div class="mb-2">
                         <input type="text" class="form-control" id="nama" name="nama">
                         <ul id="searchResult" class=""></ul>
@@ -23,15 +30,16 @@
 
                     <label class="text-xl text-dark font-weight-bolder">No. Rekening</label>
                     <div class="mb-2" style="display:flex;">
-                        <select style="width: 20%;background: rgb(223, 219, 219);">
-                            <option>BRI</option>
-                            <option>Mandiri</option>
-                            <option>BNI</option>
-                            <option>BCA</option>
-                            <option>BSI</option>
-                            <option>BJB</option>
+                        <select name="bank" style="width: 20%;background: rgb(223, 219, 219);">
+                            <option value="BRI">BRI</option>
+                            <option value="Mandiri">Mandiri</option>
+                            <option value="BNI">BNI</option>
+                            <option value="BCA">BCA</option>
+                            <option value="BSI">BSI</option>
+                            <option value="BJB">BJB</option>
+                            <option value="Lainnya">Lain-lain</option>
                         </select>
-                        <input type="number" class="form-control" placeholder="300" name="nominal" id="nominal">
+                        <input type="number" class="form-control" placeholder="300" name="norek" id="nominal">
                     </div>
                     <label class="text-xl text-dark font-weight-bolder">Keterangan</label>
                     <div class="mb-2">

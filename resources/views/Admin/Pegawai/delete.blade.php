@@ -7,7 +7,7 @@
                 <h1 class="modal-title fs-5 fw-bolder text-light" id="staticBackdropLabel">Delete Data {{$title}}</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form method="post" action="/admin/pegawai/{{$data->id}}">
+            <form method="post" action="/pegawaai/{{$data->id}}">
                 @method('Delete')
                 @csrf
                 <div class="modal-body row g-2">
@@ -27,7 +27,7 @@
                     </div>
                 </div>
                 <div class="footer px-4 mb-2">
-                    <button type="submit" class="btn btn-danger float-sm-start col-md-2 mt-4 me-3">delete</button>
+                    <button type="submit" class="btn btn-danger float-sm-start  mt-4 text-center">delete</button>
                     <button type="button" class="btn btn-info float-sm-end col-md-2 mt-4"
                         data-bs-dismiss="modal">Close</button>
                 </div>

@@ -17,10 +17,12 @@
 
                     <div class="mx-3">
                         <a href="/departemen-pdf" target="blank" class="btn bg-gradient-danger w-15 my-4 mb-2"><i
-                                class="bi bi-file-earmark-pdf-fill"></i>Cetak Pdf</a>
+                                class="bi bi-file-earmark-pdf-fill"></i></a>
+                        {{-- <a href="/departemen-pdf" target="blank" class="btn bg-gradient-danger w-15 my-4 mb-2"><i
+                                class="bi bi-file-earmark-pdf-fill"></i>Cetak Pdf</a> --}}
                         {{-- <button class="btn bg-gradient-success w-15 my-4 mb-2">Cetak Excel</button> --}}
-                        <a href="/departemen-data" target="blank" class="btn bg-gradient-success w-16 my-4 mb-2"><i
-                                class="bi bi-file-earmark-spreadsheet-fill"></i> Cetak Excel</a>
+                        {{-- <a href="/departemen-data" target="blank" class="btn bg-gradient-success w-16 my-4 mb-2"><i
+                                class="bi bi-file-earmark-spreadsheet-fill"></i> Cetak Excel</a> --}}
                         {{-- <a href="/admin/user/create"  class="btn bg-gradient-info w-15 my-4 mb-2 float-sm-end">Entry</a> --}}
                         <button class="btn bg-gradient-info w-15 my-4 mb-2 float-sm-end" data-bs-toggle="modal"
                             data-bs-target="#staticBackdrop">Entry <i class="bi bi-plus-square-fill"></i></button>
@@ -53,11 +55,11 @@
                                 @if($pegawai->count())
                                 @foreach ($pegawai as $data )
                                 <tr>
-                                    <td class="text-center">{{$loop->iteration}}</td>
+                                    <td class="text-center">{{$nomorUrut++}}</td>
                                     <td>
                                         <div class="d-flex px-2 py-1">
                                         <div>
-                                            <img src="@if($data->profil!= '') ../profil_Pegawai/{{$data->profil}} @else https://cdn-icons-png.flaticon.com/512/3135/3135715.png  @endif " class="avatar avatar-sm me-3 border-radius-lg" alt="user1">
+                                            <img src="@if($data->profil!= '') ../img/profil_Pegawai/{{$data->profil}} @else https://cdn-icons-png.flaticon.com/512/3135/3135715.png  @endif " class="avatar avatar-sm me-3 border-radius-lg" alt="user1">
                                         </div>
                                         <div class="d-flex flex-column justify-content-center">
                                             <h6 class="mb-0 text-sm">{{$data->nama}}</h6>
@@ -69,20 +71,20 @@
                                         <p class="align-middle"> {{$data->nip}}</p>
                                     </td>
                                     <td class="">
-                                        <p class="align-middle"> {{$data->created_at->diffforHumans()}}</p>
+                                        <p class="align-middle"> {{$data->umur}}</p>
                                     </td>
                                     <td class="">
-                                        <p class="text-xs font-weight-bold mb-0">Manager</p>
-                                        <p class="text-xs text-secondary mb-0">Organization</p>
+                                        <p class="text-xs font-weight-bold mb-0">{{$data->jabatan->nama}}</p>
+                                        <p class="text-xs text-secondary mb-0">{{$data->departemen->nama}}</p>
                                     </td>
                                     {{-- <td class="">
                                         <p class="align-middle"> {{$data->created_at->format('ymd')-$data->created_at->format('ymd')}}</p>
                                     </td> --}}
                                     <td class="bg-info">
                                         <div class="d-flex">
-                                            <button class="btn btn-warning font-weight-bold m-auto"
-                                                data-bs-toggle="modal" data-bs-target="#data-{{$data->id}}"><i
-                                                    class="bi bi-pencil-square"></i></button>
+                                            <button class="btn btn-success font-weight-bold m-auto"
+                                                data-bs-toggle="modal" data-bs-target="#data-{{$data->id}}">
+                                                <i class="bi bi-eye-fill"></i></button>
                                             <button class="btn btn-warning font-weight-bold m-auto"
                                                 data-bs-toggle="modal" data-bs-target="#data-{{$data->id}}"><i
                                                     class="bi bi-pencil-square"></i></button>

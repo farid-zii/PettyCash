@@ -15,13 +15,18 @@ return new class extends Migration
     {
         Schema::create('pengajuans', function (Blueprint $table) {
             $table->id();
-            $table->string('kode',10);
+            $table->string('kode',10)->nullable();
             $table->foreignId('pegawai_id');
-            $table->foreignId('bank_id');
-            $table->text('text');
+            $table->string('bank');
+            $table->text('keterangan');
             $table->string('norek');
-            $table->double('nominal',10);
-            $table->double('deposit',10)->nullable();
+            $table->string('type');
+            $table->double('nominal',12);
+            $table->string('approveF')->nullable();
+            $table->text('komenF')->nullable();
+            $table->string('approveD')->nullable();
+            $table->text('komenD')->nullable();
+            $table->double('refund',12)->nullable();
             $table->double('saldo',10)->nullable();
             $table->timestamps();
         });

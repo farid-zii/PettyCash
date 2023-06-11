@@ -1,12 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers;
 use App\Http\Controllers\LoginController;
-use App\Http\Controllers\Admin;
-use App\Http\Controllers\Hrd;
-use App\Http\Controllers\Finance;
-use App\Http\Controllers\Direktur;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Home;
 use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\UserController;
@@ -40,7 +36,7 @@ Route::post('/login', [LoginController::class,'login']
 //          ADMIN             //
 ///////////////////////////////
 Route::middleware(['auth', 'checkLevel:admin'])->group(function () {
-    Route::get('/', [Home::class,'admin']);
+    Route::get('/', [Home::class,'hrd']);
      Route::resource('/admin/pangkat', PangkatController::class);
      Route::resource('/admin/pegawai', PegawaiController::class);
      Route::resource('/admin/jabatan', JabatanController::class);
@@ -52,7 +48,7 @@ Route::middleware(['auth', 'checkLevel:admin'])->group(function () {
      Route::resource('/admin/user', UserController::class);
      Route::get('/export-data', [UserController::class,'excel']);
      Route::get('/user-pdf', [UserController::class,'pdf']);
-     Route::get('/a', [PengajuanController::class,'index']);
+    //  Route::get('/profile', [ProfileController::class,'index']);
      #endregion
 });
 
@@ -61,12 +57,13 @@ Route::middleware(['auth', 'checkLevel:admin'])->group(function () {
 ///////////////////////////////
 Route::middleware(['auth', 'checkLevel:hrd'])->group(function () {
     Route::get('/', [Home::class, 'hrd']);
-    Route::resource('/pegawai', PegawaiController::class);
+    Route::resource('/pegawaai', PegawaiController::class);
     Route::resource('/saldo', SaldoController::class);
     Route::resource('/pengajuan', PengajuanController::class);
     Route::resource('/jabatan', JabatanController::class);
     Route::resource('/departemen', DepartemenController::class);
     Route::get('/export-data', [UserController::class, 'excel']);
+    Route::get('/profile', [ProfileController::class, 'admin']);
     // Route::get('/pegawai', function () {
     //     return view('hrd.pegawai.index');
     // });

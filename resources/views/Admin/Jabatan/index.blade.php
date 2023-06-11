@@ -11,19 +11,13 @@
                         <h6 class="text-white text-uppercase ps-3">Data {{$title}}</h6>
                     </div>
                 </div>
-                <div class="card-body px-0 pb-2">
 
-
-                    <div class="mx-3">
-                        <a href="/jabatan-pdf" target="blank" class="btn bg-gradient-danger w-15 my-4 mb-2"><i
-                                class="bi bi-file-earmark-pdf-fill"></i>Cetak Pdf</a>
-                        {{-- <button class="btn bg-gradient-success w-15 my-4 mb-2">Cetak Excel</button> --}}
-                        <a href="/jabatan-data" blank class="btn bg-gradient-success w-16 my-4 mb-2"><i
-                                class="bi bi-file-earmark-spreadsheet-fill"></i> Cetak Excel</a>
+                <div class="mx-3">
                         {{-- <a href="/admin/user/create"  class="btn bg-gradient-info w-15 my-4 mb-2 float-sm-end">Entry</a> --}}
                         <button class="btn bg-gradient-info w-15 my-4 mb-2 float-sm-end" data-bs-toggle="modal"
                             data-bs-target="#staticBackdrop">Entry <i class="bi bi-plus-square-fill"></i></button>
-                    </div>
+                </div>
+                <div class="card-body px-0 pb-2">
                     <div class="table-responsive px-3">
                         <table class="table table-bordered border-dark" style="">
                             <thead>

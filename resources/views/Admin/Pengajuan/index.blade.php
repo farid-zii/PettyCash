@@ -45,16 +45,16 @@
                                         Kode</th>
                                     <th
                                         class="text-uppercase text-light text-xs font-weight-bolder opacity-7">
-                                        Nama</th>
+                                        Nama/Departemen</th>
                                     <th
                                         class="text-uppercase text-light text-xs font-weight-bolder opacity-7">
                                         Keterangan</th>
-                                    <th
-                                        class="text-uppercase text-light text-xs font-weight-bolder opacity-7 ">
-                                        Nominal</th>
                                     <th style=""
                                         class="text-uppercase text-light text-xs font-weight-bolder opacity-7 ">
                                         Rekening Tujuan</th>
+                                    <th
+                                        class="text-uppercase text-light text-xs font-weight-bolder opacity-7 ">
+                                        Nominal</th>
                                     <th colspan="2"
                                         class="text-center text-uppercase text-light text-xs font-weight-bolder opacity-7">
                                         Approve</th>
@@ -68,11 +68,11 @@
                                     <td class="">202305001</td>
                                     <td class="">Pandaman</td>
                                     <td class=""></td>
-                                    <td class="">40000</td>
                                     <td class="">
                                         <p class="text-xs font-weight-bold mb-0">31231231231314r</p>
                                         <p class="text-xs text-secondary mb-0">BCA</p>
                                     </td>
+                                    <td class="">40000</td>
                                     <td class="text-center">✔</td>
                                     <td class="text-center">❌</td>
                                     <td class="text-center">
@@ -81,23 +81,28 @@
                                         <button>Delete</button>
                                     </td>
                                 </tr>
-                                {{-- @foreach ($pangkat as $data )
+                                @foreach ($pengajuan as $data )
                                 <tr>
-                                    <td class="text-center">
-                                        <p class="text-xs font-weight-bold mb-0"> {{$data->kode}}</p>
+                                    <td class=""> {{$data->id}}</td>
+                                    <td class="">
+                                        <p class="text-xl font-weight-bold mb-0">{{$data->pegawai->nama}}</p>
+                                        <p class="text-xs text-secondary mb-0">{{$data->pegawai->departemen->nama}}</p>
                                     </td>
-                                    <td class="text-center">
-                                        <p class="text-xs font-weight-bold mb-0"> {{$data->keterangan}}</p>
+                                    <td class="">{{$data->keterangan}}</td>
+                                    <td class="">
+                                        <p class="text-xs font-weight-bold mb-0">{{$data->norek}}</p>
+                                        <p class="text-xs text-secondary mb-0">{{$data->bank}}</p>
                                     </td>
-                                    <td class="text-center">
-                                        <p class="text-xs font-weight-bold mb-0"> {{$data->nominal}}</p>
-                                    </td>
-                                    <td class="text-center">
-                                        <p class="text-xs font-weight-bold mb-0"> Setuju</p>
-                                        <p class="text-xs font-weight-bold mb-0"> Tidak</p>
-                                    </td>
+                                    <td class="text-right">@rp($data->nominal)</td>
+                                    {{--  --}}
+                                    <td class="text-center">{{$data->approveF}}</td>
+                                    {{--  --}}
+                                    <td class="text-center">{{$data->approveD}}</td>
+                                    {{--  --}}
                                     <td class="bg-info text-center">
                                         <div class="d-flex">
+                                            <button class="btn btn-warning font-weight-bold m-auto" data-bs-toggle="modal"
+                                                data-bs-target="#data-{{$data->id}}"><i class="bi bi-pencil-square"></i></button>
                                             <button class="btn btn-warning font-weight-bold m-auto" data-bs-toggle="modal"
                                                 data-bs-target="#data-{{$data->id}}"><i class="bi bi-pencil-square"></i></button>
                                             <form action="/admin/pangkat/{{$data->id}}" method="post" class="">
@@ -109,7 +114,13 @@
                                         </div>
                                     </td>
                                 </tr>
-                                @endforeach --}}
+                                @endforeach
+
+                                <tr>
+                                    <td colspan="4" class="text-center">Total Dana</td>
+                                    <td colspan="">Rp.</td>
+                                    <td colspan="3"></td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>

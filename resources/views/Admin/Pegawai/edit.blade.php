@@ -7,8 +7,9 @@
                 <h1 class="modal-title fs-5" id="staticBackdropLabel">Edit Data {{$title}}</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form method="post" action="/admin/pegawai/{{$data->id}}">
+            <form method="post" action="/pegawaai/{{$data->id}}" enctype="multipart/form-data">
                 @method('PUT')
+                @csrf
                 <div class="modal-body row g-2">
                     <div class="col-md-12">
                         <label class="text-xl text-dark font-weight-bolder" required>Nama</label>
@@ -31,7 +32,7 @@
                     </div>
                     <div class="col-md-12">
                         <label class="text-xl text-dark font-weight-bolder ">Photo Profile</label>
-                        <input type="file" class="form-control" accept="image/png, image/gif, image/jpeg" required name="profil"
+                        <input type="file" class="form-control" accept="image/png, image/gif, image/jpeg" name="profil"
                             value="{{$data->profil}}">
                     </div>
                     <div class="col-md-6">

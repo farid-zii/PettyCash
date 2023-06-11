@@ -31,10 +31,10 @@ class LoginController extends Controller
 
         if(Auth::attempt($credentials)){
             if(Auth::user()->level=='admin'){
-                return redirect('/');
+                return redirect('/profile');
             }
             if(Auth::user()->level=='hrd'){
-                return redirect('/');
+                return redirect('/profile');
             }
             if(Auth::user()->level=='finance'){
                 return redirect('/');

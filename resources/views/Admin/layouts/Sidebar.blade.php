@@ -41,7 +41,7 @@
         <ul class="navbar-nav">
             <li class="nav-item">
                 <a class="nav-link text-white {{ ($active=='Profile') ? 'active bg-gradient-info' : '' }}"
-                    href="/">
+                    href="/profile">
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="fa-solid fa-user" style="color: #ffffff;"></i>
                     </div>
@@ -94,7 +94,7 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link text-white {{ ($active=='Pegawai') ? 'active bg-gradient-info' : '' }} "
-                    href="/pegawai">
+                    href="/pegawaai">
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="fa-solid fa-users" style="color: #ffffff;"></i>
                     </div>

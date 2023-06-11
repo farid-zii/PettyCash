@@ -9,9 +9,9 @@ use App\Models\Departemen;
 use App\Models\Jabatan;
 use App\Models\KategoriPgw;
 use App\Models\Pangkat;
-
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
-use DB;
+use Carbon\Carbon;
 
 class PegawaiController extends Controller
 {
@@ -20,16 +20,27 @@ class PegawaiController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+
     public function index()
     {
-    //   $namaP= DB::select('select pangkats.nama from pegawais left join pangkats on pegawais.pangkat_id = pangkats.id');
+        //   $namaP= DB::select('select pangkats.nama from pegawais left join pangkats on pegawais.pangkat_id = pangkats.id');
 
+        $pegawai = Pegawai::latest()->paginate(7);
+        $pegawai->transform(function ($data) {
+            $tglLahir = Carbon::parse($data->tgl_lahir);
+            $data->umur = $tglLahir->diffInYears(Carbon::now()) . ' tahun ' . $tglLahir->diffInMonths(Carbon::now()) % 12 . ' bulan';
+            return $data;
+        });
+
+        $nomorUrut = ($pegawai->currentPage() - 1) * $pegawai->perPage() + 1;
         return view('admin.pegawai.index',[
-            "pegawai"=>Pegawai::latest()->paginate(7),
+            "pegawai"=>$pegawai,
             "kategori"=>KategoriPgw::get(),
             "jabatan"=>Jabatan::get(),
             "departemen"=>Departemen::get(),
             "pangkat"=>Pangkat::get(),
+            'nomorUrut' => $nomorUrut,
             'title'=>'Pegawai',
             "active"=>"Pegawai",
         ]);
@@ -81,14 +92,14 @@ class PegawaiController extends Controller
 
         // $validate['profil']==$gambar;
         if ($request->hasFile('profil')) {
+
             //jika request memiliki file dengan name profil maka -->
-            $nama= $request->file('profil')->getClientOriginalName();
+            $nama= time().$request->file('profil')->getClientOriginalName();
             $request->file('profil')->move(public_path('img/profil_Pegawai'),$nama);
             //Memindahkan file ke public/profil_pegawai dengan nama asli file
             $validate['profil'] = $nama;
             //Mengubah nama file menjadi nama asli sesuai nama file di direktori
         }
-
 
         Pegawai::create($validate);
         return back()->with('add','Entry data Success');
@@ -129,28 +140,18 @@ class PegawaiController extends Controller
             'nama'=>'required',
             'nip'=>'required',
             'tgl_lahir'=>'required',
-            'agama'=>'required',
+            'agama'=> 'nullable',
             'email'=>'required|email:dns',
-            'profil'=>'max:4096',
+            'profil'=>'nullable|max:4096',
             'j_kelamin'=>'required',
             'jabatan_id'=>'required',
             'departemen_id'=>'required',
         ]);
 
-
-        // $gambar = $request->file('profil');
-        // $nama_file = time() . "_" . $gambar->getClientOriginalName();
-        // $tujuan_upload = 'profil_Pegawai';
-        // $gambar->move(public_path($tujuan_upload), $nama_file);
-        // $file_extention= $gambar->extension();
-        // $nama_gambar = date('ydmhis').'.'.$file_extention;
-        // $gambar->move(public_path('profilPegawai'),$nama_gambar);
-
-        // $validate['profil']==$gambar;
         if ($request->hasFile('profil')) {
             //jika request memiliki file dengan name profil maka -->
-            $nama= $request->file('profil')->getClientOriginalName();
-            $request->file('profil')->move(public_path('img/profil_Pegawai'),$nama);
+            $nama = time().$request->file('profil')->getClientOriginalName();
+            $request->file('profil')->move(public_path('img/profil_Pegawai'), $nama);
             //Memindahkan file ke public/profil_pegawai dengan nama asli file
             $validate['profil'] = $nama;
             //Mengubah nama file menjadi nama asli sesuai nama file di direktori
@@ -169,7 +170,17 @@ class PegawaiController extends Controller
      */
     public function destroy($id)
     {
-        Pegawai::destroy($id);
+        $data = Pegawai::where('id',$id)->get('profil');
+        $data2 = Pegawai::findOrFail($id);
+
+        //hapus gambar pada penyimpanan
+        Storage::delete('public/img/profil_Pegawai/'.$data);
+        // Storage::delete('public/img/profil_Pegawai/'.$data->profil);
+
+        //hapus data pada database
+        $data2->delete();
+
+
         return back()->with('delete', 'Delete Data Success');
     }
 }

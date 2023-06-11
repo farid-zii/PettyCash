@@ -23,10 +23,8 @@ class PegawaiFactory extends Factory
             'j_kelamin'=> fake()->randomElement(['Laki-laki', 'Perempuan']),
             'agama'=> fake()->randomElement(['Islam', 'Atheis']),
             'tgl_lahir'=>fake()->date(),
-            'pangkat_id'=>mt_rand(1,8),
             'departemen_id'=>mt_rand(1,8),
             'jabatan_id'=>mt_rand(1,8),
-            'kategoriPgw_id'=>mt_rand(1,8),
         ];
     }
 }

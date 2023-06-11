@@ -11,6 +11,8 @@
     <!-- Nucleo Icons -->
     <link href="/../css/nucleo-icons.css" rel="stylesheet" />
     <link href="/../css/nucleo-svg.css" rel="stylesheet" />
+
+    <link href="https://cdn.tailwindcss.com/2.2.19/tailwind.min.css" rel="stylesheet">
     <!-- Font Awesome Icons -->
     <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
     <!-- Material Icons -->
@@ -57,7 +59,7 @@
         background-color: #fff;
         position: absolute;
         z-index: 999;
-        width: 100%;
+        width: 96%;
     }
 
     #searchResult li {
@@ -81,12 +83,6 @@
 
         <div>
             @yield('isi')
-            <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl bg-info" id="navbarBlur"
-                data-scroll="true" style="border-bottom-left-radius:0px;border-bottom-right-radius:0px; ">
-                <div class="container-fluid py-1 px-3">
-                    <h1>Footer</h1>
-                </div>
-            </nav>
         </div>
     </main>
     {{-- <footer>

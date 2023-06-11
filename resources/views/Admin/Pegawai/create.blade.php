@@ -7,7 +7,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
-            <form method="post" action="/admin/pegawai" enctype="multipart/form-data">
+            <form method="post" action="/pegawaai" enctype="multipart/form-data">
                 @method('POST')
                 @csrf
                 <div class="modal-body row g-2">
@@ -32,7 +32,7 @@
                     </div>
                     <div class="col-md-12">
                         <label class="text-xl text-dark font-weight-bolder ">Photo Profile</label>
-                        <input type="file" class="form-control" accept="image/png, image/gif, image/jpeg" required name="profil"
+                        <input type="file" class="form-control" accept="image/png, image/gif, image/jpeg" name="profil"
                             value="{{old('profil')}}">
                     </div>
                     <div class="col-md-6">

@@ -24,8 +24,6 @@ return new class extends Migration
             $table->string('agama');
             $table->foreignId('departemen_id');
             $table->foreignId('jabatan_id');
-            $table->foreignId('pangkat_id');
-            $table->foreignId('kategoriPgw_id');
             $table->timestamps();
         });
     }
