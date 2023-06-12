@@ -46,18 +46,18 @@ class DatabaseSeeder extends Seeder
         ],
     );
 
-        \App\Models\Pengajuan::factory()->create(
-            [
-            'pegawai_id' => '1',
-            'bank' => 'BRI',
-            'keterangan' => 'sadsadas',
-            'norek' => '1231312',
-            'type' => 'penambahan',
-            'saldo'=>'2000',
-            'nominal'=>'2000',
-            'approveD'=>'✅',
-            'approveF'=>'✅',
-        ],
-    );
+    //     \App\Models\Pengajuan::factory()->create(
+    //         [
+    //         'pegawai_id' => '1',
+    //         'bank' => 'BRI',
+    //         'keterangan' => 'sadsadas',
+    //         'norek' => '1231312',
+    //         'type' => 'penambahan',
+    //         'saldo'=>'2000',
+    //         'nominal'=>'2000',
+    //         'approveD'=>'✅',
+    //         'approveF'=>'✅',
+    //     ],
+    // );
     }
 }
