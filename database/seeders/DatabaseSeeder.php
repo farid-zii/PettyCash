@@ -11,6 +11,7 @@ use Illuminate\Database\Seeder;
 use App\Models\User;
 use App\Models\Pangkat;
 use App\Models\Pegawai;
+use App\Models\Pengajuan;
 
 class DatabaseSeeder extends Seeder
 {
@@ -42,6 +43,20 @@ class DatabaseSeeder extends Seeder
             'level' => 'hrd',
             'password' => bcrypt('123456'),
             'email' => 'hrd@test.com',
+        ],
+    );
+
+        \App\Models\Pengajuan::factory()->create(
+            [
+            'pegawai_id' => '1',
+            'bank' => 'BRI',
+            'keterangan' => 'sadsadas',
+            'norek' => '1231312',
+            'type' => 'penambahan',
+            'saldo'=>'2000',
+            'nominal'=>'2000',
+            'approveD'=>'✅',
+            'approveF'=>'✅',
         ],
     );
     }
