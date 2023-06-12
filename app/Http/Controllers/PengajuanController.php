@@ -24,11 +24,11 @@ class PengajuanController extends Controller
         $data=Pengajuan::get();
         $a=Pengajuan::where('type','=','penambahan')->latest()->get();
         if ($a->id='' || $a->id=null) {
-            return $a->saldo='-'
+            return $a->saldo='-';
         }
         $ab=Pengajuan::where('type','=','pengajuan')->latest()->get();
         if ($a->id='' || $a->id=null) {
-            return $ab->nominal='-'
+            return $ab->nominal='-';
         }
 
         return view('admin.pengajuan.index',[
