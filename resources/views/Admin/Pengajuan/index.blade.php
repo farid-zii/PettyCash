@@ -128,8 +128,8 @@
                                 @endforeach
                                 <tr>
                                     <td colspan="4" class="text-center">Total Dana</td>
-                                    <td colspan="">Rp.@rp(50000)</td>
-                                    <td colspan="">Rp.@rp(20000)</td>
+                                    <td colspan="">Rp.@rp($tKredit[0]->nominal)</td>
+                                    <td colspan="">Rp.@rp($tDebit[0]->saldo)</td>
                                     <td colspan="3"></td>
                                 </tr>
                             </tbody>
