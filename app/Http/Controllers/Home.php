@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Pegawai;
+use App\Models\Pengajuan;
 use App\Models\Saldo;
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -19,7 +20,7 @@ class Home extends Controller
      */
     public function admin()
     {
-        $saldo= Saldo::get();
+        $saldo= Pengajuan::get();
         $pegawai = Pegawai::get();
 
         if($saldo!=''){
@@ -41,7 +42,7 @@ class Home extends Controller
     public function hrd()
     {
         $pegawai = Pegawai::get();
-        $saldo = Saldo::get();
+        $saldo = Pengajuan::get();
 
         if ($saldo != '') {
             return view('admin.index', [

@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\StorePengajuanRequest;
 use App\Http\Requests\UpdatePengajuanRequest;
 use App\Models\Pegawai;
+use Illuminate\Http\Request;
 // use App\Models\Pengajuan;
 
 use DB;
@@ -21,11 +22,15 @@ class PengajuanController extends Controller
     public function index()
     {
         $data=Pengajuan::get();
+        $a=Pengajuan::where('type','=','penambahan')->latest()->get();
+        $ab=Pengajuan::where('type','=','pengajuan')->latest()->get();
 
         return view('admin.pengajuan.index',[
             'active' => 'Pengajuan',
             'title' => 'Pengajuan',
-            'pengajuan'=>$data
+            'pengajuan'=>$data,
+            'tDebit'=>$a,
+            'tKredit'=>$ab
         ]);
     }
 
@@ -62,20 +67,23 @@ class PengajuanController extends Controller
 
         $nama=Pegawai::where('nama',$request->nama)->first();
 
-        // if($request->type='penambahan'){
-        //     Pengajuan::create([
-        //         'pegawai_id' => $nama->id,
-        //         'keterangan' => $request->keterangan,
-        //         'nominal' => $request->nominal,
-        //         'bank'=> $request->bank,
-        //         'type'=> $request->type,
-        //         'norek'=> $request->norek,
-        //         'approveF'=> '✅',
-        //         'approveD'=> '✅',
-        //     ]);
-        //     return back();
-        // }
-        if($request->type='pengajuan'){
+        if($request->type=='penambahan'){
+
+            $saldo=$request->saldo+$request->nominal;
+            Pengajuan::create([
+                'pegawai_id' => $nama->id,
+                'keterangan' => $request->keterangan,
+                'nominal' => $request->nominal,
+                'bank'=> $request->bank,
+                'type'=> $request->type,
+                'norek'=> $request->norek,
+                'approveF'=> '✅',
+                'approveD'=> '✅',
+                'saldo'=> $saldo,
+            ]);
+            return back();
+        }
+        if($request->type=='pengajuan'){
             Pengajuan::create([
                 'pegawai_id' => $nama->id,
                 'keterangan' => $request->keterangan,
@@ -88,19 +96,61 @@ class PengajuanController extends Controller
             ]);
             return back();
         }
-
-
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Pengajuan  $pengajuan
-     * @return \Illuminate\Http\Response
-     */
+
+    public function financeAprrove(Request $r,$id)
+    {
+        if($r->type=='setuju'){
+            Pengajuan::where('id',$id)
+                    ->update([
+                        'approveF'=>'✅'
+                    ]);
+            return back();
+        }
+        if($r->type=='tolak'){
+            Pengajuan::where('id',$id)
+                    ->update([
+                        'approveF'=>'✅',
+                        'komenF'=>$r->komen,
+                    ]);
+            return back();
+        }
+    }
+
+    public function direksiAprrove(Request $r,$id)
+    {
+        $pengajuan= Pengajuan::where('id', $id)->get();
+
+        if($r->type=='setuju'){
+            if($pengajuan->aooriveF== '✅'){
+                $a=$pengajuan->saldo-$pengajuan->nominal;
+                Pengajuan::where('id', $id)
+                    ->update([
+                        'approveD' => '✅',
+                        'saldo' =>$a,
+                    ]);
+                return back();
+            }
+            Pengajuan::where('id',$id)
+                    ->update([
+                        'approveD'=>'✅'
+                    ]);
+            return back();
+        }
+        if($r->type=='tolak'){
+            Pengajuan::where('id',$id)
+                    ->update([
+                        'approveD'=>'✅',
+                        'komenD'=>$r->komen,
+                    ]);
+            return back();
+        }
+    }
+
     public function show(Pengajuan $pengajuan)
     {
-        //
+
     }
 
     /**

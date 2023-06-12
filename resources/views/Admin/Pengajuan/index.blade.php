@@ -36,7 +36,7 @@
                         <button class="btn bg-gradient-info w-15 my-4 mb-2 float-sm-end" data-bs-toggle="modal"
                             data-bs-target="#staticBackdrop">Entry <i class="bi bi-plus-square-fill"></i></button>
                     </div>
-                    <div class="table-responsive p-0">
+                    <div class="table-responsive p-1">
                         <table class="table align-items-center mb-0 table-bordered border-dark">
                             <thead>
                                 <tr class="bg-dark">
@@ -46,15 +46,18 @@
                                     <th
                                         class="text-uppercase text-light text-xs font-weight-bolder opacity-7">
                                         Nama/Departemen</th>
-                                    <th
+                                    <th style="width: 50px"
                                         class="text-uppercase text-light text-xs font-weight-bolder opacity-7">
                                         Keterangan</th>
                                     <th style=""
                                         class="text-uppercase text-light text-xs font-weight-bolder opacity-7 ">
-                                        Rekening Tujuan</th>
+                                        Rekening</th>
                                     <th
                                         class="text-uppercase text-light text-xs font-weight-bolder opacity-7 ">
-                                        Nominal</th>
+                                        Kredit</th>
+                                    <th
+                                        class="text-uppercase text-light text-xs font-weight-bolder opacity-7 ">
+                                        Debit</th>
                                     <th colspan="2"
                                         class="text-center text-uppercase text-light text-xs font-weight-bolder opacity-7">
                                         Approve</th>
@@ -67,11 +70,12 @@
                                 <tr>
                                     <td class="">202305001</td>
                                     <td class="">Pandaman</td>
-                                    <td class=""></td>
+                                    <td class="" style="width: 50px"></td>
                                     <td class="">
                                         <p class="text-xs font-weight-bold mb-0">31231231231314r</p>
                                         <p class="text-xs text-secondary mb-0">BCA</p>
                                     </td>
+                                    <td class="">40000</td>
                                     <td class="">40000</td>
                                     <td class="text-center">✔</td>
                                     <td class="text-center">❌</td>
@@ -88,12 +92,19 @@
                                         <p class="text-xl font-weight-bold mb-0">{{$data->pegawai->nama}}</p>
                                         <p class="text-xs text-secondary mb-0">{{$data->pegawai->departemen->nama}}</p>
                                     </td>
-                                    <td class="">{{$data->keterangan}}</td>
+                                    <td class="" style="width: 50px">{{$data->keterangan}}</td>
                                     <td class="">
                                         <p class="text-xs font-weight-bold mb-0">{{$data->norek}}</p>
                                         <p class="text-xs text-secondary mb-0">{{$data->bank}}</p>
                                     </td>
+
+                                    @if ($data->type=='penambahan')
+                                    <td class="text-right">-</td>
                                     <td class="text-right">@rp($data->nominal)</td>
+                                    @elseif ($data->type=='pengajuan')
+                                    <td class="text-right">@rp($data->nominal)</td>
+                                    <td class="text-right">-</td>
+                                    @endif
                                     {{--  --}}
                                     <td class="text-center">{{$data->approveF}}</td>
                                     {{--  --}}
@@ -115,10 +126,10 @@
                                     </td>
                                 </tr>
                                 @endforeach
-
                                 <tr>
                                     <td colspan="4" class="text-center">Total Dana</td>
-                                    <td colspan="">Rp.</td>
+                                    <td colspan="">Rp.@rp($tKredit[0]->nominal)</td>
+                                    <td colspan="">Rp.@rp($tDebit[0]->saldo)</td>
                                     <td colspan="3"></td>
                                 </tr>
                             </tbody>
