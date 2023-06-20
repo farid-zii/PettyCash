@@ -19,24 +19,75 @@ class PengajuanController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+
+    public function tab1(){
+        $data = Pengajuan::get();
+        return response()->json($data, 200);
+    }
+
+     public function index()
     {
         $data=Pengajuan::get();
-        $a=Pengajuan::where('type','=','penambahan')->latest()->get();
-        if ($a->id='' || $a->id=null) {
-            return $a->saldo='-';
-        }
-        $ab=Pengajuan::where('type','=','pengajuan')->latest()->get();
-        if ($a->id='' || $a->id=null) {
-            return $ab->nominal='-';
-        }
+        // $totalNominal=Pengajuan::where('type','=','penambahan')->latest()->get();
 
+        //Total Debit
+        $totalDebit = Pengajuan::select('type',  DB::raw('SUM(nominal) as total'))
+        ->where('type', '=', false)
+        ->groupBy('type')
+        ->first();
+
+        //Total Kredit
+        $totalKredit = Pengajuan::select('type', DB::raw('SUM(nominal) as total'))
+        ->where('type', '=', true)
+        ->groupBy('type')
+        ->first();
+
+        // $totalKredit = Pengajuan::select('type', DB::raw('SUM(nominal) as total'))
+        // ->where('type', '=', null)
+        // ->groupBy('type')
+        // ->first();
+
+        // if($data->type=null){
+
+        // }
+
+        if($totalDebit == null && $totalKredit ==null){
+            return view('admin.pengajuan.index', [
+                'active' => 'Pengajuan',
+                'title' => 'Pengajuan',
+                'pengajuan' => $data,
+                'debit' => 0,
+                'kredit' => 0,
+                // 'tKredit'=>$ab
+            ]);
+        }
+        if($totalDebit == null){
+            return view('admin.pengajuan.index', [
+                'active' => 'Pengajuan',
+                'title' => 'Pengajuan',
+                'pengajuan' => $data,
+                'debit' => '-',
+                'kredit' => $totalKredit->total,
+                // 'tKredit'=>$ab
+            ]);
+        }
+        elseif($totalKredit ==null){
+            return view('admin.pengajuan.index', [
+                'active' => 'Pengajuan',
+                'title' => 'Pengajuan',
+                'pengajuan' => $data,
+                'debit' => $totalDebit->total,
+                'kredit' => 0,
+                // 'tKredit'=>$ab
+            ]);
+        }
         return view('admin.pengajuan.index',[
             'active' => 'Pengajuan',
             'title' => 'Pengajuan',
             'pengajuan'=>$data,
-            'tDebit'=>$a,
-            'tKredit'=>$ab
+            'debit'=>$totalDebit->total,
+            'kredit'=>$totalKredit->total,
+            // 'tKredit'=>$ab
         ]);
     }
 
@@ -73,10 +124,10 @@ class PengajuanController extends Controller
 
         $nama=Pegawai::where('nama',$request->nama)->first();
 
-        if($request->type=='penambahan'){
+        if($request->type==false){
 
             $saldo=$request->saldo+$request->nominal;
-            Pengajuan::create([
+            $data=Pengajuan::create([
                 'pegawai_id' => $nama->id,
                 'keterangan' => $request->keterangan,
                 'nominal' => $request->nominal,
@@ -87,9 +138,9 @@ class PengajuanController extends Controller
                 'approveD'=> '✅',
                 'saldo'=> $saldo,
             ]);
-            return back();
+            return response()->json($data,200);
         }
-        if($request->type=='pengajuan'){
+        if($request->type==true){
             Pengajuan::create([
                 'pegawai_id' => $nama->id,
                 'keterangan' => $request->keterangan,
@@ -103,24 +154,76 @@ class PengajuanController extends Controller
             return back();
         }
     }
+    public function awal(Request $request)
+    {
+        //jika waktu pembuatan beda sama sekarang maka $i=0
+        $validator = Validator::make($request->all(),[
+            'nama' => 'required',
+            'keterangan' => 'required',
+            'nominal' => 'required',
+            'bank'=>'required',
+            'norek'=>'required',
+        ]);
+
+        // if($validator->fails()){
+        //     return response()->json($validator->errors(), 200);
+        // }
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
+
+        $nama=Pegawai::where('nama',$request->nama)->first();
+
+        if($request->type==false){
+
+            $saldo=$request->saldo+$request->nominal;
+            $data=Pengajuan::create([
+                'pegawai_id' => $nama->id,
+                'keterangan' => $request->keterangan,
+                'nominal' => $request->nominal,
+                'bank'=> $request->bank,
+                'type'=> $request->type,
+                'norek'=> $request->norek,
+                'approveF'=> '✅',
+                'approveD'=> '✅',
+                'saldo'=> $saldo,
+            ]);
+            return response()->json($data,200);
+        }
+        if($request->type==true){
+            $data=Pengajuan::create([
+                'pegawai_id' => $nama->id,
+                'keterangan' => $request->keterangan,
+                'nominal' => $request->nominal,
+                'bank'=> $request->bank,
+                'type'=> $request->type,
+                'norek'=> $request->norek,
+                'approveF'=> '⏹',
+                'approveD'=> '⏹',
+            ]);
+            return response()->json($data, 200);
+        }
+    }
 
 
     public function financeAprrove(Request $r,$id)
     {
         if($r->type=='setuju'){
-            Pengajuan::where('id',$id)
+            $data=Pengajuan::where('id',$id)
                     ->update([
                         'approveF'=>'✅'
                     ]);
-            return back();
+            // return back();
+            return response()->json($data, 200);
         }
         if($r->type=='tolak'){
-            Pengajuan::where('id',$id)
+            $data=Pengajuan::where('id',$id)
                     ->update([
                         'approveF'=>'✅',
                         'komenF'=>$r->komen,
                     ]);
             return back();
+            return response()->json($data, 200);
         }
     }
 

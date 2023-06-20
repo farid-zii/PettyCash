@@ -55,6 +55,7 @@ Route::middleware(['auth', 'checkLevel:admin'])->group(function () {
 /////////////////////////////////
 //           HRD              //
 ///////////////////////////////
+// Route::post('/iPengajuan', [PengajuanController::class,'awal']);
 Route::middleware(['auth', 'checkLevel:hrd'])->group(function () {
     Route::get('/', [Home::class, 'hrd']);
     Route::resource('/pegawaai', PegawaiController::class);

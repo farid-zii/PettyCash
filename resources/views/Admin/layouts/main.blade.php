@@ -12,6 +12,10 @@
     <link href="/../css/nucleo-icons.css" rel="stylesheet" />
     <link href="/../css/nucleo-svg.css" rel="stylesheet" />
 
+    {{-- toas --}}
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+
+
     <link href="https://cdn.tailwindcss.com/2.2.19/tailwind.min.css" rel="stylesheet">
     <!-- Font Awesome Icons -->
     <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
@@ -35,6 +39,14 @@
     <!-- Customized Bootstrap Stylesheet -->
     <link href="/../css/bootstrap.min.css" rel="stylesheet">
 
+     <!-- CSS Bootstrap 5 -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+
+  <!-- CSS DataTables -->
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.4/css/dataTables.bootstrap5.min.css">
+  <link rel="stylesheet" type="text/css" href="{{asset('datatable/datatables.min.css')}}">
+
+
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
@@ -45,13 +57,19 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 
+    {{-- Sweet Alert --}}
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <style>
         * {
             margin: 0px;
             font-family: 'Times New Roman', Times, serif;
         }
 
-         #searchResult {
+        #passwordMessage{
+            margin-top: 5px;
+        }
+        #searchResult {
         list-style-type: none;
         padding: 0;
         margin: 0;
@@ -62,6 +80,23 @@
         width: 96%;
     }
 
+    #myTable {
+  border-collapse: collapse;
+      width: 100%;
+}
+
+#myTable th,
+#myTable td {
+
+    border: 1px solid black;
+      padding: 8px;
+      text-align: left;
+      vertical-align: top;
+  word-wrap: break-word;
+
+  /* overflow: hidden;
+  text-overflow: ellipsis; */
+}
     #searchResult li {
         padding: 10px;
         cursor: pointer;
@@ -91,6 +126,10 @@
         </div>
     </footer> --}}
     <div class="js">
+        {{-- <script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.11.4/js/dataTables.bootstrap5.min.js"></script> --}}
+
+        <script src="{{asset('datatable/datatables.min.js')}}"></script>
         <script src="/./js/core/popper.min.js"></script>
         <script src="/./js/core/bootstrap.min.js"></script>
         <script src="/./js/plugins/perfect-scrollbar.min.js"></script>
@@ -103,6 +142,11 @@
         <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
         <script src="/../js/material-dashboard.min.js?v=3.0.4"></script>
         <script src="/../js/bootstrap.bundle.min.js"></script>
+
+
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+
         <script>
             var dropdown = document.getElementsByClassName("dropdown-btn");
 var i;

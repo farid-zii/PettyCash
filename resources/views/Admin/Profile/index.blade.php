@@ -63,7 +63,7 @@
                     passwordMessage.css("padding", "2px");
                 } else {
                     passwordMessage.text("Password tidak cocok");
-                    passwordMessage.css({color:"black",background: "red",padding: "2px"});
+                    passwordMessage.css({color:"black",background: "red",padding: "3px"});
                 }
                 }
 

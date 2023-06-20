@@ -12,7 +12,7 @@
                 <div class="modal-body">
 
                     <div class="mb-1 col-4 float-sm-end">
-                        <select name="type" style="width: 100%;background: rgb(223, 219, 219);padding:5px;">
+                        <select name="type" id='type' style="width: 100%;background: rgb(223, 219, 219);padding:5px;">
                             <option value="pengajuan">Pengajuan</option>
                             <option value="penambahan">Penambahan</option>
                         </select>
@@ -22,15 +22,17 @@
                         <input type="text" class="form-control" id="nama" name="nama">
                         <ul id="searchResult" class=""></ul>
                     </div>
+
                     <label class="text-xl text-dark font-weight-bolder">Nominal</label>
                     <div class="mb-2" style="display:flex;">
                         <div class="form-control text-center" disabled style="width: 7%;background: rgb(223, 219, 219);">Rp</div>
                         <input type="number" class="form-control" placeholder="300" name="nominal" id="nominal">
+                        <div class="alert alert-danger mt-2 d-none" role="alert" id="alert-nominal"></div>
                     </div>
 
                     <label class="text-xl text-dark font-weight-bolder">No. Rekening</label>
                     <div class="mb-2" style="display:flex;">
-                        <select name="bank" style="width: 20%;background: rgb(223, 219, 219);">
+                        <select name="bank" id="bank" style="width: 20%;background: rgb(223, 219, 219);">
                             <option value="BRI">BRI</option>
                             <option value="Mandiri">Mandiri</option>
                             <option value="BNI">BNI</option>
@@ -39,11 +41,11 @@
                             <option value="BJB">BJB</option>
                             <option value="Lainnya">Lain-lain</option>
                         </select>
-                        <input type="number" class="form-control" placeholder="300" name="norek" id="nominal">
+                        <input type="number" class="form-control" placeholder="300" name="norek" id="norek">
                     </div>
                     <label class="text-xl text-dark font-weight-bolder">Keterangan</label>
                     <div class="mb-2">
-                        <textarea class="form-control" name="keterangan"></textarea>
+                        <textarea class="form-control" name="keterangan" id="keterangan"></textarea>
                     </div>
                     {{-- <label class="text-xl text-dark font-weight-bolder">Jumlah</label>
                     <div class="mb-2">
@@ -52,7 +54,7 @@
 
                 </div>
                 <div class="footer px-4 mb-2">
-                    <button type="submit" class="btn btn-primary float-sm-start col-md-2 mt-4">Save</button>
+                    <button type="button" class="btn btn-primary float-sm-start col-md-2 mt-4" onclick="simpan()">Save</button>
                     <button type="button" class="btn btn-danger float-sm-end col-md-2 mt-4"
                         data-bs-dismiss="modal">Close</button>
                 </div>
@@ -62,19 +64,51 @@
 </div>
 
 <script>
+    var csrfToken = document.head.querySelector('meta[name="csrf-token"]').content;
+
+    function simpan() {
+        let nama = $('#nama').val();
+        let type = $('#type').val();
+        let nominal = $('#nominal').val();
+        let bank = $('#bank').val();
+        let norek = $('#norek').val();
+        let keterangan = $('#keterangan').val();
+        axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken
+        axios.post('/api/iPengajuan',{
+            nama:nama,
+            type:type,
+            bank:bank,
+            nominal:nominal,
+            norek:norek,
+            keterangan:keterangan
+        }).then(function(response) {
+
+            console.log(response.data)
+
+            //Menutup modal
+            let modal = $('#staticBackdrop')
+            let bModal = bootstrap.Modal.getInstance(modal)
+            // toastr.error();('berhasil')
+            let closeButton = $('#staticBackdrop .btn-danger');
+            closeButton.click()
+
+        }).catch(function(error) {
+
+            Swal.fire({
+                title: 'Error!',
+                text: 'Pastikan Semua Data Di isi',
+                icon: 'error',
+                timer: 2000,
+                confirmButtonText: 'Close'
+            })
+        })
+    }
+
 
     $('#nama').on('input',function() {
         let keyword = $(this).val();
-        var csrfToken = document.head.querySelector('meta[name="csrf-token"]').content;
+        // var csrfToken = document.head.querySelector('meta[name="csrf-token"]').content;
 
-  // Setel CSRF token pada header Axios
-    //  axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken;
-
-        // $.ajax({
-        //     url: `/api/searchNama`,
-        //     type: "GET",
-        //     data:{keyword: keyword}
-        // })
         axios.get('/api/searchNama',{ params: {keyword: keyword}})
         .then(function (response) {
             var results = response.data;

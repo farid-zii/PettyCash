@@ -20,7 +20,8 @@ return new class extends Migration
             $table->string('bank');
             $table->text('keterangan');
             $table->string('norek');
-            $table->string('type');
+            // $table->string('type');
+            $table->boolean('type');
             $table->double('nominal',12);
             $table->string('approveF')->nullable();
             $table->text('komenF')->nullable();

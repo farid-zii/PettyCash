@@ -4,12 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-// use Alfa6661\AutoNumber\AutoNumberTtaits;
+// use Alfa6661\AutoNumber\AutoNumberTrait;
+
 
 class Pengajuan extends Model
 {
     use HasFactory;
-    // use AutoNumberTtaits;
+    // use AutoNumberTrait;
 
     protected $guarded = [
     ];
