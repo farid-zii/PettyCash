@@ -19,12 +19,6 @@ class PengajuanController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-
-    public function tab1(){
-        $data = Pengajuan::get();
-        return response()->json($data, 200);
-    }
-
      public function index()
     {
         $data=Pengajuan::get();

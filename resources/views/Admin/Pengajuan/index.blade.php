@@ -25,19 +25,19 @@
                     <table id="myTable" class="table table-striped display responsive nowrap">
                         <thead class="">
                         <tr class="text-center bg-dark">
-                            <th class="text-light" style="">Kode</th>
-                            <th class="text-light" style="">Nama/Departemen</th>
+                            <th class="text-light" style="width: 5%;">Kode</th>
+                            <th class="text-light" style="width: 10%;">Nama/Departemen</th>
                             <th class="text-light" style="">Keterangan</th>
-                            <th class="text-light" style="">Rekening</th>
-                            <th class="text-light" style="">Debit</th>
-                            <th class="text-light" style="">Kredit</th>
-                            <th class="text-light" style="" colspan="2">Aprrove</th>
-                            <th class="text-light" style="" >Aksi</th>
+                            <th class="text-light" style="width: 9%;">Rekening</th>
+                            <th class="text-light" style="width: 7%;">Debit</th>
+                            <th class="text-light" style="width: 7%;">Kredit</th>
+                            <th class="text-light text-center" style="width: 10%;" colspan="2">Aprrove</th>
+                            <th class="text-light" style="width: 14%;" >Aksi</th>
                         </tr>
                         </thead>
                         <tbody>
                         @foreach ($pengajuan as $data )
-                                <tr id="{{$data->id}}">
+                                <tr>
                                     <td class=""> {{$loop->iteration}}</td>
                                     <td class="">
                                         <p class="text-xl font-weight-bold mb-0">{{$data->pegawai->nama}}</p>
@@ -49,10 +49,10 @@
                                         <p class="text-xs text-secondary mb-0">{{$data->bank}}</p>
                                     </td>
 
-                                    @if ($data->type=='penambahan')
+                                    @if ($data->type==false)
                                     <td class="text-end">-</td>
                                     <td class="text-end">@rp($data->nominal)</td>
-                                    @elseif ($data->type=='pengajuan')
+                                    @elseif ($data->type==true)
                                     <td class="text-end">@rp($data->nominal)</td>
                                     <td class="text-end">-</td>
                                     @endif
@@ -67,8 +67,12 @@
                                                 data-bs-target="#data-{{$data->id}}"><i class="bi bi-eye-fill"></i></button>
                                             <button class="btn btn-warning font-weight-bold m-auto" data-bs-toggle="modal"
                                                 data-bs-target="#data-{{$data->id}}"><i class="bi bi-pencil-square"></i></button>
-                                            <button class="btn btn-danger font-weight-bold m-auto" type="button"
-                                                    onclick=""><i class="bi bi-trash3-fill"></i></button>
+                                            <form action="/admin/pangkat/{{$data->id}}" method="post" class="">
+                                                @method('DELETE')
+                                                @csrf
+                                                <button class="btn btn-danger font-weight-bold m-auto" type="submit"
+                                                    onclick="return confirm('Yakin akan menghapus data ?')"><i class="bi bi-trash3-fill"></i></button>
+                                            </form>
                                         </div>
                                     </td>
                                 </tr>
@@ -76,8 +80,6 @@
                         <!-- Tambahkan baris lainnya sesuai kebutuhan -->
                         </tbody>
                     </table>
-                    <div class="">
-                        {{$kredit}}
                     </div>
                 </div>
             </div>
@@ -97,17 +99,17 @@
         pageLength: 10,
         lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
         language: {
-        info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
-        infoEmpty: "Menampilkan 0 sampai 0 dari 0 data",
-        infoFiltered: "(disaring dari _MAX_ total data)",
-        lengthMenu: "Tampilkan _MENU_ data per halaman",
-        zeroRecords: "Tidak ada data yang cocok",
-        search: "Cari:",
-        paginate: {
-            first: "Pertama",
-            last: "Terakhir",
-            next: "Selanjutnya",
-            previous: "Sebelumnya"
+            info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+            infoEmpty: "Menampilkan 0 sampai 0 dari 0 data",
+            infoFiltered: "(disaring dari _MAX_ total data)",
+            lengthMenu: "Tampilkan _MENU_ data per halaman",
+            zeroRecords: "Tidak ada data yang cocok",
+            search: "Cari:",
+            paginate: {
+                first: "Pertama",
+                last: "Terakhir",
+                next: "Selanjutnya",
+                previous: "Sebelumnya"
             }
         }
       });
