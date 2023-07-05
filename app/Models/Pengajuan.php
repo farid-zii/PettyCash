@@ -4,13 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-// use Alfa6661\AutoNumber\AutoNumberTrait;
 
 
 class Pengajuan extends Model
 {
     use HasFactory;
-    // use AutoNumberTrait;
+
+    public $incrementing = false;
+    protected $keyType = 'string';
 
     protected $guarded = [
     ];
@@ -23,20 +24,5 @@ class Pengajuan extends Model
     {
         return $this->belongsTo(Bank::class);
     }
-    // public function getAutoNumberOptions()
-    // {
-    //     return [
-    //         // kode dibawah adalah nama field yang ada pada table
-    //         'kode' => [
-    //             'format' => function () {
-    //                 return date('Ym') . '?'; // autonumber format. '?' will be replaced with the generated number.
-    //             },
-    //             'length' => 3 // panjang nomor yg digenerate
-    //             // 202304290001
-    //             // 20230429 adalah tanggal pembuatan data
-    //             // 0001 adalah panjang nomor yg digenerate
-    //         ]
-    //     ];
-    // }
 
 }

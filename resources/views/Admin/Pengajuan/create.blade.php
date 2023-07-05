@@ -13,14 +13,14 @@
 
                     <div class="mb-1 col-4 float-sm-end">
                         <select name="type" id='type' style="width: 100%;background: rgb(223, 219, 219);padding:5px;">
-                            <option value="pengajuan">Pengajuan</option>
-                            <option value="penambahan">Penambahan</option>
+                            <option value="1">Pengajuan</option>
+                            <option value="0">Penambahan</option>
                         </select>
                     </div>
                     <label class="text-xl text-dark font-weight-bolder col-6">Nama</label>
                     <div class="mb-2">
                         <input type="text" class="form-control" id="nama" name="nama">
-                        <ul id="searchResult" class=""></ul>
+                        {{-- <ul id="searchResult" class=""></ul> --}}
                     </div>
 
                     <label class="text-xl text-dark font-weight-bolder">Nominal</label>
@@ -45,7 +45,7 @@
                     </div>
                     <label class="text-xl text-dark font-weight-bolder">Keterangan</label>
                     <div class="mb-2">
-                        <textarea class="form-control" name="keterangan" id="keterangan"></textarea>
+                        <textarea class="form-control" name="keterangan" id="keterangan" onkeydown="addNumberOnEnter(event)"></textarea>
                     </div>
                     {{-- <label class="text-xl text-dark font-weight-bolder">Jumlah</label>
                     <div class="mb-2">
@@ -64,6 +64,47 @@
 </div>
 
 <script>
+
+$(document).ready(function() {
+    // Initialize the Typeahead.js autocomplete
+    var namaInput = $('#nama');
+    var namaData = new Bloodhound({
+        datumTokenizer: Bloodhound.tokenizers.obj.whitespace('nama'),
+        queryTokenizer: Bloodhound.tokenizers.whitespace,
+        remote: {
+            url: '/api/searchNama?keyword=%QUERY',
+            wildcard: '%QUERY'
+        }
+    });
+
+    namaInput.typeahead(
+        {
+            hint: true,
+            highlight: true,
+            minLength: 1
+        },
+        {
+            name: 'nama-autocomplete',
+            display: 'nama',
+            source: namaData,
+            templates: {
+                suggestion: function(data) {
+                    return '<div class="custom-suggestion" style="z-index: 999; background: #c3bdbd; ; width: 120%;">' + data.nama + '</div>';
+                },
+            }
+        }
+    );
+});
+
+// Rest of your code
+$('#nama').on('typeahead:selected', function(event, suggestion, dataset) {
+    // Do something when a suggestion is selected
+    console.log(suggestion);
+});
+
+
+
+
     var csrfToken = document.head.querySelector('meta[name="csrf-token"]').content;
 
     function simpan() {
@@ -90,7 +131,9 @@
             let bModal = bootstrap.Modal.getInstance(modal)
             // toastr.error();('berhasil')
             let closeButton = $('#staticBackdrop .btn-danger');
-            closeButton.click()
+            // closeButton.click()
+            location.reload();
+
 
         }).catch(function(error) {
 
@@ -105,37 +148,44 @@
     }
 
 
-    $('#nama').on('input',function() {
-        let keyword = $(this).val();
-        // var csrfToken = document.head.querySelector('meta[name="csrf-token"]').content;
 
-        axios.get('/api/searchNama',{ params: {keyword: keyword}})
-        .then(function (response) {
-            var results = response.data;
+//    $('#nama').on('input', function() {
+//     let keyword = $(this).val();
+//     // var csrfToken = document.head.querySelector('meta[name="csrf-token"]').content;
 
-            console.log(results)//cek data masuk atau tidak
+//     axios.get('/api/searchNama', { params: { keyword: keyword } })
+//         .then(function(response) {
+//             var results = response.data;
 
-            $('#searchResult').empty();
+//             console.log(results); // Cek data masuk atau tidak
 
-            results.forEach(function(result) {
-                var listNama = $(`<li style="list-style-type:none;">`).text(result);
-                $('#searchResult').append(listNama);
-            })
+//             $('#searchResult').empty();
 
-        }).catch(function(error) {
-            console.error(error)
-        })
-    })
+//             results.forEach(function(result) {
+//                 // Cek jika value gambar === null sebelum menambahkan elemen <li>
+//                 if (keyword !== null || keyword !== undefined) {
+//                     var listNama = $('<li style="list-style-type:none;">').text(result);
+//                     $('#searchResult').append(listNama);
+//                 }else{
+//                 $('#searchResult').empty();
+//                 }
+//             });
+//         })
+//         .catch(function(error) {
+//             console.error(error);
+//         });
+// });
+
 
         // Event listener saat opsi autocompleted di klik
-    $(document).on('click', '#searchResult li', function () {
-    var selectedValue = $(this).text();
+    // $(document).on('click', '#searchResult li', function () {
+    // var selectedValue = $(this).text();
 
-    // Isi input field dengan opsi autocompleted yang dipilih
-    $('#nama').val(selectedValue);
+    // // Isi input field dengan opsi autocompleted yang dipilih
+    // $('#nama').val(selectedValue);
 
-    // Kosongkan hasil pencarian
-    $('#searchResult').empty();
-    });
+    // // Kosongkan hasil pencarian
+    // $('#searchResult').empty();
+    // });
 
 </script>

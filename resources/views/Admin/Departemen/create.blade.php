@@ -43,6 +43,7 @@
                 'nama':nama,
 
             },success:function(response){
+                $('').text(`${reponse.data.id}`)
                 let dataPost =`<tr id="index_${response.data.id}">
                                     <td class="">2</td>
                                     <td class="" style="">
@@ -60,7 +61,7 @@
                                     </td>
                                 </tr>`
 
-                $('#table-departemen').prepend(dataPost);
+                $('#table-departemen').append(dataPost);
 
             //clear form
                 $('#nama').val('');

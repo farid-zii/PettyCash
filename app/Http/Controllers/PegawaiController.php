@@ -51,10 +51,10 @@ class PegawaiController extends Controller
         // $keyword = $request->input('keyword');
         $keyword = $request->input('keyword');
 
-        $result =Pegawai::where('nama','like',$keyword.'%')
-                 ->pluck('nama')
-                 ->toArray();
-                // ->get();
+        $result =Pegawai::where('nama','like','%'.$keyword.'%')
+                //  ->pluck('nama')
+                //  ->toArray();
+                ->get();
 
          return response()->json($result);
     }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Pengajuan;
+use App\Services\AutoNumberService;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\StorePengajuanRequest;
 use App\Http\Requests\UpdatePengajuanRequest;
@@ -14,11 +15,35 @@ use DB;
 
 class PengajuanController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function data(){
+        $data = Pengajuan::get();
+        // $totalNominal=Pengajuan::where('type','=','penambahan')->latest()->get();
+
+        //Total Debit
+        $totalDebit = Pengajuan::select('type',  DB::raw('SUM(nominal) as total'))
+        ->where('type', '=', false)
+        ->groupBy('type')
+        ->first();
+
+        //Total Kredit
+        $totalKredit = Pengajuan::select('type', DB::raw('SUM(nominal) as total'))
+        ->where('type', '=', true)
+        ->groupBy('type')
+        ->first();
+
+        // $totalKredit = Pengajuan::select('type', DB::raw('SUM(nominal) as total'))
+        // ->where('type', '=', null)
+        // ->groupBy('type')
+        // ->first();
+
+        // if($data->type=null){
+
+        // }
+
+
+        return response()->json($data, 200);
+    }
+
      public function index()
     {
         $data=Pengajuan::get();
@@ -45,6 +70,7 @@ class PengajuanController extends Controller
 
         // }
 
+
         if($totalDebit == null && $totalKredit ==null){
             return view('admin.pengajuan.index', [
                 'active' => 'Pengajuan',
@@ -60,7 +86,7 @@ class PengajuanController extends Controller
                 'active' => 'Pengajuan',
                 'title' => 'Pengajuan',
                 'pengajuan' => $data,
-                'debit' => '-',
+                'debit' => 0,
                 'kredit' => $totalKredit->total,
                 // 'tKredit'=>$ab
             ]);
@@ -103,51 +129,60 @@ class PengajuanController extends Controller
      */
     public function store(StorePengajuanRequest $request)
     {
-        //jika waktu pembuatan beda sama sekarang maka $i=0
-        $validator = Validator::make($request->all(),[
+        $validator = Validator::make($request->all(), [
             'nama' => 'required',
             'keterangan' => 'required',
             'nominal' => 'required',
-            'bank'=>'required',
-            'norek'=>'required',
+            'bank' => 'required',
+            'norek' => 'required',
         ]);
 
-        if($validator->fails()){
+        if ($validator->fails()) {
             return response()->json($validator->errors(), 200);
         }
 
-        $nama=Pegawai::where('nama',$request->nama)->first();
+        $nama = Pegawai::where('nama', $request->nama)->first();
 
-        if($request->type==false){
+        $autoNumber = AutoNumberService::generateNumber();
 
-            $saldo=$request->saldo+$request->nominal;
-            $data=Pengajuan::create([
+        if ($request->type == 0) {
+            $saldo = $request->saldo + $request->nominal;
+
+            $data = Pengajuan::create([
+                'kode' => $autoNumber,
                 'pegawai_id' => $nama->id,
                 'keterangan' => $request->keterangan,
+                'project' => $request->project,
                 'nominal' => $request->nominal,
-                'bank'=> $request->bank,
-                'type'=> $request->type,
-                'norek'=> $request->norek,
-                'approveF'=> '✅',
-                'approveD'=> '✅',
-                'saldo'=> $saldo,
+                'bank' => $request->bank,
+                'type' => $request->type,
+                'norek' => $request->norek,
+                'approveF' => '✅',
+                'approveD' => '✅',
+                'saldo' => $saldo,
             ]);
-            return response()->json($data,200);
+
+            return response()->json($data, 200);
         }
-        if($request->type==true){
-            Pengajuan::create([
+
+        if ($request->type == 1) {
+            $data = Pengajuan::create([
+                'kode' => $autoNumber,
                 'pegawai_id' => $nama->id,
                 'keterangan' => $request->keterangan,
                 'nominal' => $request->nominal,
-                'bank'=> $request->bank,
-                'type'=> $request->type,
-                'norek'=> $request->norek,
-                'approveF'=> '⏹',
-                'approveD'=> '⏹',
+                'bank' => $request->bank,
+                'type' => $request->type,
+                'norek' => $request->norek,
+                'approveF' => '⏹',
+                'approveD' => '⏹',
             ]);
-            return back();
+
+            return response()->json($data, 200);
         }
     }
+
+
     public function awal(Request $request)
     {
         //jika waktu pembuatan beda sama sekarang maka $i=0
@@ -285,8 +320,16 @@ class PengajuanController extends Controller
      * @param  \App\Models\Pengajuan  $pengajuan
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Pengajuan $pengajuan)
+    public function destroy($id)
     {
-        //
+        $data = Pengajuan::destroy($id);
+
+        return response()->json($data, 200);
+    }
+    public function delete($id)
+    {
+        $data=Pengajuan::destroy($id);
+
+        return response()->json($data, 200);
     }
 }

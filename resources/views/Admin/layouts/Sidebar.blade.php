@@ -80,10 +80,10 @@
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="fa-sharp fa-solid fa-hand-holding-dollar" style="color: #ffffff;"></i>
                     </div>
-                    <span class="nav-link-text ms-1">Bukti</span>
+                    <span class="nav-link-text ms-1">Realisasi</span>
                 </a>
             </li>
-            <li class="nav-item">
+            {{-- <li class="nav-item">
                 <a class="nav-link text-white {{ ($active=='Saldo') ? 'active bg-gradient-info' : '' }}"
                     href="/saldo">
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -91,7 +91,7 @@
                     </div>
                     <span class="nav-link-text ms-1">Saldo</span>
                 </a>
-            </li>
+            </li> --}}
             <li class="nav-item">
                 <a class="nav-link text-white {{ ($active=='Pegawai') ? 'active bg-gradient-info' : '' }} "
                     href="/pegawaai">
@@ -115,7 +115,7 @@
                 <ul style="" class="inDrop ms-2 me-3">
                         <li class="mt-2"><a class="ms-3" href="/departemen">Departemen</a></li>
                         <li class="mt-2"><a class="ms-3" href="/jabatan">Jabatan</a></li>
-                        <li class="mt-2"><a class="ms-3" href="#">Bank</a></li>
+                        {{-- <li class="mt-2"><a class="ms-3" href="#">Bank</a></li> --}}
                 </ul>
                 </div>
             </li>

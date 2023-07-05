@@ -19,14 +19,14 @@ return new class extends Migration
             $table->foreignId('pegawai_id');
             $table->string('bank');
             $table->text('keterangan');
+            $table->text('project');
             $table->string('norek');
             // $table->string('type');
             $table->boolean('type');
-            $table->double('nominal',12);
+            $table->double('debit',12);
+            $table->double('kredit',12);
             $table->string('approveF')->nullable();
             $table->text('komenF')->nullable();
-            $table->string('approveD')->nullable();
-            $table->text('komenD')->nullable();
             $table->double('refund',12)->nullable();
             $table->double('saldo',10)->nullable();
             $table->timestamps();

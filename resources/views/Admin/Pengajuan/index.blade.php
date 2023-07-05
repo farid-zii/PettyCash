@@ -25,25 +25,27 @@
                     <table id="myTable" class="table table-striped display responsive nowrap">
                         <thead class="">
                         <tr class="text-center bg-dark">
-                            <th class="text-light" style="width: 5%;">Kode</th>
-                            <th class="text-light" style="width: 10%;">Nama/Departemen</th>
-                            <th class="text-light" style="">Keterangan</th>
+                            <th class="text-light" style="width: 10%;">Kode</th>
+                            <th class="text-light" style="width: 15%;">Nama/Departemen</th>
+                            <th class="text-light" style="">Project</th>
                             <th class="text-light" style="width: 9%;">Rekening</th>
-                            <th class="text-light" style="width: 7%;">Debit</th>
-                            <th class="text-light" style="width: 7%;">Kredit</th>
-                            <th class="text-light text-center" style="width: 10%;" colspan="2">Aprrove</th>
+                            <th class="text-light" style="width: 8%;">Debit</th>
+                            <th class="text-light" style="width: 8%;">Kredit</th>
+                            <th class="text-light" style="">Uraian</th>
+                            <th class="text-light text-center" style="width: 10%;" colspan="">Aprrove</th>
                             <th class="text-light" style="width: 14%;" >Aksi</th>
                         </tr>
                         </thead>
                         <tbody>
                         @foreach ($pengajuan as $data )
-                                <tr>
-                                    <td class=""> {{$loop->iteration}}</td>
+                                <tr id="index_{{$data->id}}">
+                                    <td class=""> {{$data->kode}}</td>
                                     <td class="">
                                         <p class="text-xl font-weight-bold mb-0">{{$data->pegawai->nama}}</p>
                                         <p class="text-xs text-secondary mb-0">{{$data->pegawai->departemen->nama}}</p>
                                     </td>
                                     <td class="" style="width: 50px">{{$data->keterangan}}</td>
+
                                     <td class="">
                                         <p class="text-xs font-weight-bold mb-0">{{$data->norek}}</p>
                                         <p class="text-xs text-secondary mb-0">{{$data->bank}}</p>
@@ -57,28 +59,31 @@
                                     <td class="text-end">-</td>
                                     @endif
                                     {{--  --}}
+                                    <td class="" style="width: 50px">{{$data->keterangan}}</td>
                                     <td class="text-center">{{$data->approveF}}</td>
                                     {{--  --}}
-                                    <td class="text-center">{{$data->approveD}}</td>
                                     {{--  --}}
                                     <td class="bg-info text-center">
                                         <div class="d-flex">
                                             <button class="btn btn-dark font-weight-bold m-auto" data-bs-toggle="modal"
-                                                data-bs-target="#data-{{$data->id}}"><i class="bi bi-eye-fill"></i></button>
+                                                data-bs-target="#data-{{$data->id}}-view"><i class="bi bi-eye-fill"></i></button>
                                             <button class="btn btn-warning font-weight-bold m-auto" data-bs-toggle="modal"
                                                 data-bs-target="#data-{{$data->id}}"><i class="bi bi-pencil-square"></i></button>
-                                            <form action="/admin/pangkat/{{$data->id}}" method="post" class="">
-                                                @method('DELETE')
-                                                @csrf
-                                                <button class="btn btn-danger font-weight-bold m-auto" type="submit"
-                                                    onclick="return confirm('Yakin akan menghapus data ?')"><i class="bi bi-trash3-fill"></i></button>
-                                            </form>
+                                            <button class="btn btn-danger font-weight-bold m-auto" onclick="hapus({{$data->id}})"><i class="bi bi-trash3-fill"></i></button>
                                         </div>
                                     </td>
                                 </tr>
                                 @endforeach
                         <!-- Tambahkan baris lainnya sesuai kebutuhan -->
                         </tbody>
+                        <tfoot>
+                            <tr>
+                            <th class="text-center" colspan="4">Total</th>
+                            <td class="text-end">@rp($kredit)</td>
+                            <td class="text-end">@rp($debit)</td>
+                            <th></th>
+                            </tr>
+                        </tfoot>
                     </table>
                     </div>
                 </div>
@@ -90,6 +95,7 @@
 
 <!-- CREATE -->
 @include('admin.pengajuan.create')
+@include('admin.pengajuan.view')
 @include('admin.pengajuan.edit')
 
 <script>
@@ -108,15 +114,63 @@
             paginate: {
                 first: "Pertama",
                 last: "Terakhir",
-                next: "Selanjutnya",
-                previous: "Sebelumnya"
+                next: ">",
+                previous: "<"
             }
         }
       });
 
-
-
     });
+
+    // function load() {
+    //     axios.get('api/get-pengajuan').then((response)=>{
+    //         let data = response.data
+    //         let table = $('#myTable tbody')
+
+    //         $.each(data,function(index, item) {
+    //             let row = $(`<tr></tr>`)
+
+    //             row.append($(`<td></td>`).text(data.nama))
+    //             row.append($(`<td></td>`).text(data.nama))
+    //             row.append($(`<td></td>`).text(data.nama))
+    //             row.append($(`<td></td>`).text(data.nama))
+
+    //             table.append(row);
+    //         })
+
+    //     }).catch(()=>{
+    //         console.log('gaggal')
+    //     }
+
+    //     )
+    // }
+
+    var csrfToken = document.head.querySelector('meta[name="csrf-token"]').content;
+    let token = $("meta[name='csrf-token']").attr("content");
+    function hapus(id) {
+        Swal.fire({
+            title:'Apakah kamu yakin',
+			text: "ingin menghapus data  ini",
+			icon: 'warning',
+			showConfirmButton:true,
+            showCancelButton: true,
+			confirmButtonText: 'YA, HAPUS!',
+            cancelButtonText:'TIDAK',
+        }).then((result)=>{
+            if(result.isConfirmed){
+
+                axios.delete(`api/pengajuan-del/${id}`).then(()=>{
+
+                    Swal.fire({
+                        title:'Data Berhasil Dihapus',
+			            icon: 'success',
+			            timer: 2000,
+                    })
+                })
+                $(`#index_${id}`).remove();
+            }
+        })
+      }
 </script>
 
 @endsection

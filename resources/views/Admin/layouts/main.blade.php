@@ -60,7 +60,8 @@
     {{-- Sweet Alert --}}
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-
+    {{-- TypeAhead --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.11.1/typeahead.bundle.min.js"></script>
 
     <style>
         * {
@@ -71,7 +72,7 @@
         #passwordMessage{
             margin-top: 5px;
         }
-        #searchResult {
+        /* custom-suggestion {
         list-style-type: none;
         padding: 0;
         margin: 0;
@@ -80,7 +81,18 @@
         position: absolute;
         z-index: 999;
         width: 96%;
-    }
+    } */
+
+    .custom-suggestion {
+    padding: 10px;
+    cursor: pointer;
+    width: 200%;
+}
+
+.custom-suggestion:hover {
+    background-color: #c3bdbd;
+}
+
 
     #myTable {
   border-collapse: collapse;
@@ -128,10 +140,10 @@
         </div>
     </footer> --}}
     <div class="js">
-        {{-- <script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
-        <script src="https://cdn.datatables.net/1.11.4/js/dataTables.bootstrap5.min.js"></script> --}}
+        <script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.11.4/js/dataTables.bootstrap5.min.js"></script>
 
-        <script src="{{asset('datatable/datatables.min.js')}}"></script>
+        {{-- <script src="{{asset('datatable/datatables.min.js')}}"></script> --}}
         <script src="/./js/core/popper.min.js"></script>
         <script src="/./js/core/bootstrap.min.js"></script>
         <script src="/./js/plugins/perfect-scrollbar.min.js"></script>
