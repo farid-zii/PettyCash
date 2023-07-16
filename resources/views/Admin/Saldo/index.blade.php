@@ -16,7 +16,7 @@
                     {{-- @include('Admin.notif') --}}
 
                     <div class="mx-3">
-                        <a href="/saldo-pdf" target="blank" class="btn bg-gradient-danger w-15 my-4 mb-2"><i
+                        {{-- <a href="/saldo-pdf" target="blank" class="btn bg-gradient-danger w-15 my-4 mb-2"><i
                                 class="bi bi-file-earmark-pdf-fill"></i>Cetak Pdf</a>
                         {{-- <button class="btn bg-gradient-success w-15 my-4 mb-2">Cetak Excel</button> --}}
                         <a href="/saldo-data" blank class="btn bg-gradient-success w-16 my-4 mb-2"><i
@@ -31,11 +31,11 @@
                                 <tr class="bg-dark" style="font-color:white;">
                                     <th class="text-uppercase text-light text-xs font-weight-bolder opacity-7">
                                         No</th>
-                                    <th style="" class="text-uppercase text-light text-xs font-weight-bolder opacity-7">
-                                        {{$title}}</th>
+                                    {{-- <th style="" class="text-uppercase text-light text-xs font-weight-bolder opacity-7">
+                                        {{$title}}</th> --}}
 
                                     <th class="text-uppercase text-light text-xs font-weight-bolder opacity-7">
-                                        keterangan</th>
+                                        Tanggal</th>
                                     <th class="text-uppercase text-light text-xs font-weight-bolder opacity-7">
                                         nominal</th>
                                     <th class="text-uppercase text-light text-xs font-weight-bolder opacity-7">
@@ -110,7 +110,7 @@
                     <label class="text-xl text-dark font-weight-bolder" required>saldo</label>
                     <div class="input-group mb-3">
                         <span class="input-group-text" id="basic-addon1">@</span>
-                        <input type="number" class="form-control" name="saldo" value="{{$datas[0]->hasil}}"
+                        <input type="number" class="form-control" name="saldo" value=""
                             aria-describedby="basic-addon1">
                     </div>
                     <label class="text-xl text-dark font-weight-bolder ">nominal</label>

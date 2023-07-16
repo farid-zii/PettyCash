@@ -12,8 +12,15 @@
     <link href="/../css/nucleo-icons.css" rel="stylesheet" />
     <link href="/../css/nucleo-svg.css" rel="stylesheet" />
 
+    {{-- date pickter --}}
+    <link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css"rel = "stylesheet">
+      <script src = "https://code.jquery.com/jquery-1.10.2.js"></script>
+      <script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+
+
+
     {{-- toas --}}
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 
 
     <link href="https://cdn.tailwindcss.com/2.2.19/tailwind.min.css" rel="stylesheet">
@@ -23,7 +30,8 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
     <!-- CSS Files -->
     <link id="pagestyle" href="/../css/material-dashboard.css?v=3.0.4" rel="stylesheet" />
-    <link id="pagestyle" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link id="pagestyle" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+        rel="stylesheet" />
     {{-- JQuery --}}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 
@@ -39,23 +47,24 @@
     <!-- Customized Bootstrap Stylesheet -->
     <link href="/../css/bootstrap.min.css" rel="stylesheet">
 
-     <!-- CSS Bootstrap 5 -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <!-- CSS Bootstrap 5 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
 
-  <!-- CSS DataTables -->
-  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.4/css/dataTables.bootstrap5.min.css">
-  <link rel="stylesheet" type="text/css" href="{{asset('datatable/datatables.min.css')}}">
+    <!-- CSS DataTables -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.4/css/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" type="text/css" href="{{asset('datatable/datatables.min.css')}}">
 
 
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
     <!-- Template Stylesheet -->
     <link href="/../css/style.css" rel="stylesheet">
     {{-- icon --}}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 
     {{-- Sweet Alert --}}
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -69,9 +78,10 @@
             font-family: 'Times New Roman', Times, serif;
         }
 
-        #passwordMessage{
+        #passwordMessage {
             margin-top: 5px;
         }
+
         /* custom-suggestion {
         list-style-type: none;
         padding: 0;
@@ -83,42 +93,43 @@
         width: 96%;
     } */
 
-    .custom-suggestion {
-    padding: 10px;
-    cursor: pointer;
-    width: 200%;
-}
+        .custom-suggestion {
+            padding: 10px;
+            cursor: pointer;
+            width: 200%;
+        }
 
-.custom-suggestion:hover {
-    background-color: #c3bdbd;
-}
+        .custom-suggestion:hover {
+            background-color: #c3bdbd;
+        }
 
 
-    #myTable {
-  border-collapse: collapse;
-      width: 100%;
-}
+        #myTable {
+            border-collapse: collapse;
+            width: 100%;
+        }
 
-#myTable th,
-#myTable td {
+        #myTable th,
+        #myTable td {
 
-    border: 1px solid black;
-      padding: 8px;
-      text-align: left;
-      vertical-align: top;
-  word-wrap: break-word;
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+            vertical-align: top;
+            word-wrap: break-word;
 
-  /* overflow: hidden;
+            /* overflow: hidden;
   text-overflow: ellipsis; */
-}
-    #searchResult li {
-        padding: 10px;
-        cursor: pointer;
-    }
+        }
 
-    #searchResult li:hover {
-        background-color: #f5f5f5;
-    }
+        #searchResult li {
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        #searchResult li:hover {
+            background-color: #f5f5f5;
+        }
 
     </style>
 </head>
@@ -158,24 +169,25 @@
         <script src="/../js/bootstrap.bundle.min.js"></script>
 
 
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
 
         <script>
             var dropdown = document.getElementsByClassName("dropdown-btn");
-var i;
+            var i;
 
-for (i = 0; i < dropdown.length; i++) {
-  dropdown[i].addEventListener("click", function() {
-    this.classList.toggle("active");
-    var dropdownContent = this.nextElementSibling;
-    if (dropdownContent.style.display === "block") {
-      dropdownContent.style.display = "none";
-    } else {
-      dropdownContent.style.display = "block";
-    }
-  });
-}
+            for (i = 0; i < dropdown.length; i++) {
+                dropdown[i].addEventListener("click", function () {
+                    this.classList.toggle("active");
+                    var dropdownContent = this.nextElementSibling;
+                    if (dropdownContent.style.display === "block") {
+                        dropdownContent.style.display = "none";
+                    } else {
+                        dropdownContent.style.display = "block";
+                    }
+                });
+            }
+
         </script>
     </div>
 </body>

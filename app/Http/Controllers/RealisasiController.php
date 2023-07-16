@@ -13,7 +13,7 @@ use Illuminate\Http\Request;
 
 use DB;
 
-class PengajuanController extends Controller
+class RealisasiController extends Controller
 {
 
     public function getProject(Request $request)
@@ -33,12 +33,10 @@ class PengajuanController extends Controller
         $data = Pengajuan::get();
         // $totalNominal=Pengajuan::where('type','=','penambahan')->latest()->get();
 
-
-        return datatables()->of($data)->make(true);
-        // return response()->json($data, 200);
+        return response()->json($data, 200);
     }
 
-     public function index2()
+     public function index()
     {
         $data=Pengajuan::get();
 
@@ -48,41 +46,22 @@ class PengajuanController extends Controller
             'pengajuan'=>$data,
         ]);
     }
-     public function index(Request $req)
+     public function index2()
     {
-
+        $data=Pengajuan::get();
         // $totalNominal=Pengajuan::where('type','=','penambahan')->latest()->get();
 
         //Total Debit
-        $totalDebit = Pengajuan::select(  DB::raw('SUM(debit) as total'))
-        // ->where('type', '=', false)
+        $totalDebit = Pengajuan::select('type',  DB::raw('SUM(nominal) as total'))
+        ->where('type', '=', false)
+        ->groupBy('type')
         ->first();
 
         //Total Kredit
-        $totalKredit = Pengajuan::select(DB::raw('SUM(kredit) as total'))
-        // ->where('type', '=', true)
+        $totalKredit = Pengajuan::select('type', DB::raw('SUM(nominal) as total'))
+        ->where('type', '=', true)
+        ->groupBy('type')
         ->first();
-
-        // $totalKredit = Pengajuan::select('type', DB::raw('SUM(nominal) as total'))
-        // ->where('type', '=', null)
-        // ->groupBy('type')
-        // ->first();
-
-        // if($data->type=null){
-
-        // }
-
-            $awal=$req->input('awal');
-            $akhir=$req->input('akhir');
-
-        $data = '';
-        if($req->awal && $req->akhir){
-             $data = Pengajuan::whereBetween('created_at',[$awal,$akhir])->get();
-        }
-        else {
-            $data = Pengajuan::get();
-        }
-
 
         if($totalDebit == null && $totalKredit ==null){
             return view('admin.pengajuan.index', [
@@ -146,8 +125,7 @@ class PengajuanController extends Controller
         ]);
 
         if ($validator->fails()) {
-            // return response()->json($validator->errors(), 200);
-            return back()->with('failed','ERROR PASTIKAN SEMUA DATA DI ISI');
+            return response()->json($validator->errors(), 200);
         }
 
         $nama = Pegawai::where('nama', $request->nama)->first();
@@ -170,16 +148,14 @@ class PengajuanController extends Controller
                 'saldo' => $saldo,
             ]);
 
-            // return response()->json($data, 200);
-            return back()->with('success','Data Berhasil ditambahkan');
-
+            return response()->json($data, 200);
         }
 
         if ($request->type == 1) {
             $data = Pengajuan::create([
                 'kode' => $autoNumber,
                 'pegawai_id' => $nama->id,
-                'keterangan' => $request->keterangan,
+                'uraian' => $request->uraian,
                 'project' => $request->project,
                 'debit' => $request->nominal,
                 'bank' => $request->bank,
@@ -188,8 +164,7 @@ class PengajuanController extends Controller
                 'approveF' => '⏹',
             ]);
 
-            // return response()->json($data, 200);
-            return back()->with('success', 'Data Berhasil ditambahkan');
+            return response()->json($data, 200);
         }
     }
 
@@ -302,7 +277,6 @@ class PengajuanController extends Controller
     public function show(Pengajuan $pengajuan)
     {
 
-
     }
 
     /**
@@ -311,67 +285,22 @@ class PengajuanController extends Controller
      * @param  \App\Models\Pengajuan  $pengajuan
      * @return \Illuminate\Http\Response
      */
-    public function editPengajuan(Request $req)
+    public function edit(Pengajuan $pengajuan)
     {
-        if($req->type==1){
-            Pengajuan::where('id',$req->id)
-            ->update([
-                'project'=>$req->project,
-                'kredit'=>$req->nominal,
-                'debit'=>'0',
-                'type' => $req->type,
-                'norek'=>$req->norek,
-                'bank'=>$req->bank,
-                'keterangan'=>$req->keterangan,
-            ]);
-
-            return back()->with('edit',"EDIT DATA BERHASIL");
-        }
-        if($req->type==0){
-            Pengajuan::where('id',$req->id)
-            ->update([
-                'project'=>$req->project,
-                'type'=>$req->type,
-                'kredit'=>'0',
-                'debit'=>$req->nominal,
-                'norek'=>$req->norek,
-                'bank'=>$req->bank,
-                'keterangan'=>$req->keterangan,
-            ]);
-
-            return back()->with('edit',"EDIT DATA BERHASIL");
-        }
+        //
     }
-    // public function edit(Request $req)
-    // {
-    //     if($req->type==1){
-    //         Pengajuan::where('id',$req->id)
-    //         ->update([
-    //             'project'=>$req->project,
-    //             'kredit'=>$req->nominal,
-    //             'debit'=>$req->nominal,
-    //             'norek'=>$req->norek,
-    //             'bank'=>$req->bank,
-    //             'keterangan'=>$req->keterangan,
-    //         ]);
 
-    //         return back()->with('edit',"EDIT DATA BERHASIL");
-    //     }
-    //     if($req->type==0){
-    //         Pengajuan::where('id',$req->id)
-    //         ->update([
-    //             'project'=>$req->project,
-    //             'kredit'=>$req->nominal,
-    //             'debit'=>$req->nominal,
-    //             'norek'=>$req->norek,
-    //             'bank'=>$req->bank,
-    //             'keterangan'=>$req->keterangan,
-    //         ]);
-
-    //         return back()->with('edit',"EDIT DATA BERHASIL");
-    //     }
-    // }
-
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \App\Http\Requests\UpdatePengajuanRequest  $request
+     * @param  \App\Models\Pengajuan  $pengajuan
+     * @return \Illuminate\Http\Response
+     */
+    public function update(UpdatePengajuanRequest $request, Pengajuan $pengajuan)
+    {
+        //
+    }
 
     /**
      * Remove the specified resource from storage.

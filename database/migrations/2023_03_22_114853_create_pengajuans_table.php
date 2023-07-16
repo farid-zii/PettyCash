@@ -23,10 +23,12 @@ return new class extends Migration
             $table->string('norek');
             // $table->string('type');
             $table->boolean('type');
-            $table->double('debit',12);
-            $table->double('kredit',12);
+            $table->string('baca',12)->nullable();
+            $table->double('debit',12)->nullable();
+            $table->double('kredit',12)->nullable();
             $table->string('approveF')->nullable();
             $table->text('komenF')->nullable();
+            $table->text('bukti')->nullable();
             $table->double('refund',12)->nullable();
             $table->double('saldo',10)->nullable();
             $table->timestamps();

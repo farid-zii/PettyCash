@@ -3,9 +3,9 @@
 @section('isi')
 
     <div class="container-fluid py-4">
-        <h1>
+        {{-- <h1>
         HALAMAN HRD
-    </h1>
+    </h1> --}}
 
     <br>
 
@@ -36,7 +36,7 @@
               </div>
               <div class="text-end pt-1">
                 <p class="text-sm mb-0 text-capitalize">UANG KELUAR</p>
-                <h4 class="mb-0">$53k</h4>
+                <h4 class="mb-0">2.222</h4>
               </div>
             </div>
             <hr class="dark horizontal my-0">
@@ -86,7 +86,7 @@
       </div>
 
       <div class="row mt-4">
-        <div class="col-lg-12 col-md-12 mt-4 mb-4">
+        <div class="col-lg-6 col-md-6 mt-4 mb-4">
           <div class="card z-index-2 ">
             <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2 bg-transparent">
               <div class="bg-gradient-primary shadow-primary border-radius-lg py-3 pe-1">
@@ -106,11 +106,11 @@
             </div>
           </div>
         </div>
-{{--
-        <div class="col-lg-12 col-md-12 mt-4 mb-4">
+
+        <div class="col-lg-6 col-md-6 mt-4 mb-4">
           <div class="card z-index-2  ">
             <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2 bg-transparent">
-              <div class="bg-gradient-primary shadow-success border-radius-lg py-3 pe-1">
+              <div class="bg-gradient-light shadow-success border-radius-lg py-3 pe-1">
                 <div class="chart">
                   <canvas id="chart-line" class="chart-canvas" height="500"></canvas>
                 </div>
@@ -126,9 +126,10 @@
               </div>
             </div>
           </div>
-        </div> --}}
+        </div>
 
       </div>
+
       <footer class="footer py-4  ">
         <div class="container-fluid">
           <div class="row align-items-center justify-content-lg-between">

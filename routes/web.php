@@ -61,10 +61,12 @@ Route::middleware(['auth', 'checkLevel:hrd'])->group(function () {
     Route::resource('/pegawaai', PegawaiController::class);
     Route::resource('/saldo', SaldoController::class);
     Route::resource('/pengajuan', PengajuanController::class);
+    Route::post('/pengajuan-edit', [PengajuanController::class,'editPengajuan']);
     Route::resource('/jabatan', JabatanController::class);
     Route::resource('/departemen', DepartemenController::class);
     Route::get('/export-data', [UserController::class, 'excel']);
     Route::get('/profile', [ProfileController::class, 'admin']);
+    Route::post('/profile-edit', [UserController::class, 'pengaturanAkun']);
     // Route::get('/pegawai', function () {
     //     return view('hrd.pegawai.index');
     // });

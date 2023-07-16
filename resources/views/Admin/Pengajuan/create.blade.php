@@ -23,6 +23,12 @@
                         {{-- <ul id="searchResult" class=""></ul> --}}
                     </div>
 
+                    <label class="text-xl text-dark font-weight-bolder col-6">Project</label>
+                    <div class="mb-2">
+                        <input type="text" class="form-control" id="project" name="project" style="width: 200%">
+                        {{-- <ul id="searchResult" class=""></ul> --}}
+                    </div>
+
                     <label class="text-xl text-dark font-weight-bolder">Nominal</label>
                     <div class="mb-2" style="display:flex;">
                         <div class="form-control text-center" disabled style="width: 7%;background: rgb(223, 219, 219);">Rp</div>
@@ -43,7 +49,7 @@
                         </select>
                         <input type="number" class="form-control" placeholder="300" name="norek" id="norek">
                     </div>
-                    <label class="text-xl text-dark font-weight-bolder">Keterangan</label>
+                    <label class="text-xl text-dark font-weight-bolder">Uraian</label>
                     <div class="mb-2">
                         <textarea class="form-control" name="keterangan" id="keterangan" onkeydown="addNumberOnEnter(event)"></textarea>
                     </div>
@@ -54,7 +60,7 @@
 
                 </div>
                 <div class="footer px-4 mb-2">
-                    <button type="button" class="btn btn-primary float-sm-start col-md-2 mt-4" onclick="simpan()">Save</button>
+                    <button type="submit" class="btn btn-primary float-sm-start col-md-2 mt-4" >Save</button>
                     <button type="button" class="btn btn-danger float-sm-end col-md-2 mt-4"
                         data-bs-dismiss="modal">Close</button>
                 </div>
@@ -94,10 +100,46 @@ $(document).ready(function() {
             }
         }
     );
+
+    var projectInput = $('#project');
+    var projectData = new Bloodhound({
+        datumTokenizer: Bloodhound.tokenizers.obj.whitespace('project'),
+        queryTokenizer: Bloodhound.tokenizers.whitespace,
+        remote: {
+            url: '/api/get-project?q=%QUERY',
+            wildcard: '%QUERY'
+        }
+    });
+
+    projectInput.typeahead(
+        {
+            hint: true,
+            highlight: true,
+            minLength: 1
+        },
+        {
+            name: 'project-autocomplete',
+            display: 'project',
+            source: projectData,
+            templates: {
+                suggestion: function(data) {
+                    return '<div class="custom-suggestion" style="z-index: 999; background: #c3bdbd; ; width: 200%;">' + data.project + '</div>';
+                },
+            }
+        }
+    );
+
+
 });
 
 // Rest of your code
 $('#nama').on('typeahead:selected', function(event, suggestion, dataset) {
+    // Do something when a suggestion is selected
+    console.log(suggestion);
+});
+
+// Rest of your code
+$('#project').on('typeahead:selected', function(event, suggestion, dataset) {
     // Do something when a suggestion is selected
     console.log(suggestion);
 });
@@ -107,45 +149,47 @@ $('#nama').on('typeahead:selected', function(event, suggestion, dataset) {
 
     var csrfToken = document.head.querySelector('meta[name="csrf-token"]').content;
 
-    function simpan() {
-        let nama = $('#nama').val();
-        let type = $('#type').val();
-        let nominal = $('#nominal').val();
-        let bank = $('#bank').val();
-        let norek = $('#norek').val();
-        let keterangan = $('#keterangan').val();
-        axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken
-        axios.post('/api/iPengajuan',{
-            nama:nama,
-            type:type,
-            bank:bank,
-            nominal:nominal,
-            norek:norek,
-            keterangan:keterangan
-        }).then(function(response) {
+    // function simpan() {
+    //     let nama = $('#nama').val();
+    //     let type = $('#type').val();
+    //     let nominal = $('#nominal').val();
+    //     let bank = $('#bank').val();
+    //     let norek = $('#norek').val();
+    //     let project = $('#project').val();
+    //     let keterangan = $('#keterangan').val();
+    //     axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken
+    //     axios.post('/api/iPengajuan',{
+    //         nama:nama,
+    //         type:type,
+    //         bank:bank,
+    //         nominal:nominal,
+    //         norek:norek,
+    //         project:project,
+    //         keterangan:keterangan
+    //     }).then(function(response) {
 
-            console.log(response.data)
+    //         console.log(response.data)
 
-            //Menutup modal
-            let modal = $('#staticBackdrop')
-            let bModal = bootstrap.Modal.getInstance(modal)
-            // toastr.error();('berhasil')
-            let closeButton = $('#staticBackdrop .btn-danger');
-            // closeButton.click()
-            location.reload();
+    //         //Menutup modal
+    //         let modal = $('#staticBackdrop')
+    //         let bModal = bootstrap.Modal.getInstance(modal)
+    //         // toastr.error();('berhasil')
+    //         let closeButton = $('#staticBackdrop .btn-danger');
+    //         // closeButton.click()
+    //         // location.reload();
 
 
-        }).catch(function(error) {
+    //     }).catch(function(error) {
 
-            Swal.fire({
-                title: 'Error!',
-                text: 'Pastikan Semua Data Di isi',
-                icon: 'error',
-                timer: 2000,
-                confirmButtonText: 'Close'
-            })
-        })
-    }
+    //         Swal.fire({
+    //             title: 'Error!',
+    //             text: 'Pastikan Semua Data Di isi',
+    //             icon: 'error',
+    //             timer: 2000,
+    //             confirmButtonText: 'Close'
+    //         })
+    //     })
+    // }
 
 
 

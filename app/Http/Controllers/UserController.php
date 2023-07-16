@@ -23,23 +23,31 @@ class UserController extends Controller
         ]);
     }
 
-    public function PengaturanAkun(Request $req,$id){
-        $validator= Validator::make($req->all,[
-            'name'=>'required',
-            'password'=>'required',
-        ]);
+    public function PengaturanAkun(Request $req){
 
-        if($validator->fails()){
-            return response()->errors($validator,404);
+
+        $id = $req->id;
+        // $validator= Validator::make($req->all,[
+        //     'name'=>'required',
+        //     'password'=>'required',
+        // ]);
+
+        // if($validator->fails()){
+        //     return response()->errors($validator,404);
+        // }
+
+        if($req->password!=$req->password2){
+            return redirect('/profile')->with('failed','Edit Gagal Password beda');
         }
 
         $update = User::where('id',$id)->update([
             'name'=>$req->nama,
+            'email'=>$req->email,
             'password'=>$req->password,
         ]);
 
         // return response()->json($update, 200);
-        return redirect('/profil')->with('success','Update berhasil');
+        return redirect('/profile')->with('success','Update berhasil');
     }
 
     public function pdf(){
@@ -56,7 +64,7 @@ class UserController extends Controller
     }
 
     public function excel(){
-        return Excel::download(new UserExport('jes'), 'users.xlsx');
+        return Excel::download(new UserExport('sd'), 'users.xlsx');
     }
 
     /**

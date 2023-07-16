@@ -45,22 +45,23 @@ class DepartemenController extends Controller
             'max' => ':attribute Harus diisi max :max karakter !',
         ];
         $validate = $request->validate([
-            "kode" => 'required|min:2|max:5',
             'nama' => 'required'
         ], $pesan);
+        Departemen::create($validate);
+        return redirect('/departemen')->with('add', 'Entry Data ' . $validate['nama'] . ' Success');
 
-        $nama = Departemen::where('kode', '=', $validate['kode'])->get('kode');
+        // $nama = Departemen::where('kode', '=', $validate['kode'])->get('kode');
 
-        if ($nama == true) {
-            return redirect('/admin/departemen')->with('failed', 'Kode ' . $validate['kode'] . ' Sudah ada');
-        }
+        // if ($nama == true) {
+        //     return redirect('/admin/departemen')->with('failed', 'Kode ' . $validate['kode'] . ' Sudah ada');
+        // }
 
-        if ($nama == false) {
-            Departemen::create($validate);
-            return redirect('/admin/departemen')->with('add', 'Entry Data ' . $validate['nama'] . ' Success');
-        } else {
-            return redirect('/admin/departemen');
-        }
+        // if ($nama == false) {
+        //     Departemen::create($validate);
+        //     return redirect('/admin/departemen')->with('add', 'Entry Data ' . $validate['nama'] . ' Success');
+        // } else {
+        //     return redirect('/admin/departemen');
+        // }
     }
 
     /**

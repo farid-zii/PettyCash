@@ -29,9 +29,22 @@
                         <td>{{$data->norek }} ({{$data->bank}})</td>
                     </tr>
                     <tr>
-                        <th style="width: 20%"> Keterangan </th>
+                        <th style="width: 20%"> Project </th>
+                        <th > : </th>
+                        <td>{{$data->project}}</td>
+                    </tr>
+                    <tr>
+                        <th style="width: 20%"> Uraian</th>
                         <th > : </th>
                         <td>{{$data->keterangan}}</td>
+                    </tr>
+                    <tr>
+                        <th style="width: 20%"> Status Aprrove</th>
+                        <th > : </th>
+                        <td>{{$data->approveF}}</td>
+                        <td>@if ($data->approveF=='❌')
+                                        <div class="">{{$data->komenF}}</div>
+                                        @endif</td>
                     </tr>
                 </table>
             </div>

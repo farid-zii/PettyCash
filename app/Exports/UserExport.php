@@ -2,6 +2,7 @@
 
 namespace App\Exports;
 
+use App\Models\Pengajuan;
 use App\Models\User;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\FromQuery;
@@ -30,10 +31,11 @@ class UserExport implements FromView
     public function view(): View
     {
         //Mencetak data excel berdasarkan template yang dibuat
-        return view('admin.user.excel',[
+        return view('admin2.user.excel',[
                     //Letak template excel
-            'data'=>User::query()->where('name', 'like', '%' . $this->name . '%')->get()
+            'data'=>Pengajuan::query()->where('keterangan', 'like', '%' . $this->name . '%')->get()
                                         //Mencari data yang memili kata yang dicari
         ]);
     }
+
 }
