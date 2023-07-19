@@ -35,6 +35,15 @@
                 </div>
               </div>
               <div class="card-body">
+                @if (session()->has('error'))
+                    <div class="alert alert-danger alert-dismissible fade show timeout"
+                        style="" role="alert">
+                        <strong>{{session('error')}}</strong>
+                        <button type="button" class="btn-close btn-danger" data-bs-dismiss="alert" aria-label="Close"><i
+                                class="bi bi-x-lg bg-light"></i></button>
+                    </div>
+                    @endif
+
                 <form role="form" class="text-start" action="/login" method="POST">
                     @csrf
                   <div class="input-group input-group-outline my-3">

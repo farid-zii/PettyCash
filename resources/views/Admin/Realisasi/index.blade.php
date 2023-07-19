@@ -29,8 +29,6 @@
                             RP. @rp($saldo)
                         </div>
                     </div>
-                    <button class="btn bg-gradient-info w-15 my-4 mb-2 col-2 float-sm-end" data-bs-toggle="modal"
-                        data-bs-target="#staticBackdrop">Entry <i class="bi bi-plus-square-fill"></i></button>
                     <button class="btn bg-gradient-success w-15 my-4 mx-2 mb-2 col-2 float-sm-end" data-bs-toggle="modal"
                         data-bs-target="#static-excel"><i class="bi bi-file-earmark-spreadsheet-fill"></i></button>
                 </div>
@@ -69,7 +67,6 @@
                                     <th class="text-light" style="">Debit</th>
                                     <th class="text-light" style="">Kredit</th>
                                     <th class="text-light" style="">Uraian</th>
-                                    <th class="text-light text-center" style="" colspan="">Aprrove</th>
                                     <th class="text-light" style="">Aksi</th>
                                 </tr>
                             </thead>
@@ -98,9 +95,6 @@
                                     @endif
                                     {{--  --}}
                                     <td class="" style="width: 50px"> {{ Str::words($data->keterangan, 2,'....')}}</td>
-                                    <td class="text-center">
-                                        {{$data->approveF}}
-                                    </td>
                                     {{--  --}}
                                     {{--  --}}
                                     <td class="bg-info text-center">
@@ -108,9 +102,8 @@
                                             <button class="btn btn-dark font-weight-bold m-auto" data-bs-toggle="modal"
                                                 data-bs-target="#data-{{$data->id}}-view"><i
                                                     class="bi bi-eye-fill"></i></button>
-                                            <button class="btn btn-warning font-weight-bold m-auto"
-                                                data-bs-toggle="modal" data-bs-target="#data-{{$data->id}}"><i
-                                                    class="bi bi-pencil-square"></i></button>
+                                            <button class="btn btn-success font-weight-bold m-auto"
+                                                data-bs-toggle="modal" data-bs-target="#data-{{$data->id}}"><i class="bi bi-plus-square-fill"></i></button>
                                             <button class="btn btn-danger font-weight-bold m-auto"
                                                 onclick="hapus({{$data->id}})"><i
                                                     class="bi bi-trash3-fill"></i></button>

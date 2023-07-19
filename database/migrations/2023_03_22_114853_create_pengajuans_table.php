@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('norek');
             // $table->string('type');
             $table->boolean('type');
-            $table->string('baca',12)->nullable();
+            $table->boolean('baca')->nullable();
             $table->double('debit',12)->nullable();
             $table->double('kredit',12)->nullable();
             $table->string('approveF')->nullable();

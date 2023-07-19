@@ -2,290 +2,137 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Pengajuan;
-use App\Services\AutoNumberService;
-use Illuminate\Support\Facades\Validator;
-use App\Http\Requests\StorePengajuanRequest;
-use App\Http\Requests\UpdatePengajuanRequest;
-use App\Models\Pegawai;
 use Illuminate\Http\Request;
-// use App\Models\Pengajuan;
-
+use App\Models\Pengajuan;
 use DB;
 
 class RealisasiController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
 
-    public function getProject(Request $request)
+    public function index(Request $req)
     {
-        // if($request->ajax())
-        // $keyword = $request->input('keyword');
-        $keyword = $request->input('keyword');
 
-        $result = Pengajuan::where('norek', 'like', '%' . $keyword . '%')
-            //  ->pluck('nama')
-            //  ->toArray();
-            ->get();
-
-        return response()->json($result);
-    }
-    public function pengajuan(){
-        $data = Pengajuan::get();
-        // $totalNominal=Pengajuan::where('type','=','penambahan')->latest()->get();
-
-        return response()->json($data, 200);
-    }
-
-     public function index()
-    {
-        $data=Pengajuan::get();
-
-        return view('admin.pengajuan.index',[
-            'active' => 'Pengajuan',
-            'title' => 'Pengajuan',
-            'pengajuan'=>$data,
-        ]);
-    }
-     public function index2()
-    {
-        $data=Pengajuan::get();
         // $totalNominal=Pengajuan::where('type','=','penambahan')->latest()->get();
 
         //Total Debit
-        $totalDebit = Pengajuan::select('type',  DB::raw('SUM(nominal) as total'))
-        ->where('type', '=', false)
-        ->groupBy('type')
+        $totalDebit = Pengajuan::select(DB::raw('SUM(debit) as total'))->where('approveF', '=', '✅')
+        // ->where('type', '=', false)
         ->first();
 
         //Total Kredit
-        $totalKredit = Pengajuan::select('type', DB::raw('SUM(nominal) as total'))
-        ->where('type', '=', true)
-        ->groupBy('type')
+        $totalKredit = Pengajuan::select(DB::raw('SUM(kredit) as total'))
+        // ->where('type', '=', true)
         ->first();
 
-        if($totalDebit == null && $totalKredit ==null){
-            return view('admin.pengajuan.index', [
-                'active' => 'Pengajuan',
-                'title' => 'Pengajuan',
+        // $totalKredit = Pengajuan::select('type', DB::raw('SUM(nominal) as total'))
+        // ->where('type', '=', null)
+        // ->groupBy('type')
+        // ->first();
+
+        // if($data->type=null){
+
+        // }
+
+        $saldo = 40000;
+
+        $awal = $req->input('awal');
+        $akhir = $req->input('akhir');
+
+        $data = '';
+        if ($req->awal && $req->akhir) {
+            $data = Pengajuan::whereBetween('created_at', [$awal, $akhir])->where('approveF', '=', '✅')->get();
+        } else {
+            $data = Pengajuan::where('approveF', '=', '✅')->get();
+        }
+
+
+        if ($totalDebit == null && $totalKredit == null) {
+            return view('admin.realisasi.index', [
+                'active' => 'Realisasi',
+                'title' => 'Realisasi',
                 'pengajuan' => $data,
                 'debit' => 0,
                 'kredit' => 0,
+                'saldo' => $saldo
                 // 'tKredit'=>$ab
             ]);
         }
-        if($totalDebit == null){
-            return view('admin.pengajuan.index', [
-                'active' => 'Pengajuan',
-                'title' => 'Pengajuan',
+        if ($totalDebit == null) {
+            return view('admin.realisasi.index', [
+                'active' => 'Realisasi',
+                'title' => 'Realisasi',
                 'pengajuan' => $data,
                 'debit' => 0,
+                'saldo' => $saldo,
                 'kredit' => $totalKredit->total,
                 // 'tKredit'=>$ab
             ]);
-        }
-        elseif($totalKredit ==null){
-            return view('admin.pengajuan.index', [
-                'active' => 'Pengajuan',
-                'title' => 'Pengajuan',
+        } elseif ($totalKredit == null) {
+            return view('admin.realisasi.index', [
+                'active' => 'Realisasi',
+                'title' => 'Realisasi',
                 'pengajuan' => $data,
                 'debit' => $totalDebit->total,
                 'kredit' => 0,
+                'saldo' => $saldo
                 // 'tKredit'=>$ab
             ]);
         }
-        return view('admin.pengajuan.index',[
-            'active' => 'Pengajuan',
-            'title' => 'Pengajuan',
-            'pengajuan'=>$data,
-            'debit'=>$totalDebit->total,
-            'kredit'=>$totalKredit->total,
+        return view('admin.realisasi.index', [
+            'active' => 'Realisasi',
+            'title' => 'Realisasi',
+            'pengajuan' => $data,
+            'debit' => $totalDebit->total,
+            'kredit' => $totalKredit->total,
+            'saldo' => $saldo
             // 'tKredit'=>$ab
         ]);
     }
 
-
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function create()
     {
-
+        //
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StorePengajuanRequest  $request
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StorePengajuanRequest $request)
+    public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'nama' => 'required',
-            'keterangan' => 'required',
-            'bank' => 'required',
-            'norek' => 'required',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json($validator->errors(), 200);
-        }
-
-        $nama = Pegawai::where('nama', $request->nama)->first();
-
-        $autoNumber = AutoNumberService::generateNumber();
-
-        if ($request->type == 0) {
-            $saldo = $request->saldo + $request->nominal;
-
-            $data = Pengajuan::create([
-                'kode' => $autoNumber,
-                'pegawai_id' => $nama->id,
-                'keterangan' => $request->keterangan,
-                'project' => $request->project,
-                'kredit' => $request->nominal,
-                'bank' => $request->bank,
-                'type' => $request->type,
-                'norek' => $request->norek,
-                'approveF' => '✅',
-                'saldo' => $saldo,
-            ]);
-
-            return response()->json($data, 200);
-        }
-
-        if ($request->type == 1) {
-            $data = Pengajuan::create([
-                'kode' => $autoNumber,
-                'pegawai_id' => $nama->id,
-                'uraian' => $request->uraian,
-                'project' => $request->project,
-                'debit' => $request->nominal,
-                'bank' => $request->bank,
-                'type' => $request->type,
-                'norek' => $request->norek,
-                'approveF' => '⏹',
-            ]);
-
-            return response()->json($data, 200);
-        }
+        //
     }
 
-
-    public function awal(Request $request)
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
     {
-        //jika waktu pembuatan beda sama sekarang maka $i=0
-        $validator = Validator::make($request->all(),[
-            'nama' => 'required',
-            'keterangan' => 'required',
-            'nominal' => 'required',
-            'bank'=>'required',
-            'norek'=>'required',
-        ]);
-
-        // if($validator->fails()){
-        //     return response()->json($validator->errors(), 200);
-        // }
-        if ($validator->fails()) {
-            return response()->json($validator->errors(), 422);
-        }
-
-        $nama=Pegawai::where('nama',$request->nama)->first();
-        $autoNumber = AutoNumberService::generateNumber();
-        if($request->type==false){
-
-            $saldo=$request->saldo+$request->nominal;
-            $data=Pengajuan::create([
-                'kode'=> $autoNumber,
-                'pegawai_id' => $nama->id,
-                'keterangan' => $request->keterangan,
-                'kredit' => $request->nominal,
-                'bank'=> $request->bank,
-                'type'=> $request->type,
-                'project' => $request->project,
-                'norek'=> $request->norek,
-                'approveF'=> '✅',
-                'saldo'=> $saldo,
-            ]);
-            return response()->json($data,200);
-        }
-        if($request->type==true){
-            $data=Pengajuan::create([
-                'kode' => $autoNumber,
-                'pegawai_id' => $nama->id,
-                'keterangan' => $request->keterangan,
-                'project' => $request->project,
-                'debit' => $request->nominal,
-                'bank'=> $request->bank,
-                'type'=> $request->type,
-                'norek'=> $request->norek,
-                'approveF'=> '⏹',
-            ]);
-            return response()->json($data, 200);
-        }
-    }
-
-
-    public function financeAprrove(Request $r,$id)
-    {
-        if($r->type=='setuju'){
-            $data=Pengajuan::where('id',$id)
-                    ->update([
-                        'approveF'=>'✅'
-                    ]);
-            // return back();
-            return response()->json($data, 200);
-        }
-        if($r->type=='tolak'){
-            $data=Pengajuan::where('id',$id)
-                    ->update([
-                        'approveF'=>'✅',
-                        'komenF'=>$r->komen,
-                    ]);
-            return back();
-            return response()->json($data, 200);
-        }
-    }
-
-    public function direksiAprrove(Request $r,$id)
-    {
-        $pengajuan= Pengajuan::where('id', $id)->get();
-
-        if($r->type=='setuju'){
-            if($pengajuan->aooriveF== '✅'){
-                $a=$pengajuan->saldo-$pengajuan->nominal;
-                Pengajuan::where('id', $id)
-                    ->update([
-                        'approveD' => '✅',
-                        'saldo' =>$a,
-                    ]);
-                return back();
-            }
-            Pengajuan::where('id',$id)
-                    ->update([
-                        'approveD'=>'✅'
-                    ]);
-            return back();
-        }
-        if($r->type=='tolak'){
-            Pengajuan::where('id',$id)
-                    ->update([
-                        'approveD'=>'✅',
-                        'komenD'=>$r->komen,
-                    ]);
-            return back();
-        }
-    }
-
-    public function show(Pengajuan $pengajuan)
-    {
-
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Pengajuan  $pengajuan
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Pengajuan $pengajuan)
+    public function edit($id)
     {
         //
     }
@@ -293,11 +140,11 @@ class RealisasiController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdatePengajuanRequest  $request
-     * @param  \App\Models\Pengajuan  $pengajuan
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdatePengajuanRequest $request, Pengajuan $pengajuan)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -305,19 +152,11 @@ class RealisasiController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Pengajuan  $pengajuan
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        $data = Pengajuan::destroy($id);
-
-        return response()->json($data, 200);
-    }
-    public function delete($id)
-    {
-        $data=Pengajuan::destroy($id);
-
-        return response()->json($data, 200);
+        //
     }
 }

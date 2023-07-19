@@ -1,7 +1,7 @@
 
  @if (session()->has('add'))
                     <div class="alert alert-success alert-dismissible fade show timeout"
-                        style="width: 30%;margin-left:70%;" role="alert">
+                        style="" role="alert">
                         <strong>{{session('add')}}</strong>
                         <button type="button" class="btn-close btn-danger" data-bs-dismiss="alert" aria-label="Close"><i
                                 class="bi bi-x-lg"></i></button>

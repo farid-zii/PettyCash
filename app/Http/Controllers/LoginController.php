@@ -30,11 +30,11 @@ class LoginController extends Controller
         ]);
 
         if(Auth::attempt($credentials)){
-            if(Auth::user()->level=='admin'){
-                return redirect('/profile');
-            }
+            // if(Auth::user()->level=='admin'){
+            //     return redirect('/profile');
+            // }
             if(Auth::user()->level=='hrd'){
-                return redirect('/profile');
+                return redirect('/profile')->with('login','Login berhasil');
             }
             if(Auth::user()->level=='finance'){
                 return redirect('/');
@@ -44,7 +44,7 @@ class LoginController extends Controller
             }
         }
         else {
-            return redirect('/');
+            return back()->with('error','Email atau Password salah');
         }
     }
 

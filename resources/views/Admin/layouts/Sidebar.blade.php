@@ -75,8 +75,8 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-white {{ ($active=='Bukti') ? 'active bg-gradient-info' : '' }}"
-                    href="../pages/billing.html">
+                <a class="nav-link text-white {{ ($active=='Realisasi') ? 'active bg-gradient-info' : '' }}"
+                    href="/realisasi">
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="fa-sharp fa-solid fa-hand-holding-dollar" style="color: #ffffff;"></i>
                     </div>

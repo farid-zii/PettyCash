@@ -12,6 +12,7 @@ use App\Http\Controllers\JabatanController;
 use App\Http\Controllers\KategoriPgwController;
 use App\Http\Controllers\DepartemenController;
 use App\Http\Controllers\PengajuanController;
+use App\Http\Controllers\RealisasiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -51,7 +52,7 @@ Route::middleware(['auth', 'checkLevel:admin'])->group(function () {
     //  Route::get('/profile', [ProfileController::class,'index']);
      #endregion
 });
-
+Route::post('/cetak-excel', [PengajuanController::class, 'excel']);
 /////////////////////////////////
 //           HRD              //
 ///////////////////////////////
@@ -60,11 +61,13 @@ Route::middleware(['auth', 'checkLevel:hrd'])->group(function () {
     Route::get('/', [Home::class, 'hrd']);
     Route::resource('/pegawaai', PegawaiController::class);
     Route::resource('/saldo', SaldoController::class);
+    Route::resource('/realisasi', RealisasiController::class);
     Route::resource('/pengajuan', PengajuanController::class);
     Route::post('/pengajuan-edit', [PengajuanController::class,'editPengajuan']);
+    // Route::get('/cetak-excel', [PengajuanController::class,'excel']);
+    Route::post('/cetak-excel', [PengajuanController::class,'excel']);
     Route::resource('/jabatan', JabatanController::class);
     Route::resource('/departemen', DepartemenController::class);
-    Route::get('/export-data', [UserController::class, 'excel']);
     Route::get('/profile', [ProfileController::class, 'admin']);
     Route::post('/profile-edit', [UserController::class, 'pengaturanAkun']);
     // Route::get('/pegawai', function () {

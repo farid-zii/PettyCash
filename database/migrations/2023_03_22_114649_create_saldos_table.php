@@ -18,7 +18,6 @@ return new class extends Migration
             $table->double('saldo',12);
             $table->double('nominal',12)->nullable();
             $table->double('hasil',12)->nullable();
-            $table->string('status',10)->nullable();
             $table->timestamps();
         });
     }

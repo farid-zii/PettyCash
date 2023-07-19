@@ -164,33 +164,7 @@ $(document).ready(function() {
         }
     );
 
-    var projectInput = $('#norek');
-    var projectData = new Bloodhound({
-        datumTokenizer: Bloodhound.tokenizers.obj.whitespace('norek'),
-        queryTokenizer: Bloodhound.tokenizers.whitespace,
-        remote: {
-            url: '/api/get-norek?q=%QUERY',
-            wildcard: '%QUERY'
-        }
-    });
 
-    projectInput.typeahead(
-        {
-            hint: true,
-            highlight: true,
-            minLength: 1
-        },
-        {
-            name: 'norek-autocomplete',
-            display: 'norek',
-            source: norekData,
-            templates: {
-                suggestion: function(data) {
-                    return '<div class="custom-suggestion" style="z-index: 999; background: #c3bdbd; ; width: 200%;">' + data.norek + '</div>';
-                },
-            }
-        }
-    );
 });
 
 // Rest of your code
@@ -204,10 +178,8 @@ $('#project').on('typeahead:selected', function(event, suggestion, dataset) {
     // Do something when a suggestion is selected
     console.log(suggestion);
 });
-$('#norek').on('typeahead:selected', function(event, suggestion, dataset) {
-    // Do something when a suggestion is selected
-    console.log(suggestion);
-});
+
+
 
 
     var csrfToken = document.head.querySelector('meta[name="csrf-token"]').content;
@@ -253,6 +225,8 @@ $('#norek').on('typeahead:selected', function(event, suggestion, dataset) {
     //         })
     //     })
     // }
+
+
 
 //    $('#nama').on('input', function() {
 //     let keyword = $(this).val();

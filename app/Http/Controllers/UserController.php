@@ -43,7 +43,7 @@ class UserController extends Controller
         $update = User::where('id',$id)->update([
             'name'=>$req->nama,
             'email'=>$req->email,
-            'password'=>$req->password,
+            'password'=> bcrypt($req->password),
         ]);
 
         // return response()->json($update, 200);

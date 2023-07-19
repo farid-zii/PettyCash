@@ -27,7 +27,7 @@
 
                     <label class="text-xl text-dark font-weight-bolder col-6">Project</label>
                     <div class="mb-2">
-                        <input type="text" class="form-control" id="projecta" name="project" style="" value="{{$data->project}}">
+                        <input type="text" class="form-control" id="projecta" name="project" style="width: 200%" value="{{$data->project}}">
                         <input type="hidden" class="form-control" id="projecta" name="id" style="width: 200%" value="{{$data->id}}">
                         {{-- <ul id="searchResult" class=""></ul> --}}
                     </div>

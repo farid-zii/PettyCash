@@ -9,6 +9,8 @@ use App\Http\Requests\StorePengajuanRequest;
 use App\Http\Requests\UpdatePengajuanRequest;
 use App\Models\Pegawai;
 use Illuminate\Http\Request;
+use App\Exports\PengajuanExport;
+use Maatwebsite\Excel\Facades\Excel;
 // use App\Models\Pengajuan;
 
 use DB;
@@ -16,12 +18,33 @@ use DB;
 class PengajuanController extends Controller
 {
 
+    public function excel(Request $req)
+    {
+        $awal = $req->awal;
+        $akhir = $req->akhir;
+        // $akhir = $req->input('akhir');
+        return Excel::download(new PengajuanExport($awal,$akhir), 'Pengajuan'.$awal.'-'.$akhir.'.xlsx');
+    }
+
     public function getProject(Request $request)
     {
         // if($request->ajax())
         // $keyword = $request->input('keyword');
         $keyword = $request->input('keyword');
 
+        $result = Pengajuan::where('project', 'like', '%' . $keyword . '%')
+            //  ->pluck('nama')
+            //  ->toArray();
+            ->get();
+
+        return response()->json($result);
+    }
+
+    public function getNorek(Request $request)
+    {
+        // if($request->ajax())
+        // $keyword = $request->input('keyword');
+        $keyword = $request->input('keyword');
         $result = Pengajuan::where('norek', 'like', '%' . $keyword . '%')
             //  ->pluck('nama')
             //  ->toArray();
@@ -29,6 +52,8 @@ class PengajuanController extends Controller
 
         return response()->json($result);
     }
+
+
     public function pengajuan(){
         $data = Pengajuan::get();
         // $totalNominal=Pengajuan::where('type','=','penambahan')->latest()->get();
@@ -72,6 +97,8 @@ class PengajuanController extends Controller
 
         // }
 
+        $saldo = 40000;
+
             $awal=$req->input('awal');
             $akhir=$req->input('akhir');
 
@@ -91,6 +118,7 @@ class PengajuanController extends Controller
                 'pengajuan' => $data,
                 'debit' => 0,
                 'kredit' => 0,
+                'saldo'=>$saldo
                 // 'tKredit'=>$ab
             ]);
         }
@@ -100,6 +128,7 @@ class PengajuanController extends Controller
                 'title' => 'Pengajuan',
                 'pengajuan' => $data,
                 'debit' => 0,
+                'saldo' => $saldo,
                 'kredit' => $totalKredit->total,
                 // 'tKredit'=>$ab
             ]);
@@ -111,6 +140,7 @@ class PengajuanController extends Controller
                 'pengajuan' => $data,
                 'debit' => $totalDebit->total,
                 'kredit' => 0,
+                'saldo' => $saldo
                 // 'tKredit'=>$ab
             ]);
         }
@@ -120,6 +150,7 @@ class PengajuanController extends Controller
             'pengajuan'=>$data,
             'debit'=>$totalDebit->total,
             'kredit'=>$totalKredit->total,
+            'saldo' => $saldo
             // 'tKredit'=>$ab
         ]);
     }
