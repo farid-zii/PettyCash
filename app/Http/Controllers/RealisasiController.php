@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Pengajuan;
+use App\Models\realisasi;
 use DB;
+use Illuminate\Support\Facades\Validator;
 
 class RealisasiController extends Controller
 {
@@ -50,6 +52,8 @@ class RealisasiController extends Controller
             $data = Pengajuan::where('approveF', '=', '✅')->get();
         }
 
+        $gambar=realisasi::get();
+
 
         if ($totalDebit == null && $totalKredit == null) {
             return view('admin.realisasi.index', [
@@ -58,7 +62,8 @@ class RealisasiController extends Controller
                 'pengajuan' => $data,
                 'debit' => 0,
                 'kredit' => 0,
-                'saldo' => $saldo
+                'saldo' => $saldo,
+                'gambar' => $gambar,
                 // 'tKredit'=>$ab
             ]);
         }
@@ -70,6 +75,7 @@ class RealisasiController extends Controller
                 'debit' => 0,
                 'saldo' => $saldo,
                 'kredit' => $totalKredit->total,
+                'gambar' => $gambar,
                 // 'tKredit'=>$ab
             ]);
         } elseif ($totalKredit == null) {
@@ -79,6 +85,7 @@ class RealisasiController extends Controller
                 'pengajuan' => $data,
                 'debit' => $totalDebit->total,
                 'kredit' => 0,
+                'gambar' => $gambar,
                 'saldo' => $saldo
                 // 'tKredit'=>$ab
             ]);
@@ -89,7 +96,8 @@ class RealisasiController extends Controller
             'pengajuan' => $data,
             'debit' => $totalDebit->total,
             'kredit' => $totalKredit->total,
-            'saldo' => $saldo
+            'saldo' => $saldo,
+            'gambar' => $gambar,
             // 'tKredit'=>$ab
         ]);
     }
@@ -112,8 +120,91 @@ class RealisasiController extends Controller
      */
     public function store(Request $request)
     {
-        //
+            $validator = Validator::make($request->all(), [
+                'inputs.*.gambars' => 'required'
+            ]);
+
+            if ($validator->fails()) {
+                return back()->with('error','GAGAL');
+            }
+
+            $kode=$request->id;
+            if ($request->hasFile('inputs.*.gambars')) {
+                $gambars = $request->file('inputs.*.gambars');
+
+                foreach ($gambars as $gambar) {
+                    $nama = time() . '_' . $gambar->getClientOriginalName();
+                    $gambar->move(public_path('img/bukti_pengajuan'), $nama);
+
+                    realisasi::create([
+                        'pengajuan_id'=>$kode,
+                        'gambar' => $nama,
+                    ]);
+                }
+            }
+
+             $kodeR =realisasi::where('pengajuan_id','=',$kode)->get();
+        Pengajuan::where('id', '=', $kode)->update([
+            'realisasi_id' => $kodeR[0]->id
+        ]);
+
+             $pemakaian=Pengajuan::where('id','=',$kode)->get();
+
+
+            foreach ($pemakaian as $data) {
+            if ($data->type == 1) {
+                $total=$data->debit - $request->terpakai;
+
+                Pengajuan::where('id', '=', $kode)->update([
+                    'realisasi_id' => $kodeR[0]->id,
+                    'refund'=>$request->terpakai,
+                    'total'=>$total,
+                ]);
+
+                return back()->with('success', 'Bukti Berhasil di Tambakan');
+            }
+            }
+
+
+             Pengajuan::where('id','=',$kode)->update([
+                'realisasi_id'=> $kodeR[0]->id
+            ]);
+
+            return back()->with('success', 'Bukti Berhasil di Tambakan');
+            // "Gambar berhasil diunggah!";
+
     }
+
+
+
+    //     {
+//         $validator = Validator::make($request->all(), [
+//             'gambars' => 'required'
+//         ]);
+
+//         if($validator->fails()){
+//             return redirect()
+//             ->withErrors($validator)
+//             ->withInput();
+//         }
+
+//     if ($request->hasFile('gambars')) {
+//         $gambars = $request->file('gambars');
+
+//         foreach ($gambars as $gambar) {
+//             $nama = time() . '_' . $gambar->getClientOriginalName();
+//             $gambar->move(public_path('img/bukti_pengajuan'), $nama);
+
+//             Realisasi::create([
+//                 'pengajuan_id' => $request->pengajuan_id,
+//                 'gambar' => $nama,
+//             ]);
+//         }
+
+//         return back()->with('success','Bukti Berhasil di Tambakan');
+//         // "Gambar berhasil diunggah!";
+//     }
+// }
 
     /**
      * Display the specified resource.
@@ -157,6 +248,16 @@ class RealisasiController extends Controller
      */
     public function destroy($id)
     {
-        //
+
+        realisasi::where('pengajuan_id','=',$id)->delete();
+        // realisasi::destroy($id);
+        Pengajuan::where('id','=',$id)->update([
+            'realisasi_id'=>null,
+            'refund'=>null,
+            'total'=>null,
+        ]);
+
+        return back();
+
     }
 }

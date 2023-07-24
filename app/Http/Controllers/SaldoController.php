@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Saldo;
 use App\Http\Requests\StoreSaldoRequest;
 use App\Http\Requests\UpdateSaldoRequest;
+use DateTime;
 use Illuminate\Support\Facades\DB;
 use PhpParser\Node\Expr\Cast\Double;
 
@@ -54,6 +55,7 @@ class SaldoController extends Controller
                 'nominal'=>$nominal,
                 'hasil'=>$hasil,
                 'status' => $status,
+                'created_at'=>new DateTime(),
             ]);
         }
         else{
@@ -63,6 +65,7 @@ class SaldoController extends Controller
                 'nominal'=>$nominal,
                 'hasil'=>$hasil,
                 'status'=>$status,
+                'created_at' => new DateTime(),
             ]);
         }
 
@@ -74,7 +77,7 @@ class SaldoController extends Controller
         // Saldo::insert([
         //     'saldo'=>$hasil
         // ]);
-        return redirect('/admin/saldo');
+        return back()->with('success','Berhasil menambahkan data');
     }
 
     /**
@@ -114,6 +117,6 @@ class SaldoController extends Controller
     public function destroy($id)
     {
         Saldo::destroy($id);
-        return redirect('/admin/saldo')->with('delete', 'Delete Data Success');
+        return back()->with('delete', 'Delete Data Success');
     }
 }

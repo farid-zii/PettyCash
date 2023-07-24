@@ -63,10 +63,10 @@
                                     <th class="text-light" style="">Kode</th>
                                     <th class="text-light" style="">Nama/Departemen</th>
                                     <th class="text-light" style="">Project</th>
-                                    <th class="text-light" style="">Rekening</th>
                                     <th class="text-light" style="">Debit</th>
                                     <th class="text-light" style="">Kredit</th>
-                                    <th class="text-light" style="">Uraian</th>
+                                    <th class="text-light" style="">Refund</th>
+                                    <th class="text-light" style="">Total Pemakaian</th>
                                     <th class="text-light" style="">Aksi</th>
                                 </tr>
                             </thead>
@@ -80,23 +80,26 @@
                                     </td>
                                     <td class="" style="width: 50px">{{ Str::words($data->project, 2,'....')}}</td>
 
-
-                                    <td class="">
-                                        <p class="text-xs font-weight-bold mb-0">{{$data->norek}}</p>
-                                        <p class="text-xs text-secondary mb-0">{{$data->bank}}</p>
-                                    </td>
-
                                     @if ($data->type==false)
                                     <td class="text-end">-</td>
-                                    <td class="text-end">@rp($data->kredit)</td>
+                                    <td class="text-end" id="kredit_">@rp($data->kredit)</td>
                                     @elseif ($data->type==true)
-                                    <td class="text-end">@rp($data->debit)</td>
+                                    <td class="text-end" id="debit_">@rp($data->debit)</td>
                                     <td class="text-end">-</td>
                                     @endif
-                                    {{--  --}}
-                                    <td class="" style="width: 50px"> {{ Str::words($data->keterangan, 2,'....')}}</td>
-                                    {{--  --}}
-                                    {{--  --}}
+
+                                    @if ($data->refund!=null)
+                                        <td class="text-end">@rp($data->refund)</td>
+                                    @else
+                                        <td class="text-end">-</td>
+                                    @endif
+
+                                    @if ($data->total!=null)
+                                        <td class="text-end">@rp($data->total)</td>
+                                    @else
+                                        <td class="text-end">-</td>
+                                    @endif
+
                                     <td class="bg-info text-center">
                                         <div class="d-flex">
                                             <button class="btn btn-dark font-weight-bold m-auto" data-bs-toggle="modal"
@@ -104,22 +107,27 @@
                                                     class="bi bi-eye-fill"></i></button>
                                             <button class="btn btn-success font-weight-bold m-auto"
                                                 data-bs-toggle="modal" data-bs-target="#data-{{$data->id}}"><i class="bi bi-plus-square-fill"></i></button>
-                                            <button class="btn btn-danger font-weight-bold m-auto"
-                                                onclick="hapus({{$data->id}})"><i
-                                                    class="bi bi-trash3-fill"></i></button>
+                                            <form action="/realisasi/{{$data->id}}" method="post">
+                                                @method('Delete')
+                                                @csrf
+                                                <button class="btn btn-danger font-weight-bold m-auto"
+                                                    type="submit"><i
+                                                        class="bi bi-trash3-fill"></i></button>
+
+                                            </form>
                                         </div>
                                     </td>
                                 </tr>
                                 @endforeach
                                 <!-- Tambahkan baris lainnya sesuai kebutuhan -->
                             </tbody>
-                            <tfoot>
+                            {{-- <tfoot>
                                 <tr>
-                                    <th class="text-center" colspan="4">Total</th>
+                                    <th class="text-center" colspan="3">Total</th>
                                     <td class="text-end">@rp($debit)</td>
                                     <td class="text-end">@rp($kredit)</td>
                                 </tr>
-                            </tfoot>
+                            </tfoot> --}}
                         </table>
                     </div>
                 </div>
@@ -133,11 +141,21 @@
 
 
 <!-- CREATE -->
-@include('admin.pengajuan.create')
-@include('admin.pengajuan.view')
-@include('admin.pengajuan.edit')
+@include('admin.realisasi.create')
+@include('admin.realisasi.view')
+@include('admin.realisasi.edit')
 
 <script>
+    let totalKredit =''
+    $('#kredit_').each(function () {
+        let kredit = parseInt($(this).text())
+        totalKredit += kredit;
+    })
+
+    console.log(totalKredit)
+
+
+
     $(document).ready(function () {
 
 

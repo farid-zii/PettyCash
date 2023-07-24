@@ -12,6 +12,10 @@
     <link href="/../css/nucleo-icons.css" rel="stylesheet" />
     <link href="/../css/nucleo-svg.css" rel="stylesheet" />
 
+    {{--  --}}
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.2/min/dropzone.min.js"></script>
+
     {{-- date pickter --}}
     <link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css"rel = "stylesheet">
       <script src = "https://code.jquery.com/jquery-1.10.2.js"></script>

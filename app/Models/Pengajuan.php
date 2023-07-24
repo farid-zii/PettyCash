@@ -20,9 +20,9 @@ class Pengajuan extends Model
     {
         return $this->belongsTo(Pegawai::class);
     }
-    public function bank()
+    public function realisasi()
     {
-        return $this->belongsTo(Bank::class);
+        return $this->belongsTo(Realisasi::class);
     }
 
 }

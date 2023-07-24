@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('kode',10)->nullable();
             $table->foreignId('pegawai_id');
+            $table->foreignId('realisasi_id')->nullable();
             $table->string('bank');
             $table->text('keterangan');
             $table->text('project');
@@ -28,8 +29,9 @@ return new class extends Migration
             $table->double('kredit',12)->nullable();
             $table->string('approveF')->nullable();
             $table->text('komenF')->nullable();
-            $table->text('bukti')->nullable();
+            // $table->text('bukti')->nullable();
             $table->double('refund',12)->nullable();
+            $table->double('total',10)->nullable();
             $table->double('saldo',10)->nullable();
             $table->timestamps();
         });

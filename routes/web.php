@@ -53,6 +53,7 @@ Route::middleware(['auth', 'checkLevel:admin'])->group(function () {
      #endregion
 });
 Route::post('/cetak-excel', [PengajuanController::class, 'excel']);
+
 /////////////////////////////////
 //           HRD              //
 ///////////////////////////////
