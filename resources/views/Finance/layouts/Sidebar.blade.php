@@ -67,7 +67,7 @@
             </li> --}}
             <li class="nav-item">
                 <a class="nav-link text-white {{ ($active=='Pengajuan') ? 'active bg-gradient-info' : '' }}"
-                    href="/pengajuan">
+                    href="/finance/pengajuan">
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="fa-sharp fa-solid fa-paper-plane" style="color: #ffffff;"></i>
                     </div>
@@ -76,7 +76,7 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link text-white {{ ($active=='Realisasi') ? 'active bg-gradient-info' : '' }}"
-                    href="/realisasi">
+                    href="/finance/realisasi">
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="fa-sharp fa-solid fa-hand-holding-dollar" style="color: #ffffff;"></i>
                     </div>
@@ -85,7 +85,7 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link text-white {{ ($active=='Saldo') ? 'active bg-gradient-info' : '' }}"
-                    href="/saldo">
+                    href="/finance/saldo">
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="fa-solid fa-money-bill-wave" style="color: #ffffff;"></i>
                     </div>
@@ -94,7 +94,7 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link text-white {{ ($active=='Pegawai') ? 'active bg-gradient-info' : '' }} "
-                    href="/pegawaai">
+                    href="/finance/pegawaai">
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="fa-solid fa-users" style="color: #ffffff;"></i>
                     </div>
@@ -113,8 +113,8 @@
                 </a>
                 <div  class="dropdown-container">
                 <ul style="" class="inDrop ms-2 me-3">
-                        <li class="mt-2"><a class="ms-3" href="/departemen">Departemen</a></li>
-                        <li class="mt-2"><a class="ms-3" href="/jabatan">Jabatan</a></li>
+                        <li class="mt-2"><a class="ms-3" href="/finance/departemen">Departemen</a></li>
+                        <li class="mt-2"><a class="ms-3" href="/finance/jabatan">Jabatan</a></li>
                         {{-- <li class="mt-2"><a class="ms-3" href="#">Bank</a></li> --}}
                 </ul>
                 </div>
@@ -166,6 +166,16 @@
                     <span class="nav-link-text ms-1">User</span>
                 </a>
             </li> --}}
+
+            <li class="nav-item">
+                <a class="nav-link text-white bg-danger "
+                    href="/logout">
+                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                        <i class="bi bi-box-arrow-right" style="color: #ffffff;"></i>
+                    </div>
+                    <span class="nav-link-text ms-1">Log Out</span>
+                </a>
+            </li>
         </ul>
     </div>
 </aside>

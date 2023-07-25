@@ -29,30 +29,34 @@
                             RP. @rp($saldo)
                         </div>
                     </div>
-                    <button class="btn bg-gradient-info w-15 my-4 mb-2 col-2 float-sm-end" data-bs-toggle="modal"
-                        data-bs-target="#staticBackdrop">Entry <i class="bi bi-plus-square-fill"></i></button>
-                    <button class="btn bg-gradient-success w-15 my-4 mx-2 mb-2 col-2 float-sm-end" data-bs-toggle="modal"
-                        data-bs-target="#static-excel"><i class="bi bi-file-earmark-spreadsheet-fill"></i></button>
+                    {{-- <button class="btn bg-gradient-info w-15 my-4 mb-2 col-2 float-sm-end" data-bs-toggle="modal"
+                        data-bs-target="#staticBackdrop">Entry <i class="bi bi-plus-square-fill"></i></button> --}}
+                    <button class="btn bg-gradient-success w-15 my-4 mx-2 mb-2 col-2 float-sm-end"
+                        data-bs-toggle="modal" data-bs-target="#static-excel"><i
+                            class="bi bi-file-earmark-spreadsheet-fill"></i></button>
                 </div>
 
 
 
-                    <div class="ms-2" style="">
+                <div class="ms-2" style="">
 
-                        <form action="/pengajuan" method="get" style="display: flex">
-                            <div class="col-2">
-                                <label class="text-xl text-dark font-weight-bolder col-6">Tanggal Akhir</label>
-                                <input type="date" id="tanggal" class="form-control ms-1" style="height: 30px" name="awal" placeholder="dd-mm-yy" value="{{ request('awal') }}">
-                            </div>
-                            <div class="col-2 ms-1">
-                                <label class="text-xl text-dark font-weight-bolder col-6">Tanggal Akhir</label>
-                                <input type="date" id="tanggal2" style="height: 30px" class="form-control ms-1" name="akhir" placeholder="dd-mm-yy" value="{{ request('akhir') }}">
-                            </div>
-                            <div class="col-3 mx-2">
-                                <button type="submit" class="btn bg-gradient-info w-15 my-4 mb-2 col-2"><i class="bi bi-search"></i></button>
-                            </div>
-                        </form>
-                    </div>
+                    <form action="/pengajuan" method="get" style="display: flex">
+                        <div class="col-2">
+                            <label class="text-xl text-dark font-weight-bolder col-6">Tanggal Akhir</label>
+                            <input type="date" id="tanggal" class="form-control ms-1" style="height: 30px" name="awal"
+                                placeholder="dd-mm-yy" value="{{ request('awal') }}">
+                        </div>
+                        <div class="col-2 ms-1">
+                            <label class="text-xl text-dark font-weight-bolder col-6">Tanggal Akhir</label>
+                            <input type="date" id="tanggal2" style="height: 30px" class="form-control ms-1" name="akhir"
+                                placeholder="dd-mm-yy" value="{{ request('akhir') }}">
+                        </div>
+                        <div class="col-3 mx-2">
+                            <button type="submit" class="btn bg-gradient-info w-15 my-4 mb-2 col-2"><i
+                                    class="bi bi-search"></i></button>
+                        </div>
+                    </form>
+                </div>
 
                 <div class="card-body px-0 pb-2">
 
@@ -105,49 +109,48 @@
                                     {{--  --}}
                                     <td class="bg-info text-center">
                                         <div class="d-flex">
-                                            <form action="/" method="post">
-                                            <button class="btn btn-dark font-weight-bold m-auto" data-bs-toggle="modal"
-                                                data-bs-target="#data-{{$data->id}}-view"><i
-                                                    class="bi bi-eye-fill"></i></button>
+                                            <form action="/pengajuan-approve/{{$data->id}}" method="put">
+                                                <button class="btn btn-dark font-weight-bold m-auto"
+                                                    type="submit"><i
+                                                        class="bi bi-eye-fill"></i></button>
+                                                <button class="btn btn-warning font-weight-bold m-auto"
+                                                    data-bs-toggle="modal" data-bs-target="#data-{{$data->id}}"><i
+                                                        class="bi bi-pencil-square"></i></button>
                                             </form>
-                                            <button class="btn btn-warning font-weight-bold m-auto"
-                                                data-bs-toggle="modal" data-bs-target="#data-{{$data->id}}"><i
-                                                    class="bi bi-pencil-square"></i></button>
                                         </div>
                                     </td>
                                     {{-- <td class="bg-info text-center">
                                         <div class="d-flex">
                                             <button class="btn btn-dark font-weight-bold m-auto" data-bs-toggle="modal"
                                                 data-bs-target="#data-{{$data->id}}-view"><i
-                                                    class="bi bi-eye-fill"></i></button>
-                                            <button class="btn btn-warning font-weight-bold m-auto"
-                                                data-bs-toggle="modal" data-bs-target="#data-{{$data->id}}"><i
-                                                    class="bi bi-pencil-square"></i></button>
-                                            <button class="btn btn-danger font-weight-bold m-auto"
-                                                onclick="hapus({{$data->id}})"><i
-                                                    class="bi bi-trash3-fill"></i></button>
-                                        </div>
-                                    </td> --}}
-                                </tr>
-                                @endforeach
-                                <!-- Tambahkan baris lainnya sesuai kebutuhan -->
-                            </tbody>
-                            <tfoot>
-                                {{-- <tr>
+                                        class="bi bi-eye-fill"></i></button>
+                                    <button class="btn btn-warning font-weight-bold m-auto" data-bs-toggle="modal"
+                                        data-bs-target="#data-{{$data->id}}"><i
+                                            class="bi bi-pencil-square"></i></button>
+                                    <button class="btn btn-danger font-weight-bold m-auto"
+                                        onclick="hapus({{$data->id}})"><i class="bi bi-trash3-fill"></i></button>
+                    </div>
+                    </td> --}}
+                    </tr>
+                    @endforeach
+                    <!-- Tambahkan baris lainnya sesuai kebutuhan -->
+                    </tbody>
+                    <tfoot>
+                        {{-- <tr>
                                     <th class="text-center" colspan="4">Total</th>
                                     <td class="text-end">@rp($debit)</td>
                                     <td class="text-end">@rp($kredit)</td>
                                 </tr> --}}
-                            </tfoot>
-                        </table>
-                    </div>
+                    </tfoot>
+                    </table>
                 </div>
             </div>
         </div>
-        {{-- <div class="col-1" style="margin: 30% 0">
+    </div>
+    {{-- <div class="col-1" style="margin: 30% 0">
                         <button class="btn btn-danger font-weight-bold m-auto" id="btnHapus" onclick="hapus(pilihId)"><i class="bi bi-trash3-fill"></i></button>
                     </div> --}}
-    </div>
+</div>
 </div>
 
 
@@ -210,9 +213,9 @@
         var awal = $('#tanggal1').val()
         var akhir = $('#tanggal2').val()
         axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken
-        axios.post('web/cetak-excel',{
-            awal:awal,
-            akhir:akhir
+        axios.post('web/cetak-excel', {
+            awal: awal,
+            akhir: akhir
         })
     }
 

@@ -31,28 +31,8 @@ Route::get('/login', [LoginController::class,'index'])->name('login');
 
 Route::post('/login', [LoginController::class,'login']
 );
+Route::get('/logout', [LoginController::class,'logout']);
 
-
-/////////////////////////////////
-//          ADMIN             //
-///////////////////////////////
-Route::middleware(['auth', 'checkLevel:admin'])->group(function () {
-    Route::get('/', [Home::class,'hrd']);
-     Route::resource('/admin/pangkat', PangkatController::class);
-     Route::resource('/admin/pegawai', PegawaiController::class);
-     Route::resource('/admin/jabatan', JabatanController::class);
-     Route::resource('/admin/kategoriPgw', KategoriPgwController::class);
-     Route::resource('/admin/departemen', DepartemenController::class);
-
-     Route::post('/admin/saldo', [SaldoController::class,'store']);
-     #region /// USER ///
-     Route::resource('/admin/user', UserController::class);
-     Route::get('/export-data', [UserController::class,'excel']);
-     Route::get('/user-pdf', [UserController::class,'pdf']);
-    //  Route::get('/profile', [ProfileController::class,'index']);
-     #endregion
-});
-Route::post('/cetak-excel', [PengajuanController::class, 'excel']);
 
 /////////////////////////////////
 //           HRD              //
@@ -60,15 +40,15 @@ Route::post('/cetak-excel', [PengajuanController::class, 'excel']);
 // Route::post('/iPengajuan', [PengajuanController::class,'awal']);
 Route::middleware(['auth', 'checkLevel:hrd'])->group(function () {
     Route::get('/', [Home::class, 'hrd']);
-    Route::resource('/pegawaai', PegawaiController::class);
-    Route::resource('/saldo', SaldoController::class);
-    Route::resource('/realisasi', RealisasiController::class);
-    Route::resource('/pengajuan', PengajuanController::class);
-    Route::post('/pengajuan-edit', [PengajuanController::class,'editPengajuan']);
+    Route::resource('/hrd/pegawaai', PegawaiController::class);
+    // Route::resource('/saldo', SaldoController::class);
+    Route::resource('/hrd/realisasi', RealisasiController::class);
+    Route::resource('/hrd/pengajuan', PengajuanController::class);
+    Route::post('/hrd/pengajuan-edit', [PengajuanController::class,'editPengajuan']);
     // Route::get('/cetak-excel', [PengajuanController::class,'excel']);
     Route::post('/cetak-excel', [PengajuanController::class,'excel']);
-    Route::resource('/jabatan', JabatanController::class);
-    Route::resource('/departemen', DepartemenController::class);
+    Route::resource('/hrd/jabatan', JabatanController::class);
+    Route::resource('/hrd/departemen', DepartemenController::class);
     Route::get('/profile', [ProfileController::class, 'admin']);
     Route::post('/profile-edit', [UserController::class, 'pengaturanAkun']);
     // Route::get('/pegawai', function () {
@@ -80,22 +60,21 @@ Route::middleware(['auth', 'checkLevel:hrd'])->group(function () {
 //          FINANCE           //
 ///////////////////////////////
 Route::middleware(['auth', 'checkLevel:finance'])->group(function () {
-    Route::get('/admin', function () {
-        return view('admin.index');
-    });
-    Route::get('/pegawai', function () {
-        return view('admin.pegawai.index');
-    });
+    Route::get('/', [Home::class, 'finance'
+    ]);
+    Route::resource('/finance/pegawaai', PegawaiController::class);
+    Route::resource('/finance/saldo', SaldoController::class);
+    Route::resource('/finance/realisasi', RealisasiController::class);
+    Route::resource('/finance/pengajuan', PengajuanController::class);
+    Route::get('/finance/pengajuan-index', [PengajuanController::class,'index_finance']);
+    // Route::get('/cetak-excel', [PengajuanController::class,'excel']);
+    Route::post('/cetak-excel', [PengajuanController::class, 'excel']);
+    Route::resource('/jabatan', JabatanController::class);
+    Route::resource('/departemen', DepartemenController::class);
+    Route::get('/profilee', [ProfileController::class, 'finance']);
+    Route::post('/profile-edit', [UserController::class, 'pengaturanAkun']);
+    // Route::get('/pegawai', function () {
+    //     return view('hrd.pegawai.index');
+    // });
 });
 
-/////////////////////////////////
-//          DIREKTUR          //
-///////////////////////////////
-Route::middleware(['auth', 'checkLevel:direktur'])->group(function () {
-    Route::get('/admin', function () {
-        return view('admin.index');
-    });
-    Route::get('/pegawai', function () {
-        return view('admin.pegawai.index');
-    });
-});

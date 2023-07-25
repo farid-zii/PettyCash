@@ -12,9 +12,13 @@ class ProfileController extends Controller
         ]);
     }
     public function finance(){
-        return view('finance.profile.index');
+        return view('finance.profile.index',[
+            'active' => 'Profile'
+        ]);
     }
     public function direktur(){
-        return view('direktur.profile.index');
+        return view('direktur.profile.index',[
+            'active' => 'Profile'
+        ]);
     }
 }

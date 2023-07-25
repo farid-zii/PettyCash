@@ -37,7 +37,7 @@ class LoginController extends Controller
                 return redirect('/profile')->with('login','Login berhasil');
             }
             if(Auth::user()->level=='finance'){
-                return redirect('/');
+                return redirect('/profilee');
             }
             if(Auth::user()->level=='direktur'){
                 return redirect('/');
@@ -54,9 +54,18 @@ class LoginController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+    public function logout(Request $request)
+    {
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect('login');
+
+    }
     public function store(Request $request)
     {
-        //
+
     }
 
     /**

@@ -67,7 +67,7 @@
             </li> --}}
             <li class="nav-item">
                 <a class="nav-link text-white {{ ($active=='Pengajuan') ? 'active bg-gradient-info' : '' }}"
-                    href="/pengajuan">
+                    href="/pengajuaan">
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="fa-sharp fa-solid fa-paper-plane" style="color: #ffffff;"></i>
                     </div>
@@ -83,7 +83,7 @@
                     <span class="nav-link-text ms-1">Realisasi</span>
                 </a>
             </li>
-            <li class="nav-item">
+            {{-- <li class="nav-item">
                 <a class="nav-link text-white {{ ($active=='Saldo') ? 'active bg-gradient-info' : '' }}"
                     href="/saldo">
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -91,7 +91,7 @@
                     </div>
                     <span class="nav-link-text ms-1">Saldo</span>
                 </a>
-            </li>
+            </li> --}}
             <li class="nav-item">
                 <a class="nav-link text-white {{ ($active=='Pegawai') ? 'active bg-gradient-info' : '' }} "
                     href="/pegawaai">
@@ -156,16 +156,17 @@
                     </div>
                     <span class="nav-link-text ms-1">Kategori Pegawai</span>
                 </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-white {{ ($active=='User') ? 'active bg-gradient-info' : '' }} "
-                    href="/admin/user">
+            </li>--}}
+            <li class="nav-item ">
+                <a class="nav-link text-white bg-danger "
+                    href="/logout">
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="fa-solid fa-user" style="color: #ffffff;"></i>
+                        <i class="bi bi-box-arrow-right" style="color: #ffffff;"></i>
+                        {{-- <i class=""></i> --}}
                     </div>
-                    <span class="nav-link-text ms-1">User</span>
+                    <span class="nav-link-text ms-1">Log Out</span>
                 </a>
-            </li> --}}
+            </li>
         </ul>
     </div>
 </aside>

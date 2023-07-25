@@ -63,7 +63,25 @@ class Home extends Controller
     }
     public function finance()
     {
+        $pegawai = Pegawai::get();
+        $saldo = Pengajuan::get();
 
+        if ($saldo != '') {
+            return view('finance.index', [
+                'title' => 'Dashboard',
+                'active' => 'Dashboard',
+                'saldo' => $saldo,
+                'pegawai' => $pegawai
+            ]);
+        }
+
+        return view('finance.index', [
+            'title' => 'Dashboard',
+            'active' => 'Dashboard',
+            'saldo' => '',
+            'pegawai' => $pegawai
+
+        ]);
     }
     public function direktur()
     {
