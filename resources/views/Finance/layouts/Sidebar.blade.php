@@ -41,7 +41,7 @@
         <ul class="navbar-nav">
             <li class="nav-item">
                 <a class="nav-link text-white {{ ($active=='Profile') ? 'active bg-gradient-info' : '' }}"
-                    href="/profile">
+                    href="/{{auth()->user()->level}}/profile">
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="fa-solid fa-user" style="color: #ffffff;"></i>
                     </div>
@@ -50,7 +50,7 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link text-white {{ ($active=='Dashboard') ? 'active bg-gradient-info' : '' }}"
-                    href="/">
+                    href="/{{auth()->user()->level}}/dashboard">
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="material-icons opacity-10">dashboard</i>
                     </div>
@@ -71,7 +71,14 @@
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="fa-sharp fa-solid fa-paper-plane" style="color: #ffffff;"></i>
                     </div>
-                    <span class="nav-link-text ms-1">Pengajuan</span>
+                    @php
+                        $pengajuan = App\Models\Pengajuan::all();
+                        $a=$pengajuan->where('approveF','=','⏹')->count();
+                    @endphp
+                    <div class="nav-link-text ms-1">Pengajuan</div>
+                    @if ($a!=0)
+                    <div class="ms-7 position-relative end-0" style="background: red;padding: 5px;border-radius: 1px">{{$a}}</div>
+                    @endif
                 </a>
             </li>
             <li class="nav-item">
@@ -101,10 +108,10 @@
                     <span class="nav-link-text ms-1">Pegawai</span>
                 </a>
             </li>
-            <li class="nav-item">
+            {{-- <li class="nav-item">
                 <a class="dropdown-btn nav-link text-white {{ ($active=='Jabatan') ? 'active bg-gradient-info' : '' }} " href="#">
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                        {{-- <i class="fa-solid fa-users" style="color: #ffffff;"></i> --}}
+                        {{-- <i class="fa-solid fa-users" style="color: #ffffff;"></i> --}
                         <i class="fa-sharp fa-regular fa-list-dropdown" style="color: #ffffff;"></i>
                         <i class="fa-solid fa-bars" style="color: #ffffff;"></i>
                     </div>
@@ -115,10 +122,10 @@
                 <ul style="" class="inDrop ms-2 me-3">
                         <li class="mt-2"><a class="ms-3" href="/finance/departemen">Departemen</a></li>
                         <li class="mt-2"><a class="ms-3" href="/finance/jabatan">Jabatan</a></li>
-                        {{-- <li class="mt-2"><a class="ms-3" href="#">Bank</a></li> --}}
+                        {{-- <li class="mt-2"><a class="ms-3" href="#">Bank</a></li> --}
                 </ul>
                 </div>
-            </li>
+            </li> --}}
 
             {{-- <li class="nav-item">
           <a class="nav-link text-white {{ ($active=='Jabatan') ? 'active bg-gradient-info' : '' }}"
@@ -156,22 +163,13 @@
                     </div>
                     <span class="nav-link-text ms-1">Kategori Pegawai</span>
                 </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-white {{ ($active=='User') ? 'active bg-gradient-info' : '' }} "
-                    href="/admin/user">
-                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="fa-solid fa-user" style="color: #ffffff;"></i>
-                    </div>
-                    <span class="nav-link-text ms-1">User</span>
-                </a>
-            </li> --}}
-
-            <li class="nav-item">
+            </li>--}}
+            <li class="nav-item ">
                 <a class="nav-link text-white bg-danger "
                     href="/logout">
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="bi bi-box-arrow-right" style="color: #ffffff;"></i>
+                        {{-- <i class=""></i> --}}
                     </div>
                     <span class="nav-link-text ms-1">Log Out</span>
                 </a>

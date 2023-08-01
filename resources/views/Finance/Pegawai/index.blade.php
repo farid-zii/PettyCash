@@ -1,4 +1,4 @@
-@extends('admin.layouts.main')
+@extends('finance.layouts.main')
 
 @section('isi')
 
@@ -13,7 +13,7 @@
                 </div>
                 <div class="card-body px-0 pb-2">
 
-{{-- @include('Admin.notif') --}}
+{{-- @include('finance.notif') --}}
 
                     <div class="mx-3">
                         <a href="/departemen-pdf" target="blank" class="btn bg-gradient-danger w-15 my-4 mb-2"><i
@@ -23,7 +23,7 @@
                         {{-- <button class="btn bg-gradient-success w-15 my-4 mb-2">Cetak Excel</button> --}}
                         {{-- <a href="/departemen-data" target="blank" class="btn bg-gradient-success w-16 my-4 mb-2"><i
                                 class="bi bi-file-earmark-spreadsheet-fill"></i> Cetak Excel</a> --}}
-                        {{-- <a href="/admin/user/create"  class="btn bg-gradient-info w-15 my-4 mb-2 float-sm-end">Entry</a> --}}
+                        {{-- <a href="/finance/user/create"  class="btn bg-gradient-info w-15 my-4 mb-2 float-sm-end">Entry</a> --}}
                         <button class="btn bg-gradient-info w-15 my-4 mb-2 float-sm-end" data-bs-toggle="modal"
                             data-bs-target="#staticBackdrop">Entry <i class="bi bi-plus-square-fill"></i></button>
                     </div>
@@ -115,7 +115,7 @@
 
 {{-- EDIT --}}
 
-@include('Admin.Pegawai.create')
-@include('Admin.Pegawai.delete')
-@include('Admin.Pegawai.edit')
+@include('finance.Pegawai.create')
+@include('finance.Pegawai.delete')
+@include('finance.Pegawai.edit')
 @endsection

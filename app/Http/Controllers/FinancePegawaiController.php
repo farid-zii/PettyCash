@@ -2,10 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Pegawai;
+use App\Http\Requests\StorePegawaiRequest;
+use App\Http\Requests\UpdatePegawaiRequest;
+use App\Models\Departemen;
+use App\Models\Jabatan;
+use App\Models\KategoriPgw;
+use App\Models\Pangkat;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
-class LoginController extends Controller
+class FinancePegawaiController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +22,24 @@ class LoginController extends Controller
      */
     public function index()
     {
-        return view('login');
+        $pegawai = Pegawai::latest()->paginate(7);
+        $pegawai->transform(function ($data) {
+            $tglLahir = Carbon::parse($data->tgl_lahir);
+            $data->umur = $tglLahir->diffInYears(Carbon::now()) . ' tahun ' . $tglLahir->diffInMonths(Carbon::now()) % 12 . ' bulan';
+            return $data;
+        });
+
+        $nomorUrut = ($pegawai->currentPage() - 1) * $pegawai->perPage() + 1;
+        return view('Finance.pegawai.index', [
+            "pegawai" => $pegawai,
+            "kategori" => KategoriPgw::get(),
+            "jabatan" => Jabatan::get(),
+            "departemen" => Departemen::get(),
+            "pangkat" => Pangkat::get(),
+            'nomorUrut' => $nomorUrut,
+            'title' => 'Pegawai',
+            "active" => "Pegawai",
+        ]);
     }
 
     /**
@@ -22,30 +47,9 @@ class LoginController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function login(Request $request)
+    public function create()
     {
-        $credentials = $request->validate([
-            'email'=>'required',
-            'password'=>'required'
-        ]);
-
-        if(Auth::attempt($credentials)){
-            // if(Auth::user()->level=='admin'){
-            //     return redirect('/profile');
-            // }
-            if(Auth::user()->level=='hrd'){
-                return redirect('/hrd/profile')->with('login','Login berhasil');
-            }
-            if(Auth::user()->level=='finance'){
-                return redirect('/finance/profile');
-            }
-            if(Auth::user()->level=='direktur'){
-                return redirect('/');
-            }
-        }
-        else {
-            return back()->with('error','Email atau Password salah');
-        }
+        //
     }
 
     /**
@@ -54,18 +58,9 @@ class LoginController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function logout(Request $request)
-    {
-        Auth::logout();
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-
-        return redirect('login');
-
-    }
     public function store(Request $request)
     {
-
+        //
     }
 
     /**

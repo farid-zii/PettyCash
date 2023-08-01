@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Departemen;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
-class LoginController extends Controller
+class FinanceDepartemenController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,11 @@ class LoginController extends Controller
      */
     public function index()
     {
-        return view('login');
+        return view('Finance.departemen.index', [
+            'datas' => Departemen::latest()->paginate(7),
+            'active' => 'Departemen',
+            'title' => 'Departemen',
+        ]);
     }
 
     /**
@@ -22,30 +26,9 @@ class LoginController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function login(Request $request)
+    public function create()
     {
-        $credentials = $request->validate([
-            'email'=>'required',
-            'password'=>'required'
-        ]);
-
-        if(Auth::attempt($credentials)){
-            // if(Auth::user()->level=='admin'){
-            //     return redirect('/profile');
-            // }
-            if(Auth::user()->level=='hrd'){
-                return redirect('/hrd/profile')->with('login','Login berhasil');
-            }
-            if(Auth::user()->level=='finance'){
-                return redirect('/finance/profile');
-            }
-            if(Auth::user()->level=='direktur'){
-                return redirect('/');
-            }
-        }
-        else {
-            return back()->with('error','Email atau Password salah');
-        }
+        //
     }
 
     /**
@@ -54,18 +37,9 @@ class LoginController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function logout(Request $request)
-    {
-        Auth::logout();
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-
-        return redirect('login');
-
-    }
     public function store(Request $request)
     {
-
+        //
     }
 
     /**

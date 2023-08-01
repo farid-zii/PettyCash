@@ -7,7 +7,7 @@
                 <h1 class="modal-title fs-5 fw-bolder text-light" id="staticBackdropLabel">Delete Data {{$title}}</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form method="post" action="/admin/jabatan/{{$data->id}}">
+            <form method="post" action="/hrd/jabatan/{{$data->id}}">
                 @method('Delete')
                 <div class="modal-body">
                     @csrf

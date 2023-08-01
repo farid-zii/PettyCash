@@ -140,7 +140,12 @@
 
 <body class="g-sidenav-show  bg-gray-300">
 
+    @if (Auth::user()->level=='hrd')
     @include('Admin.layouts.sidebar')
+    @else
+    @include('Finance.layouts.sidebar')
+    @endif
+
 
     <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
         @include('admin.layouts.navbar')

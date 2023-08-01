@@ -57,7 +57,7 @@
                    $gambars= $gambar->where('pengajuan_id','=',$data->id);
                 @endphp
                 @foreach ($gambars as $item)
-                <img src="../img/bukti_pengajuan/{{$item->gambar}}" class="col-3" alt="">
+                <img src="../img/bukti_pengajuan/{{$item->gambar}}" class="col-3" style="border: 1px solid black" alt="">
 
                 @endforeach
 

@@ -1,4 +1,4 @@
-@extends('admin.layouts.main')
+@extends('finance.layouts.main')
 
 @section('isi')
 <div class="container-fluid py-4">
@@ -12,7 +12,7 @@
                 </div>
 
                 <div class="m-2">
-                    @include('admin.notif')
+                    @include('finance.notif')
                 </div>
 
                 <div class="m-2" style="">
@@ -20,7 +20,7 @@
                     --}}
                     {{-- <button class="btn bg-gradient-success w-15 my-4 mb-2">Cetak Excel</button> --}}
 
-                    {{-- <a href="/admin/user/create"  class="btn bg-gradient-info w-15 my-4 mb-2 float-sm-end">Entry</a> --}}
+                    {{-- <a href="/finance/user/create"  class="btn bg-gradient-info w-15 my-4 mb-2 float-sm-end">Entry</a> --}}
 
                     <div class="bg-gradient-success  text-center my-4 mb-2 col-3 float-sm-start"
                         style="border-radius: 10px;color:white">
@@ -108,17 +108,36 @@
                                     {{--  --}}
                                     {{--  --}}
                                     <td class="bg-info text-center">
-                                        <div class="d-flex">
-                                            <form action="/pengajuan-approve/{{$data->id}}" method="put">
-                                                <button class="btn btn-dark font-weight-bold m-auto"
-                                                    type="submit"><i
-                                                        class="bi bi-eye-fill"></i></button>
-                                                <button class="btn btn-warning font-weight-bold m-auto"
-                                                    data-bs-toggle="modal" data-bs-target="#data-{{$data->id}}"><i
-                                                        class="bi bi-pencil-square"></i></button>
-                                            </form>
+                                        <div class="d-flex text-center">
+                                            @if ($data->approveF=='✅')
+                                            <button class="btn btn-dark font-weight-bold m-auto" data-bs-toggle="modal"
+                                                data-bs-target="#data-{{$data->id}}-view"><i
+                                                    class="bi bi-eye-fill"></i></button>
+                                            @else
+                                            <form action="/finance/pengajuan" class="m-auto" method="post">
+                                            @csrf
+                                            @method('post')
+                                            <input type="hidden" name="id" value="{{$data->id}}">
+                                            <button type="submit" name="setuju" value="setuju" class="btn btn-success font-weight-bold m-auto"><i class="bi bi-check-square-fill"></i></button>
+                                        </form>
+                                            <button  type="button" class="btn btn-warning font-weight-bold m-auto" data-bs-toggle="modal"
+                                                data-bs-target="#data-{{$data->id}}"><i
+                                                class="bi bi-pencil-square"></i></button>
+                                            <button class="btn btn-dark font-weight-bold m-auto" data-bs-toggle="modal"
+                                                data-bs-target="#data-{{$data->id}}-view"><i
+                                                    class="bi bi-eye-fill"></i></button>
+                                            @endif
                                         </div>
                                     </td>
+                                    {{-- <td>
+                                        <div class="d-flex">
+                                            <a href="" class="btn btn-success font-weight-bold m-auto" data-bs-toggle="modal"
+                                                        data-bs-target="#data-{{$data->id}}-view"><i class="bi bi-check-square-fill"></i></a>
+                                            <button class="btn btn-warning font-weight-bold m-auto" data-bs-toggle="modal"
+                                                data-bs-target="#data-{{$data->id}}"><i
+                                                class="bi bi-pencil-square"></i></button>
+                                    </div>
+                                    </td> --}}
                                     {{-- <td class="bg-info text-center">
                                         <div class="d-flex">
                                             <button class="btn btn-dark font-weight-bold m-auto" data-bs-toggle="modal"
@@ -155,9 +174,9 @@
 
 
 <!-- CREATE -->
-@include('admin.pengajuan.create')
-@include('admin.pengajuan.view')
-@include('admin.pengajuan.edit')
+@include('finance.pengajuan.create')
+@include('finance.pengajuan.view')
+@include('finance.pengajuan.edit')
 
 <script>
     $(document).ready(function () {

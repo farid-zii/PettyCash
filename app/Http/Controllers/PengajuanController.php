@@ -10,6 +10,7 @@ use App\Http\Requests\UpdatePengajuanRequest;
 use App\Models\Pegawai;
 use Illuminate\Http\Request;
 use App\Exports\PengajuanExport;
+use App\Models\Saldo;
 use Maatwebsite\Excel\Facades\Excel;
 // use App\Models\Pengajuan;
 
@@ -97,7 +98,12 @@ class PengajuanController extends Controller
 
         // }
 
-        $saldo = 40000;
+        $saldos = Saldo::latest()->first();
+        if ($saldos == null) {
+            $saldo = 0;
+        } else {
+            $saldo = $saldos->saldo;
+        }
 
             $awal=$req->input('awal');
             $akhir=$req->input('akhir');
@@ -374,7 +380,7 @@ class PengajuanController extends Controller
         if($r->type=='tolak'){
             $data=Pengajuan::where('id',$id)
                     ->update([
-                        'approveF'=>'✅',
+                        'approveF'=>'❌',
                         'komenF'=>$r->komen,
                     ]);
             return back();
@@ -382,35 +388,7 @@ class PengajuanController extends Controller
         }
     }
 
-    public function direksiAprrove(Request $r,$id)
-    {
-        $pengajuan= Pengajuan::where('id', $id)->get();
 
-        if($r->type=='setuju'){
-            if($pengajuan->aooriveF== '✅'){
-                $a=$pengajuan->saldo-$pengajuan->nominal;
-                Pengajuan::where('id', $id)
-                    ->update([
-                        'approveD' => '✅',
-                        'saldo' =>$a,
-                    ]);
-                return back();
-            }
-            Pengajuan::where('id',$id)
-                    ->update([
-                        'approveD'=>'✅'
-                    ]);
-            return back();
-        }
-        if($r->type=='tolak'){
-            Pengajuan::where('id',$id)
-                    ->update([
-                        'approveD'=>'✅',
-                        'komenD'=>$r->komen,
-                    ]);
-            return back();
-        }
-    }
 
     public function show(Pengajuan $pengajuan)
     {

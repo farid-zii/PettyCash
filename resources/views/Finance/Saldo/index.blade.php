@@ -11,21 +11,21 @@
                         <h6 class="text-white text-uppercase ps-3">Data {{$title}}</h6>
                     </div>
                 </div>
-                <div class="card-body px-0 pb-2">
+                <div class="card-body px-4 pb-2 row">
 
                     {{-- @include('Admin.notif') --}}
 
-                    <div class="mx-3">
+                    <div class="mx-4">
                         {{-- <a href="/saldo-pdf" target="blank" class="btn bg-gradient-danger w-15 my-4 mb-2"><i
                                 class="bi bi-file-earmark-pdf-fill"></i>Cetak Pdf</a>
                         {{-- <button class="btn bg-gradient-success w-15 my-4 mb-2">Cetak Excel</button> --}}
-                        <a href="/saldo-data" blank class="btn bg-gradient-success w-16 my-4 mb-2"><i
-                                class="bi bi-file-earmark-spreadsheet-fill"></i> Cetak Excel</a>
+                        {{-- <a href="/saldo-data" blank class="btn bg-gradient-success w-16 my-4 mb-2"><i
+                                class="bi bi-file-earmark-spreadsheet-fill"></i> Cetak Excel</a> --}}
                         {{-- <a href="/admin/user/create"  class="btn bg-gradient-info w-15 my-4 mb-2 float-sm-end">Entry</a> --}}
                         <button class="btn bg-gradient-info w-15 my-4 mb-2 float-sm-end" data-bs-toggle="modal"
                             data-bs-target="#staticBackdrop">Entry <i class="bi bi-plus-square-fill"></i></button>
                     </div>
-                    <div class="table-responsive px-3">
+                    <div class="table-responsive px-4">
                         <table class="table table-bordered border-dark" style="">
                             <thead>
                                 <tr class="bg-dark" style="font-color:white;">
@@ -102,15 +102,15 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
-            <form method="post" action="/saldo">
+            <form method="post" action="/finance/saldo">
                 @method('POST')
                 @csrf
                 <div class="modal-body">
                     <label class="text-xl text-dark font-weight-bolder" required>saldo</label>
                     <div class="input-group mb-3">
                         <span class="input-group-text" id="basic-addon1">@</span>
-                        <input type="number" class="form-control" name="saldo" value=""
-                            aria-describedby="basic-addon1">
+                        <input type="number" class="form-control" name="saldo" value="{{$saldoNow}}"
+                            aria-describedby="basic-addon1" readonly>
                     </div>
                     <label class="text-xl text-dark font-weight-bolder ">nominal</label>
                     <div class="mb-2">

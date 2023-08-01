@@ -7,7 +7,7 @@
                 <h1 class="modal-title fs-5" id="staticBackdropLabel">Tambah Bukti</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form  action="/realisasi" method="post" enctype="multipart/form-data" >
+            <form  action="/hrd/realisasi" method="post" enctype="multipart/form-data" >
             {{-- <form  action="/pengajuan-edit/{{$data->id}}" method="put" enctype="multipart/form-data"> --}}
                 @method('POST')
                 @csrf
@@ -37,7 +37,7 @@
                     </div>
 
 
-                    @if ($data->type==1)
+                    @if($data->type==1)
                     <label class="text-xl text-dark font-weight-bolder">Terpakai</label>
                     <div class="mb-2" style="display:flex;">
                         <div class="form-control text-center" disabled style="width: 7%;background: rgb(223, 219, 219);">Rp</div>
@@ -46,16 +46,14 @@
                     </div>
                     @endif
 
-
-
-                     <label class="text-xl text-dark font-weight-bolder col-6">Bukti</label>
-                     <table id="tabelBukti" class="col-8">
+                    <label class="text-xl text-dark font-weight-bolder col-6">Bukti</label>
+                    <table id="tabelBukti" class="col-8">
                         <tr>
                             <td width="90%">
                                 <input type="file" class="form-control"  name="inputs[0][gambars]" multiple>
                             </td>
                             <td width="10%">
-                                <button type="button" id="add" onclick="">+</button>
+                                <button type="button" id="add" >+</button>
                             </td>
                         </tr>
                      </table>

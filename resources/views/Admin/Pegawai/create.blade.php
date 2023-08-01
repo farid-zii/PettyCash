@@ -7,7 +7,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
-            <form method="post" action="/pegawaai" enctype="multipart/form-data">
+            <form method="post" action="/hrd/pegawaai" enctype="multipart/form-data">
                 @method('POST')
                 @csrf
                 <div class="modal-body row g-2">

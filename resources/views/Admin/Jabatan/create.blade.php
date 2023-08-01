@@ -7,7 +7,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
-            <form method="post" action="/admin/jabatan">
+            <form method="post" action="/hrd/jabatan">
                 @method('POST')
                 @csrf
                 <div class="modal-body">

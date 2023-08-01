@@ -7,7 +7,7 @@
                 <h1 class="modal-title fs-5" id="staticBackdropLabel">Edit Data {{$title}}</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form  action="/pengajuan-edit" method="post" enctype="multipart/form-data">
+            <form  action="/hrd/pengajuan-edit" method="post" enctype="multipart/form-data">
             {{-- <form  action="/pengajuan-edit/{{$data->id}}" method="put" enctype="multipart/form-data"> --}}
 
                 @csrf

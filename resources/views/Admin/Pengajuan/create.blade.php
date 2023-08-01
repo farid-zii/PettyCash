@@ -6,7 +6,7 @@
                 <h1 class="modal-title fs-5" id="staticBackdropLabel">Create Pengajuan</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form method="post" action="/pengajuan">
+            <form method="post" action="/hrd/pengajuan">
                 @method('POST')
                 @csrf
                 <div class="modal-body">

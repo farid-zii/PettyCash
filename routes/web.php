@@ -11,6 +11,8 @@ use App\Http\Controllers\PangkatController;
 use App\Http\Controllers\JabatanController;
 use App\Http\Controllers\KategoriPgwController;
 use App\Http\Controllers\DepartemenController;
+use App\Http\Controllers\FinancePegawaiController;
+use App\Http\Controllers\FinancePengajuanController;
 use App\Http\Controllers\PengajuanController;
 use App\Http\Controllers\RealisasiController;
 
@@ -39,17 +41,17 @@ Route::get('/logout', [LoginController::class,'logout']);
 ///////////////////////////////
 // Route::post('/iPengajuan', [PengajuanController::class,'awal']);
 Route::middleware(['auth', 'checkLevel:hrd'])->group(function () {
-    Route::get('/', [Home::class, 'hrd']);
+    Route::get('hrd/dashboard', [Home::class, 'hrd']);
     Route::resource('/hrd/pegawaai', PegawaiController::class);
     // Route::resource('/saldo', SaldoController::class);
     Route::resource('/hrd/realisasi', RealisasiController::class);
     Route::resource('/hrd/pengajuan', PengajuanController::class);
-    Route::post('/hrd/pengajuan-edit', [PengajuanController::class,'editPengajuan']);
+    Route::post('pengajuan-edit', [PengajuanController::class,'editPengajuan']);
     // Route::get('/cetak-excel', [PengajuanController::class,'excel']);
     Route::post('/cetak-excel', [PengajuanController::class,'excel']);
     Route::resource('/hrd/jabatan', JabatanController::class);
     Route::resource('/hrd/departemen', DepartemenController::class);
-    Route::get('/profile', [ProfileController::class, 'admin']);
+    Route::get('/hrd/profile', [ProfileController::class, 'admin']);
     Route::post('/profile-edit', [UserController::class, 'pengaturanAkun']);
     // Route::get('/pegawai', function () {
     //     return view('hrd.pegawai.index');
@@ -60,18 +62,18 @@ Route::middleware(['auth', 'checkLevel:hrd'])->group(function () {
 //          FINANCE           //
 ///////////////////////////////
 Route::middleware(['auth', 'checkLevel:finance'])->group(function () {
-    Route::get('/', [Home::class, 'finance'
+    Route::get('finance/dashboard', [Home::class, 'finance'
     ]);
-    Route::resource('/finance/pegawaai', PegawaiController::class);
+    Route::resource('/finance/pegawaai', FinancePegawaiController::class);
     Route::resource('/finance/saldo', SaldoController::class);
     Route::resource('/finance/realisasi', RealisasiController::class);
-    Route::resource('/finance/pengajuan', PengajuanController::class);
+    Route::resource('/finance/pengajuan', FinancePengajuanController::class);
     Route::get('/finance/pengajuan-index', [PengajuanController::class,'index_finance']);
     // Route::get('/cetak-excel', [PengajuanController::class,'excel']);
     Route::post('/cetak-excel', [PengajuanController::class, 'excel']);
-    Route::resource('/jabatan', JabatanController::class);
-    Route::resource('/departemen', DepartemenController::class);
-    Route::get('/profilee', [ProfileController::class, 'finance']);
+    Route::resource('finance/jabatan', JabatanController::class);
+    Route::resource('finance/departemen', DepartemenController::class);
+    Route::get('/finance/profile', [ProfileController::class, 'finance']);
     Route::post('/profile-edit', [UserController::class, 'pengaturanAkun']);
     // Route::get('/pegawai', function () {
     //     return view('hrd.pegawai.index');

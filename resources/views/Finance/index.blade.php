@@ -22,10 +22,10 @@
                 <h4 class="mb-0">{{$pegawai->count()}}</h4>
               </div>
             </div>
-            <hr class="dark horizontal my-0">
+            {{-- <hr class="dark horizontal my-0">
             <div class="card-footer p-3">
               <p class="mb-0"><span class="text-success text-sm font-weight-bolder">+3% </span>than last month</p>
-            </div>
+            </div> --}}
           </div>
         </div>
         <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
@@ -39,10 +39,10 @@
                 <h4 class="mb-0">2.222</h4>
               </div>
             </div>
-            <hr class="dark horizontal my-0">
+            {{-- <hr class="dark horizontal my-0">
             <div class="card-footer p-3">
               <p class="mb-0 font-weight-bolder">Bulan {{date('M')}} Mengalami</p>
-            </div>
+            </div> --}}
           </div>
         </div>
         <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
@@ -52,14 +52,18 @@
                 <i class="material-icons opacity-10">weekend</i>
               </div>
               <div class="text-end pt-1">
-                <p class="text-sm mb-0 text-capitalize">UANG MASUK</p>
-                <h4 class="mb-0">3,462</h4>
+                <p class="text-sm mb-0 text-capitalize">SALDO PETTY CASH</p>
+                @php
+                    $data = App\Models\Pengajuan::latest()->first();
+
+                @endphp
+                <h4 class="mb-0">@rp($data->saldo)</h4>
               </div>
             </div>
-            <hr class="dark horizontal my-0">
+            {{-- <hr class="dark horizontal my-0">
             <div class="card-footer p-3">
               <p class="mb-0 font-weight-bolder">Bulan {{date('M')}} Mengalami</p>
-            </div>
+            </div> --}}
           </div>
         </div>
         <div class="col-xl-3 col-sm-6">
@@ -77,10 +81,10 @@
                 @endif
               </div>
             </div>
-            <hr class="dark horizontal my-0">
+            {{-- <hr class="dark horizontal my-0">
             <div class="card-footer p-3">
               <p class="mb-0 font-weight-bolder">Tahun {{date('Y')}}</p>
-            </div>
+            </div> --}}
           </div>
         </div>
       </div>
@@ -104,6 +108,15 @@
                 <p class="mb-0 text-sm"> campaign sent 2 days ago </p>
               </div>
             </div>
+            {{-- <div class="card-body">
+              <h6 class="mb-0 ">Website Views</h6>
+              <p class="text-sm ">Last Campaign Performance</p>
+              <hr class="dark horizontal">
+              <div class="d-flex ">
+                <i class="material-icons text-sm my-auto me-1">schedule</i>
+                <p class="mb-0 text-sm"> campaign sent 2 days ago </p>
+              </div>
+            </div> --}}
           </div>
         </div>
 

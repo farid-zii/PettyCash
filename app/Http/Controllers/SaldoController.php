@@ -18,10 +18,17 @@ class SaldoController extends Controller
      */
     public function index()
     {
-        return view('admin.saldo.index', [
+        $saldos = saldo::latest()->first();
+        if ($saldos == null) {
+            $saldoNow = 0;
+        } else {
+            $saldoNow = $saldos->saldo;
+        }
+        return view('finance.saldo.index', [
             'datas' => Saldo::orderBy('id','DESC')->paginate(7),
             'title' => 'Saldo',
             'active' => 'Saldo',
+            'saldoNow' => $saldoNow,
         ]);
     }
 

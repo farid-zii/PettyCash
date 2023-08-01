@@ -140,10 +140,12 @@
 
 <body class="g-sidenav-show  bg-gray-300">
 
+
+    {{-- @include('finance.layouts.sidebar')--}}
     @include('Finance.layouts.sidebar')
 
     <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
-        @include('Finance.layouts.navbar')
+        @include('finance.layouts.navbar')
 
         <div>
             @yield('isi')

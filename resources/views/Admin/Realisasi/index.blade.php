@@ -107,7 +107,7 @@
                                                     class="bi bi-eye-fill"></i></button>
                                             <button class="btn btn-success font-weight-bold m-auto"
                                                 data-bs-toggle="modal" data-bs-target="#data-{{$data->id}}"><i class="bi bi-plus-square-fill"></i></button>
-                                            <form action="/realisasi/{{$data->id}}" method="post">
+                                            <form action="/hrd/realisasi/{{$data->id}}" method="post">
                                                 @method('Delete')
                                                 @csrf
                                                 <button class="btn btn-danger font-weight-bold m-auto"

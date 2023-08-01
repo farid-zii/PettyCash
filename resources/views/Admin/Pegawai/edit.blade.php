@@ -7,7 +7,7 @@
                 <h1 class="modal-title fs-5" id="staticBackdropLabel">Edit Data {{$title}}</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form method="post" action="/pegawaai/{{$data->id}}" enctype="multipart/form-data">
+            <form method="post" action="/hrd/pegawaai/{{$data->id}}" enctype="multipart/form-data">
                 @method('PUT')
                 @csrf
                 <div class="modal-body row g-2">

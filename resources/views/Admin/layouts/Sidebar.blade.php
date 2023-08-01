@@ -41,7 +41,7 @@
         <ul class="navbar-nav">
             <li class="nav-item">
                 <a class="nav-link text-white {{ ($active=='Profile') ? 'active bg-gradient-info' : '' }}"
-                    href="/profile">
+                    href="/hrd/profile">
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="fa-solid fa-user" style="color: #ffffff;"></i>
                     </div>
@@ -50,7 +50,7 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link text-white {{ ($active=='Dashboard') ? 'active bg-gradient-info' : '' }}"
-                    href="/">
+                    href="/hrd/dashboard">
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="material-icons opacity-10">dashboard</i>
                     </div>
@@ -67,20 +67,38 @@
             </li> --}}
             <li class="nav-item">
                 <a class="nav-link text-white {{ ($active=='Pengajuan') ? 'active bg-gradient-info' : '' }}"
-                    href="/pengajuaan">
+                    href="/hrd/pengajuan">
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="fa-sharp fa-solid fa-paper-plane" style="color: #ffffff;"></i>
                     </div>
-                    <span class="nav-link-text ms-1">Pengajuan</span>
+                    @php
+                        $pengajuan = App\Models\Pengajuan::all();
+                        $a=$pengajuan->where('approveF','=','❌')->count();
+                    @endphp
+                    <div class="nav-link-text ms-1">Pengajuan</div>
+                    @if ($a!=0)
+                    <div class="ms-7 position-relative end-0" style="background: red;padding: 5px;border-radius: 1px">{{$a}}</div>
+                    @endif
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-white {{ ($active=='Realisasi') ? 'active bg-gradient-info' : '' }}"
-                    href="/realisasi">
+                <a class="nav-link text-white d-flex {{ ($active=='Realisasi') ? 'active bg-gradient-info' : '' }}"
+                    href="/hrd/realisasi">
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="fa-sharp fa-solid fa-hand-holding-dollar" style="color: #ffffff;"></i>
                     </div>
-                    <span class="nav-link-text ms-1">Realisasi</span>
+                    @php
+                        $pengajuan = App\Models\Pengajuan::all();
+                        $a=$pengajuan->where('approveF','=','✅')->where('realisasi_id','=',null)->count();
+                    @endphp
+                    <div class="nav-link-text ms-1">Realisasi
+
+                    </div>
+                    @if ($a!=0)
+                    <div class="ms-7 position-relative end-0" style="background: red;padding: 5px;border-radius: 1px">{{$a}}</div>
+                    @endif
+
+
                 </a>
             </li>
             {{-- <li class="nav-item">
@@ -94,7 +112,7 @@
             </li> --}}
             <li class="nav-item">
                 <a class="nav-link text-white {{ ($active=='Pegawai') ? 'active bg-gradient-info' : '' }} "
-                    href="/pegawaai">
+                    href="/hrd/pegawaai">
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="fa-solid fa-users" style="color: #ffffff;"></i>
                     </div>
@@ -113,8 +131,8 @@
                 </a>
                 <div  class="dropdown-container">
                 <ul style="" class="inDrop ms-2 me-3">
-                        <li class="mt-2"><a class="ms-3" href="/departemen">Departemen</a></li>
-                        <li class="mt-2"><a class="ms-3" href="/jabatan">Jabatan</a></li>
+                        <li class="mt-2"><a class="ms-3" href="/hrd/departemen">Departemen</a></li>
+                        <li class="mt-2"><a class="ms-3" href="/hrd/jabatan">Jabatan</a></li>
                         {{-- <li class="mt-2"><a class="ms-3" href="#">Bank</a></li> --}}
                 </ul>
                 </div>
