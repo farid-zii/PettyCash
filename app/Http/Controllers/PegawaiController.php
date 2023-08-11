@@ -96,7 +96,7 @@ class PegawaiController extends Controller
             //jika request memiliki file dengan name profil maka -->
             $nama= time().$request->file('profil')->getClientOriginalName();
             $request->file('profil')->move(public_path('img/profil_Pegawai'),$nama);
-            //Memindahkan file ke public/profil_pegawai dengan nama asli file
+            //Memindahkan file ke public/img/profil_pegawai dengan nama asli file
             $validate['profil'] = $nama;
             //Mengubah nama file menjadi nama asli sesuai nama file di direktori
         }

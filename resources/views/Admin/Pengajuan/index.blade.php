@@ -25,12 +25,12 @@
                     <div class="bg-gradient-success  text-center my-4 mb-2 col-3 float-sm-start"
                         style="border-radius: 10px;color:white">
                         SALDO
-                        <div>
+                        <div class="fw-bold" style="color: black;font-size: 17px" >
                             RP. @rp($saldo)
                         </div>
                     </div>
                     <button class="btn bg-gradient-info w-15 my-4 mb-2 col-2 float-sm-end" data-bs-toggle="modal"
-                        data-bs-target="#staticBackdrop">Entry <i class="bi bi-plus-square-fill"></i></button>
+                        data-bs-target="#staticBackdrop">Tambah <i class="bi bi-plus-square-fill"></i></button>
                     <button class="btn bg-gradient-success w-15 my-4 mx-2 mb-2 col-2 float-sm-end" data-bs-toggle="modal"
                         data-bs-target="#static-excel"><i class="bi bi-file-earmark-spreadsheet-fill"></i></button>
                 </div>
@@ -67,7 +67,6 @@
                                     <th class="text-light" style="">Project</th>
                                     <th class="text-light" style="">Rekening</th>
                                     <th class="text-light" style="">Debit</th>
-                                    <th class="text-light" style="">Kredit</th>
                                     <th class="text-light" style="">Uraian</th>
                                     <th class="text-light text-center" style="" colspan="">Aprrove</th>
                                     <th class="text-light" style="">Aksi</th>
@@ -89,13 +88,9 @@
                                         <p class="text-xs text-secondary mb-0">{{$data->bank}}</p>
                                     </td>
 
-                                    @if ($data->type==false)
-                                    <td class="text-end">-</td>
-                                    <td class="text-end">@rp($data->kredit)</td>
-                                    @elseif ($data->type==true)
+
                                     <td class="text-end">@rp($data->debit)</td>
-                                    <td class="text-end">-</td>
-                                    @endif
+
                                     {{--  --}}
                                     <td class="" style="width: 50px"> {{ Str::words($data->keterangan, 2,'....')}}</td>
                                     <td class="text-center">
@@ -103,7 +98,7 @@
                                     </td>
                                     {{--  --}}
                                     {{--  --}}
-                                    <td class="bg-info text-center">
+                                    <td class=" text-center">
                                         <div class="d-flex">
                                             <button class="btn btn-dark font-weight-bold m-auto" data-bs-toggle="modal"
                                                 data-bs-target="#data-{{$data->id}}-view"><i
@@ -124,7 +119,6 @@
                                 <tr>
                                     <th class="text-center" colspan="4">Total</th>
                                     <td class="text-end">@rp($debit)</td>
-                                    <td class="text-end">@rp($kredit)</td>
                                 </tr>
                             </tfoot>
                         </table>

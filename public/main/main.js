@@ -1,9 +1,11 @@
-var ctx = document.getElementById("chart-bars").getContext("2d");
+console.log(dataChart);
+console.log(dataLabel);
+        var ctx = document.getElementById("chart-bars").getContext("2d");
 
             new Chart(ctx, {
                 type: "bar",
                 data: {
-                    labels: ["M", "T", "W", "T", "F", "S", "S"],
+                    labels: dataLabel,
                     datasets: [{
                         label: "Sales",
                         tension: 0.4,
@@ -11,7 +13,7 @@ var ctx = document.getElementById("chart-bars").getContext("2d");
                         borderRadius: 4,
                         borderSkipped: false,
                         backgroundColor: "rgba(255, 255, 255, .8)",
-                        data: [50, 20, 10, 22, 50, 10, 40],
+                        data: dataChart,
                         maxBarThickness: 6
                     }, ],
                 },
@@ -205,3 +207,5 @@ var ctx = document.getElementById("chart-bars").getContext("2d");
                 }
                 Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
             }
+
+

@@ -26,14 +26,16 @@ use App\Http\Controllers\RealisasiController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-// Route::get('/', function () {
-//     return view('login');
-// });
-Route::get('/login', [LoginController::class,'index'])->name('login');
+Route::get('/', function () {
+    return view('login');
+});
+Route::get('/login', [LoginController::class,'index']);
 
 Route::post('/login', [LoginController::class,'login']
 );
 Route::get('/logout', [LoginController::class,'logout']);
+
+Route::post('/cetak-excel', [PengajuanController::class, 'excel']);
 
 
 /////////////////////////////////
@@ -48,7 +50,7 @@ Route::middleware(['auth', 'checkLevel:hrd'])->group(function () {
     Route::resource('/hrd/pengajuan', PengajuanController::class);
     Route::post('pengajuan-edit', [PengajuanController::class,'editPengajuan']);
     // Route::get('/cetak-excel', [PengajuanController::class,'excel']);
-    Route::post('/cetak-excel', [PengajuanController::class,'excel']);
+    // Route::post('/cetak-excel', [PengajuanController::class,'excel']);
     Route::resource('/hrd/jabatan', JabatanController::class);
     Route::resource('/hrd/departemen', DepartemenController::class);
     Route::get('/hrd/profile', [ProfileController::class, 'admin']);
@@ -68,9 +70,10 @@ Route::middleware(['auth', 'checkLevel:finance'])->group(function () {
     Route::resource('/finance/saldo', SaldoController::class);
     Route::resource('/finance/realisasi', RealisasiController::class);
     Route::resource('/finance/pengajuan', FinancePengajuanController::class);
+    Route::post('/finance/pengajuan', [FinancePengajuanController::class,'update']);
     Route::get('/finance/pengajuan-index', [PengajuanController::class,'index_finance']);
     // Route::get('/cetak-excel', [PengajuanController::class,'excel']);
-    Route::post('/cetak-excel', [PengajuanController::class, 'excel']);
+    // Route::post('/cetak-excel', [PengajuanController::class, 'excel']);
     Route::resource('finance/jabatan', JabatanController::class);
     Route::resource('finance/departemen', DepartemenController::class);
     Route::get('/finance/profile', [ProfileController::class, 'finance']);

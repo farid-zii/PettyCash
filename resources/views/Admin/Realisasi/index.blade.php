@@ -29,8 +29,8 @@
                             RP. @rp($saldo)
                         </div>
                     </div>
-                    <button class="btn bg-gradient-success w-15 my-4 mx-2 mb-2 col-2 float-sm-end" data-bs-toggle="modal"
-                        data-bs-target="#static-excel"><i class="bi bi-file-earmark-spreadsheet-fill"></i></button>
+                    {{-- <button class="btn bg-gradient-success w-15 my-4 mx-2 mb-2 col-2 float-sm-end" data-bs-toggle="modal"
+                        data-bs-target="#static-excel"><i class="bi bi-file-earmark-spreadsheet-fill"></i></button> --}}
                 </div>
 
 
@@ -64,9 +64,9 @@
                                     <th class="text-light" style="">Nama/Departemen</th>
                                     <th class="text-light" style="">Project</th>
                                     <th class="text-light" style="">Debit</th>
-                                    <th class="text-light" style="">Kredit</th>
-                                    <th class="text-light" style="">Refund</th>
                                     <th class="text-light" style="">Total Pemakaian</th>
+                                    <th class="text-light" style="">Refund</th>
+                                    <th class="text-light" style="">Uraian</th>
                                     <th class="text-light" style="">Aksi</th>
                                 </tr>
                             </thead>
@@ -80,13 +80,8 @@
                                     </td>
                                     <td class="" style="width: 50px">{{ Str::words($data->project, 2,'....')}}</td>
 
-                                    @if ($data->type==false)
-                                    <td class="text-end">-</td>
-                                    <td class="text-end" id="kredit_">@rp($data->kredit)</td>
-                                    @elseif ($data->type==true)
                                     <td class="text-end" id="debit_">@rp($data->debit)</td>
-                                    <td class="text-end">-</td>
-                                    @endif
+
 
                                     @if ($data->refund!=null)
                                         <td class="text-end">@rp($data->refund)</td>
@@ -99,6 +94,8 @@
                                     @else
                                         <td class="text-end">-</td>
                                     @endif
+
+                                    <td class="text-end">{{$data->keterangan}}</td>
 
                                     <td class="bg-info text-center">
                                         <div class="d-flex">
@@ -125,7 +122,6 @@
                                 <tr>
                                     <th class="text-center" colspan="3">Total</th>
                                     <td class="text-end">@rp($debit)</td>
-                                    <td class="text-end">@rp($kredit)</td>
                                 </tr>
                             </tfoot> --}}
                         </table>
@@ -146,16 +142,6 @@
 @include('admin.realisasi.edit')
 
 <script>
-    let totalKredit =''
-    $('#kredit_').each(function () {
-        let kredit = parseInt($(this).text())
-        totalKredit += kredit;
-    })
-
-    console.log(totalKredit)
-
-
-
     $(document).ready(function () {
 
 
@@ -201,19 +187,7 @@
 
     });
 
-    //  $('#btnHapus').on('click',function() {
-    //     hapus(id)
-    //  })
 
-    function Excel() {
-        var awal = $('#tanggal1').val()
-        var akhir = $('#tanggal2').val()
-        axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken
-        axios.post('web/cetak-excel',{
-            awal:awal,
-            akhir:akhir
-        })
-    }
 
     function hapus(id) {
 

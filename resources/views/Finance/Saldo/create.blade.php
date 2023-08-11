@@ -1,26 +1,17 @@
-
-@section('modal')
-<!-- CREATE -->
-<div class="modal fade" dty id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-    aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header bg-info">
-                <h1 class="modal-title fs-5" id="staticBackdropLabel">Entry Data {{$title}}</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-
-            <form method="post" action="/admin/pangkat">
+            <form method="post" action="/finance/saldo">
                 @method('POST')
                 @csrf
                 <div class="modal-body">
-                    <label class="text-xl text-dark font-weight-bolder" required>Nama</label>
-                    <div class="mb-2">
-                        <input type="text" class="form-control" placeholder="" name="nama" value="{{old('kode')}}">
+                    <label class="text-xl text-dark font-weight-bolder" required>saldo</label>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon1">@</span>
+                        <input type="number" class="form-control" id='saldo' name="saldo" value="{{$saldoNow}}"
+                            aria-describedby="basic-addon1" readonly>
                     </div>
-                    <label class="text-xl text-dark font-weight-bolder ">Kode</label>
+                    <label class="text-xl text-dark font-weight-bolder ">nominal</label>
                     <div class="mb-2">
-                        <input type="text" class="form-control " placeholder="" id='kode' required name="kode" value="{{old('kode')}}">
+                        <input type="number" class="form-control " placeholder="" id='nominal' required name="nominal"
+                            value="">
                     </div>
                 </div>
                 <div class="footer px-4 mb-2">
@@ -33,4 +24,22 @@
         </div>
     </div>
 </div>
-@endsection
+
+
+<script>
+    $(document).ready(function() {
+
+                // let nominal = parseFloat($('#nominal').val());
+                // let saldo = parseFloat($('#saldo').val());
+
+                // if (!isNaN(nominal)) {
+                //     let hasil = saldo + nominal;
+                //     console.log(hasil);
+                //     $('#saldo').val(hasil);
+                // } else {
+                //     // Jika input 'nominal' kosong, reset saldo ke nilai semula
+                //     let hasil = saldo ;
+                //     $('#saldo').val(hasil);
+                // }
+            });
+</script>

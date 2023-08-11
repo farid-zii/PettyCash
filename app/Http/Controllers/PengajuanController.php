@@ -84,11 +84,6 @@ class PengajuanController extends Controller
         // ->where('type', '=', false)
         ->first();
 
-        //Total Kredit
-        $totalKredit = Pengajuan::select(DB::raw('SUM(kredit) as total'))
-        // ->where('type', '=', true)
-        ->first();
-
         // $totalKredit = Pengajuan::select('type', DB::raw('SUM(nominal) as total'))
         // ->where('type', '=', null)
         // ->groupBy('type')
@@ -99,10 +94,10 @@ class PengajuanController extends Controller
         // }
 
         $saldos = Saldo::latest()->first();
-        if ($saldos == null) {
-            $saldo = 0;
+        if ($saldos != null) {
+            $saldo = $saldos->total;
         } else {
-            $saldo = $saldos->saldo;
+            $saldo = 0;
         }
 
             $awal=$req->input('awal');
@@ -117,17 +112,6 @@ class PengajuanController extends Controller
         }
 
 
-        if($totalDebit == null && $totalKredit ==null){
-            return view('admin.pengajuan.index', [
-                'active' => 'Pengajuan',
-                'title' => 'Pengajuan',
-                'pengajuan' => $data,
-                'debit' => 0,
-                'kredit' => 0,
-                'saldo'=>$saldo
-                // 'tKredit'=>$ab
-            ]);
-        }
         if($totalDebit == null){
             return view('admin.pengajuan.index', [
                 'active' => 'Pengajuan',
@@ -135,27 +119,14 @@ class PengajuanController extends Controller
                 'pengajuan' => $data,
                 'debit' => 0,
                 'saldo' => $saldo,
-                'kredit' => $totalKredit->total,
-                // 'tKredit'=>$ab
             ]);
         }
-        elseif($totalKredit ==null){
-            return view('admin.pengajuan.index', [
-                'active' => 'Pengajuan',
-                'title' => 'Pengajuan',
-                'pengajuan' => $data,
-                'debit' => $totalDebit->total,
-                'kredit' => 0,
-                'saldo' => $saldo
-                // 'tKredit'=>$ab
-            ]);
-        }
+
         return view('admin.pengajuan.index',[
             'active' => 'Pengajuan',
             'title' => 'Pengajuan',
             'pengajuan'=>$data,
             'debit'=>$totalDebit->total,
-            'kredit'=>$totalKredit->total,
             'saldo' => $saldo
             // 'tKredit'=>$ab
         ]);
@@ -171,10 +142,6 @@ class PengajuanController extends Controller
         // ->where('type', '=', false)
         ->first();
 
-        //Total Kredit
-        $totalKredit = Pengajuan::select(DB::raw('SUM(kredit) as total'))
-        // ->where('type', '=', true)
-        ->first();
 
         // $totalKredit = Pengajuan::select('type', DB::raw('SUM(nominal) as total'))
         // ->where('type', '=', null)
@@ -198,18 +165,6 @@ class PengajuanController extends Controller
             $data = Pengajuan::get();
         }
 
-
-        if($totalDebit == null && $totalKredit ==null){
-            return view('finance.pengajuan.index', [
-                'active' => 'Pengajuan',
-                'title' => 'Pengajuan',
-                'pengajuan' => $data,
-                'debit' => 0,
-                'kredit' => 0,
-                'saldo'=>$saldo
-                // 'tKredit'=>$ab
-            ]);
-        }
         if($totalDebit == null){
             return view('finance.pengajuan.index', [
                 'active' => 'Pengajuan',
@@ -217,19 +172,6 @@ class PengajuanController extends Controller
                 'pengajuan' => $data,
                 'debit' => 0,
                 'saldo' => $saldo,
-                'kredit' => $totalKredit->total,
-                // 'tKredit'=>$ab
-            ]);
-        }
-        elseif($totalKredit ==null){
-            return view('finance.pengajuan.index', [
-                'active' => 'Pengajuan',
-                'title' => 'Pengajuan',
-                'pengajuan' => $data,
-                'debit' => $totalDebit->total,
-                'kredit' => 0,
-                'saldo' => $saldo
-                // 'tKredit'=>$ab
             ]);
         }
         return view('finance.pengajuan.index',[
@@ -237,7 +179,6 @@ class PengajuanController extends Controller
             'title' => 'Pengajuan',
             'pengajuan'=>$data,
             'debit'=>$totalDebit->total,
-            'kredit'=>$totalKredit->total,
             'saldo' => $saldo
             // 'tKredit'=>$ab
         ]);
@@ -273,7 +214,6 @@ class PengajuanController extends Controller
 
         $autoNumber = AutoNumberService::generateNumber();
 
-        if ($request->type == 0) {
             $saldo = $request->saldo + $request->nominal;
 
             $data = Pengajuan::create([
@@ -281,35 +221,16 @@ class PengajuanController extends Controller
                 'pegawai_id' => $nama->id,
                 'keterangan' => $request->keterangan,
                 'project' => $request->project,
-                'kredit' => $request->nominal,
-                'bank' => $request->bank,
-                'type' => $request->type,
-                'norek' => $request->norek,
-                'approveF' => '✅',
-                'saldo' => $saldo,
-            ]);
-
-            // return response()->json($data, 200);
-            return back()->with('success','Data Berhasil ditambahkan');
-
-        }
-
-        if ($request->type == 1) {
-            $data = Pengajuan::create([
-                'kode' => $autoNumber,
-                'pegawai_id' => $nama->id,
-                'keterangan' => $request->keterangan,
-                'project' => $request->project,
                 'debit' => $request->nominal,
                 'bank' => $request->bank,
-                'type' => $request->type,
                 'norek' => $request->norek,
                 'approveF' => '⏹',
             ]);
 
             // return response()->json($data, 200);
-            return back()->with('success', 'Data Berhasil ditambahkan');
-        }
+            return back()->with('success','Data Berhasil ditambahkan');
+
+
     }
 
 

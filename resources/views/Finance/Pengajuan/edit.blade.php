@@ -7,12 +7,11 @@
                 <h1 class="modal-title fs-5" id="staticBackdropLabel">Tolak Data {{$title}}</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form  action="/finance/pengajuan/{{$data->id}}" method="put" enctype="multipart/form-data">
-            {{-- <form  action="/pengajuan-edit/{{$data->id}}" method="put" enctype="multipart/form-data"> --}}
-                @method('put')
+            <form method="post"  action="/finance/pengajuan" >
                 @csrf
                 <div class="modal-body">
                     <label class="text-xl text-dark font-weight-bolder col-6">Alasan</label>
+                    <input type="hidden" value="{{$data->id}}" name="id">
                     <div class="mb-2">
                         <textarea type="text" class="form-control" id="namaa" name="alasan" value="" placeholder=""></textarea>
                         {{-- <ul id="searchResult" class=""></ul> --}}

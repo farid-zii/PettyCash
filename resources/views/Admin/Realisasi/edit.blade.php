@@ -37,14 +37,12 @@
                     </div>
 
 
-                    @if($data->type==1)
                     <label class="text-xl text-dark font-weight-bolder">Terpakai</label>
                     <div class="mb-2" style="display:flex;">
                         <div class="form-control text-center" disabled style="width: 7%;background: rgb(223, 219, 219);">Rp</div>
                         <input type="number" class="form-control" placeholder="300" name="terpakai" id="nominal">
                         <div class="alert alert-danger mt-2 d-none" role="alert" id="alert-nominal"></div>
                     </div>
-                    @endif
 
                     <label class="text-xl text-dark font-weight-bolder col-6">Bukti</label>
                     <table id="tabelBukti" class="col-8">
@@ -61,7 +59,7 @@
 
                 </div>
                 <div class="footer px-4 mb-2">
-                    <button type="submit" class="btn btn-warning float-sm-start col-md-2 mt-4">Edit</button>
+                    <button type="submit" class="btn btn-info float-sm-start col-md-2 mt-4">Tambah</button>
                     <button type="button" class="btn btn-danger float-sm-end col-md-2 mt-4"
                         data-bs-dismiss="modal">Close</button>
                 </div>
@@ -93,52 +91,5 @@
 </script>
 
 
-<script>
 
-
-
-
-
-
-
-//    $('#nama').on('input', function() {
-//     let keyword = $(this).val();
-//     // var csrfToken = document.head.querySelector('meta[name="csrf-token"]').content;
-
-//     axios.get('/api/searchNama', { params: { keyword: keyword } })
-//         .then(function(response) {
-//             var results = response.data;
-
-//             console.log(results); // Cek data masuk atau tidak
-
-//             $('#searchResult').empty();
-
-//             results.forEach(function(result) {
-//                 // Cek jika value gambar === null sebelum menambahkan elemen <li>
-//                 if (keyword !== null || keyword !== undefined) {
-//                     var listNama = $('<li style="list-style-type:none;">').text(result);
-//                     $('#searchResult').append(listNama);
-//                 }else{
-//                 $('#searchResult').empty();
-//                 }
-//             });
-//         })
-//         .catch(function(error) {
-//             console.error(error);
-//         });
-// });
-
-
-        // Event listener saat opsi autocompleted di klik
-    // $(document).on('click', '#searchResult li', function () {
-    // var selectedValue = $(this).text();
-
-    // // Isi input field dengan opsi autocompleted yang dipilih
-    // $('#nama').val(selectedValue);
-
-    // // Kosongkan hasil pencarian
-    // $('#searchResult').empty();
-    // });
-
-</script>
 @endforeach

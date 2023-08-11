@@ -26,7 +26,7 @@
                             data-bs-target="#staticBackdrop">Entry <i class="bi bi-plus-square-fill"></i></button>
                     </div>
                     <div class="table-responsive px-4">
-                        <table class="table table-bordered border-dark" style="">
+                        <table class="ol-12 table table-striped display responsive nowrap" id="myTable" style="">
                             <thead>
                                 <tr class="bg-dark" style="font-color:white;">
                                     {{-- <th class="text-uppercase text-light text-xs font-weight-bolder opacity-7">
@@ -35,33 +35,29 @@
                                         {{$title}}</th> --}}
 
                                     <th class="text-uppercase text-light text-xs font-weight-bolder opacity-7">
-                                        Tanggal</th>
+                                        NO</th>
                                     <th class="text-uppercase text-light text-xs font-weight-bolder opacity-7">
                                         Keterangan</th>
                                     <th class="text-uppercase text-light text-xs font-weight-bolder opacity-7">
-                                        nominal</th>
-                                    <th class="text-uppercase text-light text-xs font-weight-bolder opacity-7">
-                                        hasil</th>
+                                        Hasil</th>
                                     <th style="width: 10%"
                                         class="text-uppercase text-light text-xs font-weight-bolder opacity-7">
                                         Action</th>
                                 </tr>
                             </thead>
                             <tbody class="">
-                                @if($datas->count())
                                 @foreach ($datas as $data )
-                                <tr class="@if ($data->status == 'Tambah') bg-gradient-success  @else bg-danger @endif">
-                                    <td class="">{{$data->created_at}}</td>
+                                <tr class="">
                                     <td class="">
-                                        <p class="text-start"> sdsadas</p>
+                                        <p class="text-start"> {{$loop->iteration}}</p>
                                     </td>
                                     <td class="">
-                                        <p class="text-end"> @rp($data->nominal)</p>
+                                        <p class="">Saldo ditambahakan sebanyak Rp. <span class="fw-bold">@rp($data->saldo)</span> pada tanggal {{$data->created_at->format('d-M-Y')}} </p>
                                     </td>
                                     <td class="">
-                                        <p class="text-end"> @rp($data->hasil)</p>
+                                        <p class="text-start"> @rp($data->total)</p>
                                     </td>
-                                    <td class="bg-info">
+                                    <td class="">
                                         <div class="d-flex">
                                             <button class="btn btn-warning font-weight-bold m-auto"
                                                 data-bs-toggle="modal" data-bs-target="#data-{{$data->id}}"><i
@@ -73,23 +69,47 @@
                                     </td>
                                 </tr>
                                 @endforeach
-                                @else
-                                <tr>
-                                    <td colspan="5" class="text-center">DATA TIDAK ADA</td>
-                                </tr>
-                                @endif
                             </tbody>
                         </table>
 
-                        <div class="d-flex justify-content-end">
-                            {{$datas->links('vendor.pagination.bootstrap-5')}}
-                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    $(document).ready(function () {
+
+
+        $('#myTable').DataTable({
+            paging: true,
+            pageLength: 10,
+            // scrollX:true,
+            lengthMenu: [
+                [10, 25, 50, -1],
+                [10, 25, 50, "All"]
+            ],
+            language: {
+                info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+                infoEmpty: "Menampilkan 0 sampai 0 dari 0 data",
+                infoFiltered: "(disaring dari _MAX_ total data)",
+                lengthMenu: "Tampilkan _MENU_ data per halaman",
+                zeroRecords: "Tidak ada data yang cocok",
+                search: "Cari:",
+                paginate: {
+                    first: "Pertama",
+                    last: "Terakhir",
+                    next: ">",
+                    previous: "<"
+                }
+            }
+        });
+
+
+    });
+</script>
 
 
 <!-- CREATE -->
@@ -102,38 +122,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
-            <form method="post" action="/finance/saldo">
-                @method('POST')
-                @csrf
-                <div class="modal-body">
-                    <label class="text-xl text-dark font-weight-bolder" required>saldo</label>
-                    <div class="input-group mb-3">
-                        <span class="input-group-text" id="basic-addon1">@</span>
-                        <input type="number" class="form-control" name="saldo" value="{{$saldoNow}}"
-                            aria-describedby="basic-addon1" readonly>
-                    </div>
-                    <label class="text-xl text-dark font-weight-bolder ">nominal</label>
-                    <div class="mb-2">
-                        <input type="number" class="form-control " placeholder="" id='nominal' required name="nominal"
-                            value="{{old('nominal')}}">
-                    </div>
-                    <div class="col-md-6">
-                        <label class="text-xl text-dark font-weight-bolder">Tambah</label>
-                        <input type="radio" value="Tambah" name="status" checked>
-                        <label class="text-xl text-dark font-weight-bolder">Kurang</label>
-                        <input type="radio" value="Kurang" name="status">
-                    </div>
-                </div>
-                <div class="footer px-4 mb-2">
-                    <button type="submit" class="btn btn-primary float-sm-start col-md-2 mt-4">Save</button>
-                    <button type="button" class="btn btn-danger float-sm-end col-md-2 mt-4"
-                        data-bs-dismiss="modal">Close</button>
-                    <button type="reset" class="btn btn-dark float-sm-end col-md-2 mt-4 me-3">Reset</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
+@include('Finance.Saldo.create')
 
 {{-- EDIT --}}
 @foreach ($datas as $data)

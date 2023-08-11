@@ -2,7 +2,7 @@
     aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header bg-info">
                 <h1 class="modal-title fs-5" id="staticBackdropLabel">Create Pengajuan</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
@@ -11,12 +11,6 @@
                 @csrf
                 <div class="modal-body">
 
-                    <div class="mb-1 col-4 float-sm-end">
-                        <select name="type" id='type' style="width: 100%;background: rgb(223, 219, 219);padding:5px;">
-                            <option value="1">Pengajuan</option>
-                            <option value="0">Penambahan</option>
-                        </select>
-                    </div>
                     <label class="text-xl text-dark font-weight-bolder col-6">Nama</label>
                     <div class="mb-2">
                         <input type="text" class="form-control" id="nama" name="nama">
@@ -60,9 +54,9 @@
 
                 </div>
                 <div class="footer px-4 mb-2">
-                    <button type="submit" class="btn btn-primary float-sm-start col-md-2 mt-4" >Save</button>
+                    <button type="submit" class="btn btn-primary float-sm-start col-md-2 mt-4" >Simpan</button>
                     <button type="button" class="btn btn-danger float-sm-end col-md-2 mt-4"
-                        data-bs-dismiss="modal">Close</button>
+                        data-bs-dismiss="modal">Tutup</button>
                 </div>
             </form>
         </div>

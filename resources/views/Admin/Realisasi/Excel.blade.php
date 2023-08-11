@@ -10,7 +10,6 @@
             <th>Departemen</th>
             <th>No.Rek</th>
             <th>Debit</th>
-            <th>Kredit</th>
             <th>Uraian</th>
         </tr>
     </thead>
@@ -25,7 +24,7 @@
                 {{$dataa->bank}}
             </td>
             <td>{{$dataa->debit}}</td>
-            <td>{{$dataa->kredit}}</td>
+            <td>{{$dataa->debit}}</td>
             <td>{{$dataa->keterangan}}</td>
         </tr>
         @endforeach

@@ -7,8 +7,9 @@ use App\Models\Pengajuan;
 use App\Models\Saldo;
 use Illuminate\Http\Request;
 use App\Models\User;
-use Illuminate\Support\Facades\DB;
+// use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Facade;
+use DB;
 
 
 class Home extends Controller
@@ -39,17 +40,41 @@ class Home extends Controller
             'pegawai' => $pegawai
         ]);
     }
-    public function hrd()
+    public function hrd(Request $r)
     {
+
+        $datas='';
+
+        if($r->tahun!=null){
+            $datas = Pengajuan::select(\DB::raw("COUNT(*) as count"), DB::raw('MONTHNAME(created_at) as month_name'))
+            ->whereYear('created_at', $r->tahun)
+            ->groupBy(\DB::raw("MONTHNAME(created_at)"))
+            ->orderBy('created_at', 'asc')
+            ->pluck('count', 'month_name');
+        }
+        else{
+            $datas=Pengajuan::select(\DB::raw("COUNT(*) as count"), DB::raw('MONTHNAME(created_at) as month_name'))
+            ->whereYear('created_at', date('Y'))
+            ->groupBy(\DB::raw("MONTHNAME(created_at)"))
+            ->orderBy('created_at', 'asc')
+            ->pluck('count','month_name');
+        }
+
+
+        $dataLabel = $datas->keys();
+        $dataChart = $datas->values();
+
         $pegawai = Pegawai::get();
-        $saldo = Pengajuan::get();
+        $saldo = saldo::get();
 
         if ($saldo != '') {
             return view('admin.index', [
                 'title' => 'Dashboard',
                 'active' => 'Dashboard',
                 'saldo' => $saldo,
-                'pegawai' => $pegawai
+                'pegawai' => $pegawai,
+                'dataChart' => $dataChart,
+                'dataLabel' => $dataLabel
             ]);
         }
 
@@ -57,21 +82,46 @@ class Home extends Controller
             'title' => 'Dashboard',
             'active' => 'Dashboard',
             'saldo'=>'',
-            'pegawai'=> $pegawai
+            'pegawai'=> $pegawai,
+            'dataChart' => $dataChart,
+            'dataLabel' => $dataLabel
 
         ]);
     }
-    public function finance()
+
+    public function finance(Request $r)
     {
+        $datas = '';
+
+        if ($r->tahun != null) {
+            $datas = Pengajuan::select(\DB::raw("COUNT(*) as count"), DB::raw('MONTHNAME(created_at) as month_name'))
+            ->whereYear('created_at', $r->tahun)
+                ->groupBy(\DB::raw("MONTHNAME(created_at)"))
+                ->orderBy('created_at', 'asc')
+                ->pluck('count', 'month_name');
+        } else {
+            $datas = Pengajuan::select(\DB::raw("COUNT(*) as count"), DB::raw('MONTHNAME(created_at) as month_name'))
+            ->whereYear('created_at', date('Y'))
+                ->groupBy(\DB::raw("MONTHNAME(created_at)"))
+                ->orderBy('created_at', 'asc')
+                ->pluck('count', 'month_name');
+        }
+
+
+        $dataLabel = $datas->keys();
+        $dataChart = $datas->values();
+
         $pegawai = Pegawai::get();
-        $saldo = Pengajuan::get();
+        $saldo = saldo::get();
 
         if ($saldo != '') {
             return view('finance.index', [
                 'title' => 'Dashboard',
                 'active' => 'Dashboard',
                 'saldo' => $saldo,
-                'pegawai' => $pegawai
+                'pegawai' => $pegawai,
+                'dataChart' => $dataChart,
+                'dataLabel' => $dataLabel
             ]);
         }
 
@@ -79,11 +129,14 @@ class Home extends Controller
             'title' => 'Dashboard',
             'active' => 'Dashboard',
             'saldo' => '',
-            'pegawai' => $pegawai
+            'pegawai' => $pegawai,
+            'dataChart' => $dataChart,
+            'dataLabel' => $dataLabel
 
         ]);
     }
-    public function direktur()
+
+    public function pieChart()
     {
 
     }

@@ -6,6 +6,7 @@ use App\Models\Saldo;
 use App\Http\Requests\StoreSaldoRequest;
 use App\Http\Requests\UpdateSaldoRequest;
 use DateTime;
+use Date;
 use Illuminate\Support\Facades\DB;
 use PhpParser\Node\Expr\Cast\Double;
 
@@ -22,7 +23,7 @@ class SaldoController extends Controller
         if ($saldos == null) {
             $saldoNow = 0;
         } else {
-            $saldoNow = $saldos->saldo;
+            $saldoNow = $saldos->total;
         }
         return view('finance.saldo.index', [
             'datas' => Saldo::orderBy('id','DESC')->paginate(7),
@@ -52,38 +53,16 @@ class SaldoController extends Controller
     {
         $saldo= $request->saldo;
         $nominal= $request->nominal;
-        $status= $request->status;
 
         // DB::insert('insert into saldos (saldo, nominal, hasil) values (?, ?, ?)', [$saldo, $nominal,$hasil]);
-        if($status=='Tambah'){
             $hasil = $saldo + $nominal;
+            $tanggal=new DateTime();
             DB::table('saldos')->insert([
-                'saldo'=>$saldo,
-                'nominal'=>$nominal,
-                'hasil'=>$hasil,
-                'status' => $status,
+                'saldo'=>$nominal,
+                'total' => $hasil,
                 'created_at'=>new DateTime(),
             ]);
-        }
-        else{
-            $hasil = $saldo - $nominal;
-            DB::table('saldos')->insert([
-                'saldo'=>$saldo,
-                'nominal'=>$nominal,
-                'hasil'=>$hasil,
-                'status'=>$status,
-                'created_at' => new DateTime(),
-            ]);
-        }
 
-        // Saldo::insert([
-        //     'saldo' => $saldo,
-        //     'nominal' => $nominal,
-        //     'hasil' => $hasil
-        // ]);
-        // Saldo::insert([
-        //     'saldo'=>$hasil
-        // ]);
         return back()->with('success','Berhasil menambahkan data');
     }
 

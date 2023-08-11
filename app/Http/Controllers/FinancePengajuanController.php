@@ -31,11 +31,6 @@ class FinancePengajuanController extends Controller
         // ->where('type', '=', false)
         ->first();
 
-        //Total Kredit
-        $totalKredit = Pengajuan::select(DB::raw('SUM(kredit) as total'))
-        // ->where('type', '=', true)
-        ->first();
-
         // $totalKredit = Pengajuan::select('type', DB::raw('SUM(nominal) as total'))
         // ->where('type', '=', null)
         // ->groupBy('type')
@@ -49,7 +44,7 @@ class FinancePengajuanController extends Controller
         if ($saldos == null) {
             $saldo = 0;
         } else {
-            $saldo = $saldos->saldo;
+            $saldo = $saldos->total;
         }
 
         $awal = $req->input('awal');
@@ -62,18 +57,6 @@ class FinancePengajuanController extends Controller
             $data = Pengajuan::get();
         }
 
-
-        if ($totalDebit == null && $totalKredit == null) {
-            return view('finance.pengajuan.index', [
-                'active' => 'Pengajuan',
-                'title' => 'Pengajuan',
-                'pengajuan' => $data,
-                'debit' => 0,
-                'kredit' => 0,
-                'saldo' => $saldo
-                // 'tKredit'=>$ab
-            ]);
-        }
         if ($totalDebit == null) {
             return view('finance.pengajuan.index', [
                 'active' => 'Pengajuan',
@@ -81,17 +64,6 @@ class FinancePengajuanController extends Controller
                 'pengajuan' => $data,
                 'debit' => 0,
                 'saldo' => $saldo,
-                'kredit' => $totalKredit->total,
-                // 'tKredit'=>$ab
-            ]);
-        } elseif ($totalKredit == null) {
-            return view('finance.pengajuan.index', [
-                'active' => 'Pengajuan',
-                'title' => 'Pengajuan',
-                'pengajuan' => $data,
-                'debit' => $totalDebit->total,
-                'kredit' => 0,
-                'saldo' => $saldo
                 // 'tKredit'=>$ab
             ]);
         }
@@ -100,7 +72,6 @@ class FinancePengajuanController extends Controller
             'title' => 'Pengajuan',
             'pengajuan' => $data,
             'debit' => $totalDebit->total,
-            'kredit' => $totalKredit->total,
             'saldo' => $saldo
             // 'tKredit'=>$ab
         ]);
@@ -125,11 +96,22 @@ class FinancePengajuanController extends Controller
     public function store(Request $r)
     {
         $id=$r->id;
+
+
         // if ($r->setuju == 'setuju') {
-            $data = Pengajuan::where('id', $id)
+            Pengajuan::where('id', $id)
                 ->update([
                     'approveF' => '✅'
                 ]);
+
+            $pengajuan=Pengajuan::where('id','=', $id)->first();
+            $saldo=Saldo::latest()->first();
+            $hasil = $saldo->total - $pengajuan->debit;
+
+            Saldo::where('id','=',$saldo->id)->update([
+                'total'=>$hasil
+            ]);
+
             return back();
             // return response()->json($data, 200);
         // }
@@ -173,9 +155,9 @@ class FinancePengajuanController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        Pengajuan::find($id)->update([
+        Pengajuan::where('id','=',$request->id)->update([
             'approveF'=>'❌',
             'komenF'=>$request->alasan,
         ]);

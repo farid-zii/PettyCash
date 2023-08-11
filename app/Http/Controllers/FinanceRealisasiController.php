@@ -43,7 +43,7 @@ class FinanceRealisasiController extends Controller
         if ($saldos == null) {
             $saldo = 0;
         } else {
-            $saldo = $saldos->saldo;
+            $saldo = $saldos->total;
         }
 
         $awal = $req->input('awal');

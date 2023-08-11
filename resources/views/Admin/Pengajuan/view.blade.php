@@ -18,12 +18,12 @@
                     <tr>
                         <th style="width: 20%">Departemen </th>
                         <th > : </th>
-                        <td>{{$data->pegawai->nama}}</td>
+                        <td>{{$data->pegawai->departemen->nama}}</td>
                     </tr>
                     <tr style="">
                         <th style="width: 20%"> Nominal </th>
                         <th > : </th>
-                        <td>{{$data->nominal}}</td>
+                        <td>{{$data->debit}}</td>
                         <th> Rekening </th>
                         <th > : </th>
                         <td>{{$data->norek }} ({{$data->bank}})</td>
@@ -43,7 +43,7 @@
                         <th > : </th>
                         <td>{{$data->approveF}}</td>
                         <td>@if ($data->approveF=='❌')
-                                        <div class="">{{$data->komenF}}</div>
+                                        <div class=""><b>ALASAN :</b>{{$data->komenF}}</div>
                                         @endif</td>
                     </tr>
                 </table>

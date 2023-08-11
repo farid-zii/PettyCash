@@ -71,7 +71,6 @@
                                     <th class="text-light" style="">Project</th>
                                     <th class="text-light" style="">Rekening</th>
                                     <th class="text-light" style="">Debit</th>
-                                    <th class="text-light" style="">Kredit</th>
                                     <th class="text-light" style="">Uraian</th>
                                     <th class="text-light text-center" style="" colspan="">Aprrove</th>
                                     <th class="text-light" style="">Aksi</th>
@@ -92,14 +91,8 @@
                                         <p class="text-xs font-weight-bold mb-0">{{$data->norek}}</p>
                                         <p class="text-xs text-secondary mb-0">{{$data->bank}}</p>
                                     </td>
-
-                                    @if ($data->type==false)
-                                    <td class="text-end">-</td>
-                                    <td class="text-end">@rp($data->kredit)</td>
-                                    @elseif ($data->type==true)
                                     <td class="text-end">@rp($data->debit)</td>
-                                    <td class="text-end">-</td>
-                                    @endif
+
                                     {{--  --}}
                                     <td class="" style="width: 50px"> {{ Str::words($data->keterangan, 2,'....')}}</td>
                                     <td class="text-center">

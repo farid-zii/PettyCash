@@ -35,10 +35,6 @@ class RealisasiController extends Controller
         // ->where('type', '=', false)
         ->first();
 
-        //Total Kredit
-        $totalKredit = Pengajuan::select(DB::raw('SUM(kredit) as total'))
-        // ->where('type', '=', true)
-        ->first();
 
         // $totalKredit = Pengajuan::select('type', DB::raw('SUM(nominal) as total'))
         // ->where('type', '=', null)
@@ -53,7 +49,7 @@ class RealisasiController extends Controller
         if($saldos==null){
             $saldo= 0;
         }else{
-            $saldo=$saldos->saldo;
+            $saldo=$saldos->total;
         }
 
 
@@ -69,19 +65,6 @@ class RealisasiController extends Controller
 
         $gambar=realisasi::get();
 
-
-        if ($totalDebit == null && $totalKredit == null) {
-            return view('admin.realisasi.index', [
-                'active' => 'Realisasi',
-                'title' => 'Realisasi',
-                'pengajuan' => $data,
-                'debit' => 0,
-                'kredit' => 0,
-                'saldo' => $saldo,
-                'gambar' => $gambar,
-                // 'tKredit'=>$ab
-            ]);
-        }
         if ($totalDebit == null) {
             return view('admin.realisasi.index', [
                 'active' => 'Realisasi',
@@ -89,19 +72,7 @@ class RealisasiController extends Controller
                 'pengajuan' => $data,
                 'debit' => 0,
                 'saldo' => $saldo,
-                'kredit' => $totalKredit->total,
                 'gambar' => $gambar,
-                // 'tKredit'=>$ab
-            ]);
-        } elseif ($totalKredit == null) {
-            return view('admin.realisasi.index', [
-                'active' => 'Realisasi',
-                'title' => 'Realisasi',
-                'pengajuan' => $data,
-                'debit' => $totalDebit->total,
-                'kredit' => 0,
-                'gambar' => $gambar,
-                'saldo' => $saldo
                 // 'tKredit'=>$ab
             ]);
         }
@@ -110,7 +81,6 @@ class RealisasiController extends Controller
             'title' => 'Realisasi',
             'pengajuan' => $data,
             'debit' => $totalDebit->total,
-            'kredit' => $totalKredit->total,
             'saldo' => $saldo,
             'gambar' => $gambar,
             // 'tKredit'=>$ab
@@ -160,37 +130,32 @@ class RealisasiController extends Controller
 
              $kodeR =realisasi::where('pengajuan_id','=',$kode)->get();
         Pengajuan::where('id', '=', $kode)->update([
-            'realisasi_id' => $kodeR[0]->id
+            'realisasi_id' => $kodeR[0]->id,
+
         ]);
 
-             $pemakaian=Pengajuan::where('id','=',$kode)->get();
+             $pemakaian=Pengajuan::where('id','=',$kode)->first();
+
+        $total = $pemakaian->debit - $request->terpakai;
+
+        $saldo = Saldo::latest()->first();
+
+        $hasil = $saldo->total - $total;
+
+        Saldo::where('id','=',$saldo->id)->update([
+            'total' => $hasil
+        ]);
+
+        Pengajuan::where('id', '=', $kode)->update([
+            'realisasi_id' => $kodeR[0]->id,
+            'refund' => $total,
+            'total' => $request->terpakai,
+        ]);
+
+        return back()->with('success', 'Bukti Berhasil di Tambakan');
 
 
-            foreach ($pemakaian as $data) {
-            if ($data->type == 1) {
-                $total=$data->debit - $request->terpakai;
-                $saldosBef = Pengajuan::latest()->first();
-                $saldo = $saldosBef->saldo + $total;
-                Pengajuan::where('id', '=', $kode)->update([
-                    'realisasi_id' => $kodeR[0]->id,
-                    'refund'=>$total,
-                    'total'=> $request->terpakai,
-                    'saldo'=>$saldo
-                ]);
-
-                return back()->with('success', 'Bukti Berhasil di Tambakan');
-            }
-            }
-
-
-             Pengajuan::where('id','=',$kode)->update([
-                'realisasi_id'=> $kodeR[0]->id
-            ]);
-
-            return back()->with('success', 'Bukti Berhasil di Tambakan');
-            // "Gambar berhasil diunggah!";
-
-    }
+}
 
 
 
