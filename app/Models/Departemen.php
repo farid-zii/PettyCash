@@ -9,8 +9,8 @@ class Departemen extends Model
 {
     use HasFactory;
     protected $guarded=[];
-    public function pegawai()
+    public function user()
     {
-        $this->hasMany(Pegawai::class);
+       return $this->hasMany(User::class);
     }
 }

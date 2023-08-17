@@ -11,24 +11,16 @@
                         <h6 class="text-white text-uppercase ps-3">Data {{$title}}</h6>
                     </div>
                 </div>
+                @include('Admin.notif')
+                
+                                    <div class="mx-3">
+                                        <button class="btn bg-gradient-info w-15 my-4 mb-2 float-sm-end" data-bs-toggle="modal"
+                                            data-bs-target="#staticBackdrop">Entry <i class="bi bi-plus-square-fill"></i></button>
+                                    </div>
                 <div class="card-body px-0 pb-2">
 
-{{-- @include('Admin.notif') --}}
-
-                    <div class="mx-3">
-                        <a href="/departemen-pdf" target="blank" class="btn bg-gradient-danger w-15 my-4 mb-2"><i
-                                class="bi bi-file-earmark-pdf-fill"></i></a>
-                        {{-- <a href="/departemen-pdf" target="blank" class="btn bg-gradient-danger w-15 my-4 mb-2"><i
-                                class="bi bi-file-earmark-pdf-fill"></i>Cetak Pdf</a> --}}
-                        {{-- <button class="btn bg-gradient-success w-15 my-4 mb-2">Cetak Excel</button> --}}
-                        {{-- <a href="/departemen-data" target="blank" class="btn bg-gradient-success w-16 my-4 mb-2"><i
-                                class="bi bi-file-earmark-spreadsheet-fill"></i> Cetak Excel</a> --}}
-                        {{-- <a href="/admin/user/create"  class="btn bg-gradient-info w-15 my-4 mb-2 float-sm-end">Entry</a> --}}
-                        <button class="btn bg-gradient-info w-15 my-4 mb-2 float-sm-end" data-bs-toggle="modal"
-                            data-bs-target="#staticBackdrop">Entry <i class="bi bi-plus-square-fill"></i></button>
-                    </div>
                     <div class="table-responsive m-3">
-                        <table class="table align-items-center mb-0 table-bordered border-dark" style="">
+                        <table id="myTable" class="table align-items-center mb-0 table-bordered border-dark" style="">
                             <thead>
                                 <tr class="bg-dark" style="font-color:white;">
                                     <th
@@ -36,76 +28,62 @@
                                         No</th>
                                     <th style=""
                                         class="text-uppercase text-light text-xs font-weight-bolder opacity-7">
-                                        {{$title}}</th>
+                                        Nama</th>
                                     <th
                                         class="text-uppercase text-light text-xs font-weight-bolder opacity-7">
                                         NIP</th>
                                     <th
                                         class="text-uppercase text-light text-xs font-weight-bolder opacity-7">
-                                        UMUR</th>
+                                        Departemen</th>
                                     <th
                                         class="text-uppercase text-light text-xs font-weight-bolder opacity-7">
-                                        Jabatan</th>
+                                        No. Handphone</th>
                                     <th
                                         class="text-uppercase text-light text-xs font-weight-bolder opacity-7">
                                         Action</th>
                                 </tr>
                             </thead>
                             <tbody class="">
-                                @if($pegawai->count())
-                                @foreach ($pegawai as $data )
+                                @foreach ($user as $data )
                                 <tr>
-                                    <td class="text-center">{{$nomorUrut++}}</td>
+                                    <td class="text-center">{{$loop->iteration}}</td>
                                     <td>
-                                        <div class="d-flex px-2 py-1">
-                                        <div>
-                                            <img src="@if($data->profil!= '') ../img/profil_Pegawai/{{$data->profil}} @else https://cdn-icons-png.flaticon.com/512/3135/3135715.png  @endif " class="avatar avatar-sm me-3 border-radius-lg" alt="user1">
-                                        </div>
                                         <div class="d-flex flex-column justify-content-center">
                                             <h6 class="mb-0 text-sm">{{$data->nama}}</h6>
                                             <p class="text-xs text-secondary mb-0">{{$data->email}}</p>
-                                        </div>
                                         </div>
                                     </td>
                                     <td class="">
                                         <p class="align-middle"> {{$data->nip}}</p>
                                     </td>
                                     <td class="">
-                                        <p class="align-middle"> {{$data->umur}}</p>
+                                        <p class="align-middle"> {{$data->departemen->nama}}</p>
                                     </td>
                                     <td class="">
-                                        <p class="text-xs font-weight-bold mb-0">{{$data->jabatan->nama}}</p>
-                                        <p class="text-xs text-secondary mb-0">{{$data->departemen->nama}}</p>
+                                        <p class="text-xl mb-0">{{$data->phone}}</p>
                                     </td>
                                     {{-- <td class="">
                                         <p class="align-middle"> {{$data->created_at->format('ymd')-$data->created_at->format('ymd')}}</p>
                                     </td> --}}
-                                    <td class="bg-info">
+                                    <td class="">
                                         <div class="d-flex">
-                                            <button class="btn btn-success font-weight-bold m-auto"
+                                            <button class="btn btn-dark font-weight-bold m-auto"
                                                 data-bs-toggle="modal" data-bs-target="#data-{{$data->id}}">
                                                 <i class="bi bi-eye-fill"></i></button>
                                             <button class="btn btn-warning font-weight-bold m-auto"
                                                 data-bs-toggle="modal" data-bs-target="#data-{{$data->id}}"><i
                                                     class="bi bi-pencil-square"></i></button>
-                                            <button class="btn btn-danger font-weight-bold m-auto"
-                                                data-bs-toggle="modal" data-bs-target="#delete-{{$data->id}}"><i
-                                                    class="bi bi-trash3-fill"></i></button>
+                                            <form method="post" action="/hrd/pegawai/{{$data->id}}" class="m-auto">
+                                                @method('Delete')
+                                                @csrf
+                                                <button class="btn btn-danger font-weight-bold m-auto" type="submit" onclick="return confirm('Yakin akan menghapus data ?')"><i class="bi bi-trash3-fill"></i></button>
+					                        </form>
                                         </div>
                                     </td>
                                 </tr>
                                 @endforeach
-                                @else
-                                <tr>
-                                    <td colspan="4" class="text-center">DATA TIDAK ADA</td>
-                                </tr>
-                                @endif
                             </tbody>
                         </table>
-
-                        <div class="d-flex justify-content-end">
-                                {{$pegawai->links('vendor.pagination.bootstrap-5')}}
-                        </div>
                     </div>
                 </div>
             </div>
@@ -119,6 +97,38 @@
 {{-- EDIT --}}
 
 @include('Admin.Pegawai.create')
-@include('Admin.Pegawai.delete')
 @include('Admin.Pegawai.edit')
+
+
+<script>
+    $(document).ready(function () {
+
+
+        $('#myTable').DataTable({
+            paging: true,
+            pageLength: 10,
+            // scrollX:true,
+            lengthMenu: [
+                [10, 25, 50, -1],
+                [10, 25, 50, "All"]
+            ],
+            language: {
+                info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+                infoEmpty: "Menampilkan 0 sampai 0 dari 0 data",
+                infoFiltered: "(disaring dari _MAX_ total data)",
+                lengthMenu: "Tampilkan _MENU_ data per halaman",
+                zeroRecords: "Tidak ada data yang cocok",
+                search: "Cari:",
+                paginate: {
+                    first: "Pertama",
+                    last: "Terakhir",
+                    next: ">",
+                    previous: "<"
+                }
+            }
+        });
+
+
+    });
+</script>
 @endsection

@@ -14,7 +14,13 @@ class BankController extends Controller
      */
     public function index()
     {
-        //
+        $bank=Bank::latest()->get();
+
+        return view('admin.bank.index',[
+        'datas'=>$bank,
+        'title'=>'Bank',
+        'active'=>'Bank',
+        ]);
     }
 
     /**
@@ -35,7 +41,11 @@ class BankController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Bank::create([
+            'nama'=>$request->nama
+        ]);
+
+        return back()->with('success','Data berhasil ditambahkan');
     }
 
     /**
@@ -67,9 +77,12 @@ class BankController extends Controller
      * @param  \App\Models\bank  $bank
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, bank $bank)
+    public function update(Request $request, $id)
     {
-        
+        Bank::find($id)->update([
+            'nama'=>$request->nama
+        ]);
+        return back()->with('success','Data Berhasil Diupdate');
     }
 
     /**
@@ -78,8 +91,10 @@ class BankController extends Controller
      * @param  \App\Models\bank  $bank
      * @return \Illuminate\Http\Response
      */
-    public function destroy(bank $bank)
+    public function destroy($id)
     {
-        //
+        Bank::destroy($id);
+
+        return back()->with('success','Data berhasil dihapus');
     }
 }

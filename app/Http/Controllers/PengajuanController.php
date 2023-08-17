@@ -80,9 +80,9 @@ class PengajuanController extends Controller
         // $totalNominal=Pengajuan::where('type','=','penambahan')->latest()->get();
 
         //Total Debit
-        $totalDebit = Pengajuan::select(  DB::raw('SUM(debit) as total'))
+        // $totalDebit = Pengajuan::select(  DB::raw('SUM(debit) as total'))
         // ->where('type', '=', false)
-        ->first();
+        // ->first();
 
         // $totalKredit = Pengajuan::select('type', DB::raw('SUM(nominal) as total'))
         // ->where('type', '=', null)
@@ -112,21 +112,21 @@ class PengajuanController extends Controller
         }
 
 
-        if($totalDebit == null){
-            return view('admin.pengajuan.index', [
-                'active' => 'Pengajuan',
-                'title' => 'Pengajuan',
-                'pengajuan' => $data,
-                'debit' => 0,
-                'saldo' => $saldo,
-            ]);
-        }
+        // if($totalDebit == null){
+        //     return view('admin.pengajuan.index', [
+        //         'active' => 'Pengajuan',
+        //         'title' => 'Pengajuan',
+        //         'pengajuan' => $data,
+        //         'debit' => 0,
+        //         'saldo' => $saldo,
+        //     ]);
+        // }
 
         return view('admin.pengajuan.index',[
             'active' => 'Pengajuan',
             'title' => 'Pengajuan',
             'pengajuan'=>$data,
-            'debit'=>$totalDebit->total,
+            // 'debit'=>$totalDebit->total,
             'saldo' => $saldo
             // 'tKredit'=>$ab
         ]);

@@ -85,7 +85,7 @@
     <style>
         * {
             margin: 0px;
-            font-family: 'Times New Roman', Times, serif;
+            font-family: 'arial', Times, serif;
         }
 
         #passwordMessage {

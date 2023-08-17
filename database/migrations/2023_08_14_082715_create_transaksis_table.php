@@ -13,10 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('pangkats', function (Blueprint $table) {
+        Schema::create('transaksis', function (Blueprint $table) {
             $table->id();
-            $table->string('kode','5')->unique();
-            $table->string('nama','20');
+            $table->foreignId('saldo_id')->nullable();
+            $table->foreignId('pengajuan_id')->nullable();
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pangkats');
+        Schema::dropIfExists('transaksis');
     }
 };

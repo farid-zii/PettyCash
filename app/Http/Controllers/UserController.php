@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Facade;
 use App\Exports\UserExport;
+use App\Models\Departemen;
 use Illuminate\Support\Facades\Validator;
 use PDF;
 use Maatwebsite\Excel\Facades\Excel;
@@ -16,57 +17,13 @@ class UserController extends Controller
 {
     public function index()
     {
-        return view('admin.user.index',[
-            'user'=>User::first()->get(),
-            'title'=>'User',
-            'active'=>'User',
+        return view('admin.pegawai.index',[
+            'user'=>User::get(),
+            'departemen'=>Departemen::get(),
+            'title'=>'Pegawai',
+            'active'=>'Pegawai',
         ]);
     }
-
-    public function PengaturanAkun(Request $req){
-
-
-        $id = $req->id;
-        // $validator= Validator::make($req->all,[
-        //     'name'=>'required',
-        //     'password'=>'required',
-        // ]);
-
-        // if($validator->fails()){
-        //     return response()->errors($validator,404);
-        // }
-
-        if($req->password!=$req->password2){
-            return redirect('/profile')->with('failed','Edit Gagal Password beda');
-        }
-
-        $update = User::where('id',$id)->update([
-            'name'=>$req->nama,
-            'email'=>$req->email,
-            'password'=> bcrypt($req->password),
-        ]);
-
-        // return response()->json($update, 200);
-        return redirect('/profile')->with('success','Update berhasil');
-    }
-
-    public function pdf(){
-        // $pdf= PDF::loadView('admin.user.excel',[
-        //     'data'=>User::orderBy('name')->get()
-        // ]);
-        // $nama= User::where('id','=','1')->get('name');
-        $pdf= PDF::loadView('admin.user.excel',[
-            'data'=>User::orderBy('name')->get()
-        ]);
-        // return $pdf->download('user.pdf');
-        return $pdf->setPaper('a4','landscape')->stream('user.pdf');
-        //Membuat ukuran a4 dengan layout lanscape ---- nama pdf
-    }
-
-    public function excel(){
-        return Excel::download(new UserExport('sd'), 'users.xlsx');
-    }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -74,11 +31,6 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('admin.user.create', [
-            'user' => User::first()->get(),
-            'title' => 'User',
-            'active' => 'User',
-        ]);
     }
 
     /**
@@ -89,18 +41,20 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $credentials=$request->validate([
-            'name'=>'required',
-            'password'=>'required|min:5',
-            'email'=>'required|email:dns|min:10',
-            'level'=>'required',
+        User::create([
+            'nama'=>$request->nama,
+            'username'=>$request->username,
+            'nip'=>$request->nip,
+            'jenisKelamin'=>$request->kelamin,
+            'level'=>$request->level,
+            'phone'=>$request->phone,
+            'departemen_id'=>$request->departemen,
+            'email'=>$request->email,
+            'password'=>bcrypt($request->password),
         ]);
 
-        $credentials['password']= bcrypt($credentials['password']);
-        User::create($credentials);
-        return redirect('/admin/user')->with('success', 'Registrasion success, Please login your account');
+        return back()->with('success','Entry Data Berhasil');
     }
-
     /**
      * Display the specified resource.
      *
@@ -109,7 +63,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+        
     }
 
     /**
@@ -120,7 +74,7 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        
     }
 
     /**
@@ -132,15 +86,19 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $update=$request->validate([
-            'name'=>"required",
-            'email'=>"required",
-            'level'=>'required',
-            'password'=>'required'
+        User::find($id)->update([
+            'nama' => $request->nama,
+            'username' => $request->username,
+            'nip' => $request->nip,
+            'jenisKelamin' => $request->kelamin,
+            'level' => $request->level,
+            'phone' => $request->phone,
+            'departemen_id' => $request->departemen,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
         ]);
-        $update['password']=bcrypt($update['password']);
-        User::Where('id', $id)->update($update);
-        return redirect('admin/user')->with('Edit','Your editting success');
+
+        return back()->with('success', 'Edit Data Berhasil');
     }
 
     /**
@@ -152,6 +110,6 @@ class UserController extends Controller
     public function destroy($id)
     {
         User::destroy($id);
-        return redirect('/admin/user')->with('pesan', 'Data Berhasil Dihapus');
+        return back()->with('success', 'Data Berhasil Dihapus');
     }
 }

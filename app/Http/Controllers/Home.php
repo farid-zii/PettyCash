@@ -22,22 +22,22 @@ class Home extends Controller
     public function admin()
     {
         $saldo= Pengajuan::get();
-        $pegawai = Pegawai::get();
+        
 
         if($saldo!=''){
         return view('admin2.index',[
             'title'=>'Dashboard',
             'active'=>'Dashboard',
-            'saldo'=>$saldo,
-            'pegawai'=>$pegawai
+            'saldo'=>0,
+            
         ]);
         }
 
         return view('admin2.index', [
             'title' => 'Dashboard',
             'active' => 'Dashboard',
-            'saldo' =>'',
-            'pegawai' => $pegawai
+            'saldo' =>0,
+            
         ]);
     }
     public function hrd(Request $r)
@@ -64,15 +64,15 @@ class Home extends Controller
         $dataLabel = $datas->keys();
         $dataChart = $datas->values();
 
-        $pegawai = Pegawai::get();
+        
         $saldo = saldo::get();
 
         if ($saldo != '') {
             return view('admin.index', [
                 'title' => 'Dashboard',
                 'active' => 'Dashboard',
-                'saldo' => $saldo,
-                'pegawai' => $pegawai,
+                'saldo' => 0,
+                
                 'dataChart' => $dataChart,
                 'dataLabel' => $dataLabel
             ]);
@@ -82,7 +82,6 @@ class Home extends Controller
             'title' => 'Dashboard',
             'active' => 'Dashboard',
             'saldo'=>'',
-            'pegawai'=> $pegawai,
             'dataChart' => $dataChart,
             'dataLabel' => $dataLabel
 
@@ -111,15 +110,13 @@ class Home extends Controller
         $dataLabel = $datas->keys();
         $dataChart = $datas->values();
 
-        $pegawai = Pegawai::get();
+        
         $saldo = saldo::get();
 
         if ($saldo != '') {
             return view('finance.index', [
                 'title' => 'Dashboard',
                 'active' => 'Dashboard',
-                'saldo' => $saldo,
-                'pegawai' => $pegawai,
                 'dataChart' => $dataChart,
                 'dataLabel' => $dataLabel
             ]);
@@ -128,17 +125,10 @@ class Home extends Controller
         return view('finance.index', [
             'title' => 'Dashboard',
             'active' => 'Dashboard',
-            'saldo' => '',
-            'pegawai' => $pegawai,
             'dataChart' => $dataChart,
             'dataLabel' => $dataLabel
 
         ]);
-    }
-
-    public function pieChart()
-    {
-
     }
 
     /**

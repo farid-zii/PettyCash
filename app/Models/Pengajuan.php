@@ -24,5 +24,9 @@ class Pengajuan extends Model
     {
         return $this->belongsTo(Realisasi::class);
     }
+    public function transaksi()
+    {
+        $this->hasMany(transaksi::class);
+    }
 
 }

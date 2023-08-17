@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Departemen;
+use App\Models\transaksi;
 use Illuminate\Http\Request;
 
-class FinanceDepartemenController extends Controller
+class TransaksiController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,11 +14,7 @@ class FinanceDepartemenController extends Controller
      */
     public function index()
     {
-        return view('Finance.departemen.index', [
-            'datas' => Departemen::latest()->paginate(7),
-            'active' => 'Departemen',
-            'title' => 'Departemen',
-        ]);
+        //
     }
 
     /**
@@ -45,10 +41,10 @@ class FinanceDepartemenController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\transaksi  $transaksi
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(transaksi $transaksi)
     {
         //
     }
@@ -56,10 +52,10 @@ class FinanceDepartemenController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\transaksi  $transaksi
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(transaksi $transaksi)
     {
         //
     }
@@ -68,10 +64,10 @@ class FinanceDepartemenController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Models\transaksi  $transaksi
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, transaksi $transaksi)
     {
         //
     }
@@ -79,10 +75,10 @@ class FinanceDepartemenController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Models\transaksi  $transaksi
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(transaksi $transaksi)
     {
         //
     }

@@ -16,4 +16,8 @@ class Saldo extends Model
     public function pegawai(){
         $this->belongsToMany(Pegawai::class);
     }
+    public function transaksi()
+    {
+        $this->hasMany(transaksi::class);
+    }
 }

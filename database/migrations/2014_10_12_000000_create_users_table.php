@@ -15,9 +15,14 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->enum('level',['hrd','direktur','admin','finance'])->default('hrd');
-            $table->string('email')->unique();
+            $table->string('nama');
+            $table->string('username');
+            $table->string('nip');
+            $table->string('phone');
+            $table->string('jenisKelamin');
+            $table->enum('level',['hrd','pimpinan','pegawai','finance'])->default('pegawai');
+            $table->foreignId('departemen_id')->nullable();
+            $table->string('email')->unique()->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();

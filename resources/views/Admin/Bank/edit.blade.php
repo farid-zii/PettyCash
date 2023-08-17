@@ -1,4 +1,4 @@
-@foreach ($jabatan as $data)
+@foreach ($datas as $data)
 <div class="modal fade" dty id="data-{{$data->id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
     aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -7,17 +7,13 @@
                 <h1 class="modal-title fs-5" id="staticBackdropLabel">Edit Data {{$title}}</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form method="post" action="/hrd/jabatan/{{$data->id}}">
+            <form method="post" action="/hrd/bank/{{$data->id}}">
                 @method('PUT')
                 <div class="modal-body">
                     @csrf
                     <label class="text-xl text-dark font-weight-bolder">Nama</label>
                     <div class="mb-2">
                         <input type="text" class="form-control" required name="nama" value="{{$data->nama}}">
-                    </div>
-                    <label class="text-xl text-dark font-weight-bolder">Kode</label>
-                    <div class="mb-2">
-                        <input type="text" class="form-control" required placeholder="" name="kode" value="{{$data->kode}}">
                     </div>
 
                 </div>

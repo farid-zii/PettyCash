@@ -19,7 +19,7 @@
               </div>
               <div class="text-end pt-1">
                 <p class="text-sm mb-0 text-capitalize">PEGAWAI</p>
-                <h4 class="mb-0">{{$pegawai->count()}}</h4>
+                <h4 class="mb-0">0</h4>
               </div>
             </div>
             {{-- <hr class="dark horizontal my-0">
@@ -39,10 +39,6 @@
                 <h4 class="mb-0">2.222</h4>
               </div>
             </div>
-            {{-- <hr class="dark horizontal my-0">
-            <div class="card-footer p-3">
-              <p class="mb-0 font-weight-bolder">Bulan {{date('M')}} Mengalami</p>
-            </div> --}}
           </div>
         </div>
         <div class="col-xl-4 col-sm-6 mb-xl-0 mb-4">
@@ -53,10 +49,8 @@
               </div>
               <div class="text-end pt-1">
                 <p class="text-sm mb-0 text-capitalize">SALDO PETTY CASH</p>
-                {{-- @php
-                    $data = App\Models\Pengajuan::latest()->first();
-                @endphp --}}
-                <h4 class="mb-0">@rp($saldo[0]->total)</h4>
+                
+                <h4 class="mb-0">@rp(4000)</h4>
               </div>
             </div>
             {{-- <hr class="dark horizontal my-0">
@@ -100,27 +94,6 @@
 
           </div>
         </div>
-
-        {{-- <div class="col-lg-6 col-md-6 mt-4 mb-4">
-          <div class="card z-index-2  ">
-            <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2 bg-transparent">
-              <div class="bg-gradient-light shadow-success border-radius-lg py-3 pe-1">
-                <div class="chart">
-                  @include('Admin.chart.bar')
-                </div>
-              </div>
-            </div>
-            <div class="card-body">
-              <h6 class="mb-0 "> Daily Sales </h6>
-              <p class="text-sm "> (<span class="font-weight-bolder">+15%</span>) increase in today sales. </p>
-              <hr class="dark horizontal">
-              <div class="d-flex ">
-                <i class="material-icons text-sm my-auto me-1">schedule</i>
-                <p class="mb-0 text-sm"> updated 4 min ago </p>
-              </div>
-            </div>
-          </div>
-        </div> --}}
 
       </div>
 

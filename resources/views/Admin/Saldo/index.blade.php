@@ -11,49 +11,61 @@
                         <h6 class="text-white text-uppercase ps-3">Data {{$title}}</h6>
                     </div>
                 </div>
-                <div class="mx-3">
+                @include('Admin.notif')
+
+                <div class="mx-4">
                     <button class="btn bg-gradient-info w-15 my-4 mb-2 float-sm-end" data-bs-toggle="modal"
                         data-bs-target="#staticBackdrop">Entry <i class="bi bi-plus-square-fill"></i></button>
                 </div>
-                <div class="card-body px-0 pb-2">
-                    <div class="table-responsive px-3">
-                        <table id="myTable" class="table table-bordered border-dark" style="">
+
+                <div class="card-body px-4 pb-2 row">
+                    <div class="table-responsive px-4">
+                        <table class="ol-12 table table-striped display responsive nowrap" id="myTable" style="">
                             <thead>
                                 <tr class="bg-dark" style="font-color:white;">
-                                    <th
-                                        class="text-uppercase text-light text-xs font-weight-bolder opacity-7">
-                                        No</th>
-                                    <th style=""
-                                        class="text-uppercase text-light text-xs font-weight-bolder opacity-7">
-                                        NAMA {{$title}}</th>
+                                    {{-- <th class="text-uppercase text-light text-xs font-weight-bolder opacity-7">
+                                        No</th> --}}
+                                    {{-- <th style="" class="text-uppercase text-light text-xs font-weight-bolder opacity-7">
+                                        {{$title}}</th> --}}
+
+                                    <th class="text-uppercase text-light text-xs font-weight-bolder opacity-7">
+                                        NO</th>
+                                    <th class="text-uppercase text-light text-xs font-weight-bolder opacity-7">
+                                        Keterangan</th>
+                                    <th class="text-uppercase text-light text-xs font-weight-bolder opacity-7">
+                                        Hasil</th>
                                     <th style="width: 10%"
                                         class="text-uppercase text-light text-xs font-weight-bolder opacity-7">
                                         Action</th>
                                 </tr>
                             </thead>
-                            <tbody class="" class="table-departemen">
+                            <tbody class="">
                                 @foreach ($datas as $data )
-                                <tr id="index_{{$data->id}}">
-                                    <td class="">{{$loop->iteration}}</td>
-                                    <td class="" style="">
-                                        <p class="align-middle">{{$data->nama}}</p>
+                                <tr class="">
+                                    <td class="">
+                                        <p class="text-start"> {{$loop->iteration}}</p>
+                                    </td>
+                                    <td class="">
+                                        <p class="">Saldo ditambahakan sebanyak Rp. <span class="fw-bold">@rp($data->saldo)</span> pada tanggal {{$data->created_at->format('d-M-Y')}} </p>
+                                    </td>
+                                    <td class="">
+                                        <p class="text-start"> @rp($data->total)</p>
                                     </td>
                                     <td class="">
                                         <div class="d-flex">
                                             <button class="btn btn-warning font-weight-bold m-auto"
                                                 data-bs-toggle="modal" data-bs-target="#data-{{$data->id}}"><i
                                                     class="bi bi-pencil-square"></i></button>
-                                            <form method="post" action="/hrd/departemen/{{$data->id}}">
-                                                @method('Delete')
-                                                @csrf
-                                                <button class="btn btn-danger font-weight-bold m-auto" type="submit" onclick="return confirm('Yakin akan menghapus data ?')"><i class="bi bi-trash3-fill"></i></button>
-					                        </form>
+                                            <button class="btn btn-danger font-weight-bold m-auto"
+                                                data-bs-toggle="modal" data-bs-target="#delete-{{$data->id}}"><i
+                                                    class="bi bi-trash3-fill"></i></button>
                                         </div>
                                     </td>
                                 </tr>
                                 @endforeach
                             </tbody>
                         </table>
+
                     </div>
                 </div>
             </div>
@@ -61,18 +73,14 @@
     </div>
 </div>
 
-
-<!-- CREATE -->
-@include('Admin.departemen.create')
-{{-- EDIT --}}
-@include('Admin.departemen.edit')
-{{-- Delete --}}
-
 <script>
     $(document).ready(function () {
+
+
         $('#myTable').DataTable({
             paging: true,
             pageLength: 10,
+            // scrollX:true,
             lengthMenu: [
                 [10, 25, 50, -1],
                 [10, 25, 50, "All"]
@@ -92,7 +100,20 @@
                 }
             }
         });
+
+
     });
 </script>
+
+
+<!-- CREATE -->
+
+
+@include('admin.Saldo.create')
+@include('admin.Saldo.edit')
+
+{{-- EDIT --}}
+
+
 
 @endsection

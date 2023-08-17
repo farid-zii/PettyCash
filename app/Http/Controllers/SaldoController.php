@@ -25,8 +25,8 @@ class SaldoController extends Controller
         } else {
             $saldoNow = $saldos->total;
         }
-        return view('finance.saldo.index', [
-            'datas' => Saldo::orderBy('id','DESC')->paginate(7),
+        return view('admin.saldo.index', [
+            'datas' => Saldo::latest()->get(),
             'title' => 'Saldo',
             'active' => 'Saldo',
             'saldoNow' => $saldoNow,

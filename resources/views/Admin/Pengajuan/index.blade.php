@@ -64,15 +64,14 @@
                                 <tr class="text-center bg-dark">
                                     <th class="text-light" style="">Kode</th>
                                     <th class="text-light" style="">Nama/Departemen</th>
-                                    <th class="text-light" style="">Project</th>
                                     <th class="text-light" style="">Rekening</th>
-                                    <th class="text-light" style="">Debit</th>
-                                    <th class="text-light" style="">Uraian</th>
+                                    <th class="text-light" style="">Nominal</th>
+                                    <th class="text-light" style="">Keterangan</th>
                                     <th class="text-light text-center" style="" colspan="">Aprrove</th>
                                     <th class="text-light" style="">Aksi</th>
                                 </tr>
                             </thead>
-                            <tbody id="ada">
+                            <tbody id="">
                                 @foreach ($pengajuan as $data )
                                 <tr id="{{$data->id}}">
                                     <td class="text-center"> {{$data->kode}}</td>
@@ -80,9 +79,6 @@
                                         <p class="text-xl font-weight-bold mb-0">{{$data->pegawai->nama}}</p>
                                         <p class="text-xs text-secondary mb-0">{{$data->pegawai->departemen->nama}}</p>
                                     </td>
-                                    <td class="" style="width: 50px">{{ Str::words($data->project, 2,'....')}}</td>
-
-
                                     <td class="">
                                         <p class="text-xs font-weight-bold mb-0">{{$data->norek}}</p>
                                         <p class="text-xs text-secondary mb-0">{{$data->bank}}</p>
@@ -118,7 +114,7 @@
                             <tfoot>
                                 <tr>
                                     <th class="text-center" colspan="4">Total</th>
-                                    <td class="text-end">@rp($debit)</td>
+                                    <td class="text-end">@rp(111)</td>
                                 </tr>
                             </tfoot>
                         </table>

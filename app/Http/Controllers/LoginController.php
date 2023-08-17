@@ -34,13 +34,16 @@ class LoginController extends Controller
             //     return redirect('/profile');
             // }
             if(Auth::user()->level=='hrd'){
-                return redirect('/hrd/profile')->with('login','Login berhasil');
+                return redirect('/hrd/dashboard');
             }
             if(Auth::user()->level=='finance'){
-                return redirect('/finance/profile');
+                return redirect('/finance/dashboard');
             }
-            if(Auth::user()->level=='direktur'){
-                return redirect('/');
+            if(Auth::user()->level=='pimpinan'){
+                return redirect('/pimpinan/dashboard');
+            }
+            if(Auth::user()->level=='pegawai'){
+                return redirect('/pegawai/dashboard');
             }
         }
         else {
