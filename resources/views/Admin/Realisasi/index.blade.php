@@ -60,58 +60,60 @@
                         <table id="myTable" style="" class="col-12 table table-striped display responsive nowrap">
                             <thead class="">
                                 <tr class="text-center bg-dark">
-                                    <th class="text-light" style="">Kode</th>
+                                    <th class="text-light" style="">No</th>
                                     <th class="text-light" style="">Nama/Departemen</th>
-                                    <th class="text-light" style="">Project</th>
-                                    <th class="text-light" style="">Debit</th>
+                                    <th class="text-light" style="">Nominal</th>
                                     <th class="text-light" style="">Total Pemakaian</th>
                                     <th class="text-light" style="">Refund</th>
-                                    <th class="text-light" style="">Uraian</th>
+                                    <th class="text-light" style="">Keterangan</th>
                                     <th class="text-light" style="">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody id="ada">
                                 @foreach ($pengajuan as $data )
-                                <tr id="{{$data->id}}">
-                                    <td class="text-center"> {{$data->kode}}</td>
+                                <tr id="">
+                                    <td class="text-center"> {{$loop->iteration}}</td>
                                     <td class="">
-                                        <p class="text-xl font-weight-bold mb-0">{{$data->pegawai->nama}}</p>
-                                        <p class="text-xs text-secondary mb-0">{{$data->pegawai->departemen->nama}}</p>
+                                        <p class="text-xl font-weight-bold mb-0">{{$data->user->nama}}</p>
+                                        <p class="text-xs text-secondary mb-0">{{$data->user->departemen->nama}}</p>
                                     </td>
-                                    <td class="" style="width: 50px">{{ Str::words($data->project, 2,'....')}}</td>
-
-                                    <td class="text-end" id="debit_">@rp($data->debit)</td>
 
 
-                                    @if ($data->refund!=null)
-                                        <td class="text-end">@rp($data->refund)</td>
-                                    @else
-                                        <td class="text-end">-</td>
-                                    @endif
+                                    <td class="text-end" id="debit">@rp($data->nominalAcc)</td>
 
-                                    @if ($data->total!=null)
-                                        <td class="text-end">@rp($data->total)</td>
-                                    @else
-                                        <td class="text-end">-</td>
-                                    @endif
 
-                                    <td class="text-end">{{$data->keterangan}}</td>
+                                    <td class="text-end">
+                                        @if ($data->total!=null)
+                                            @rp($data->total)
+                                        @else
+                                            -
+                                        @endif
+                                        </td>
 
-                                    <td class="bg-info text-center">
+                                    <td class="text-end">
+                                        @if ($data->refund!=null)
+                                            @rp($data->refund)
+                                        @else
+                                            -
+                                        @endif
+                                    </td>
+
+
+
+                                    <td class="" style="width: 50px">{{ Str::words($data->keterangan, 2,'....')}}</td>
+
+                                    <td class=" text-center">
                                         <div class="d-flex">
                                             <button class="btn btn-dark font-weight-bold m-auto" data-bs-toggle="modal"
                                                 data-bs-target="#data-{{$data->id}}-view"><i
                                                     class="bi bi-eye-fill"></i></button>
                                             <button class="btn btn-success font-weight-bold m-auto"
                                                 data-bs-toggle="modal" data-bs-target="#data-{{$data->id}}"><i class="bi bi-plus-square-fill"></i></button>
-                                            <form action="/hrd/realisasi/{{$data->id}}" method="post">
+                                            <form method="post" action="/hrd/realisasi/{{$data->id}}" class="m-auto">
                                                 @method('Delete')
                                                 @csrf
-                                                <button class="btn btn-danger font-weight-bold m-auto"
-                                                    type="submit"><i
-                                                        class="bi bi-trash3-fill"></i></button>
-
-                                            </form>
+                                                <button class="btn btn-danger font-weight-bold m-auto" type="submit" onclick="return confirm('Yakin akan menghapus data ?')"><i class="bi bi-trash3-fill"></i></button>
+					                        </form>
                                         </div>
                                     </td>
                                 </tr>

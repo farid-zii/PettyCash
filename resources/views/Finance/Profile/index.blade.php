@@ -19,18 +19,26 @@
                             {{-- <h1>halo {{auth()->user()->name}}</h1> --}}
                             <img src="https://images.glints.com/unsafe/glints-dashboard.s3.amazonaws.com/company-banner-pic/16e4d6351c7f12f357daab99625b1457.jpg" style="width: 100%;border-radius: 10px;box-shadow:3px 3px 2px 1px black;">
                         </div>
-                        <form class="my-3" method="post" action="/profile-edit">
+                        <form class="my-3" method="put" action="/hrd/profile">
                             @csrf
                             <h4>SETTING</h4>
 
-                            <label class="text-xl text-dark font-weight-bolder">Nama</label>
-                            <div class="mb-2">
-                                <input type="text" class="form-control" required name="nama" id="nama" value="{{auth()->user()->name}}">
+                            <div class="mb-2 col-12">
+                                <label class="text-xl text-dark font-weight-bolder">Nama</label>
+                                <input type="text" class="form-control" required name="nama" id="nama" value="{{auth()->user()->nama}}">
                                 <input type="hidden" class="form-control" required name="id" id='userId' value="{{auth()->user()->id}}">
                             </div>
-                            <label class="text-xl text-dark font-weight-bolder">Email</label>
-                            <div class="mb-2">
+                            <div class="mb-2 col-12">
+                                <label class="text-xl text-dark font-weight-bolder">NIP</label>
+                                <input type="text" name="nip" class="form-control" id="" value="{{auth()->user()->nip}}">
+                            </div>
+                            <div class="mb-2 col-12">
+                                <label class="text-xl text-dark font-weight-bolder">Email</label>
                                 <input type="email" name="email" class="form-control" id="" value="{{auth()->user()->email}}">
+                            </div>
+                            <div class="mb-2 col-12">
+                                <label class="text-xl text-dark font-weight-bolder">No. Handphone</label>
+                                <input type="number" name="phone" class="form-control" id="" value="{{auth()->user()->phone}}">
                             </div>
                             <label class="text-xl text-dark font-weight-bolder">Password</label>
                             <div class="mb-2">

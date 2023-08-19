@@ -1,4 +1,4 @@
-@extends('admin.layouts.main')
+@extends('finance.layouts.main')
 
 @section('isi')
 <div class="container-fluid py-4">
@@ -12,7 +12,7 @@
                 </div>
 
                 <div class="m-2">
-                    @include('admin.notif')
+                    @include('finance.notif')
                 </div>
 
                 <div class="m-2" style="">
@@ -20,7 +20,7 @@
                     --}}
                     {{-- <button class="btn bg-gradient-success w-15 my-4 mb-2">Cetak Excel</button> --}}
 
-                    {{-- <a href="/admin/user/create"  class="btn bg-gradient-info w-15 my-4 mb-2 float-sm-end">Entry</a> --}}
+                    {{-- <a href="/finance/user/create"  class="btn bg-gradient-info w-15 my-4 mb-2 float-sm-end">Entry</a> --}}
 
                     <div class="bg-gradient-success  text-center my-4 mb-2 col-3 float-sm-start"
                         style="border-radius: 10px;color:white">
@@ -29,8 +29,8 @@
                             RP. @rp($saldo)
                         </div>
                     </div>
-                    <button class="btn bg-gradient-success w-15 my-4 mx-2 mb-2 col-2 float-sm-end" data-bs-toggle="modal"
-                        data-bs-target="#static-excel"><i class="bi bi-file-earmark-spreadsheet-fill"></i></button>
+                    {{-- <button class="btn bg-gradient-success w-15 my-4 mx-2 mb-2 col-2 float-sm-end" data-bs-toggle="modal"
+                        data-bs-target="#static-excel"><i class="bi bi-file-earmark-spreadsheet-fill"></i></button> --}}
                 </div>
 
 
@@ -60,33 +60,27 @@
                         <table id="myTable" style="" class="col-12 table table-striped display responsive nowrap">
                             <thead class="">
                                 <tr class="text-center bg-dark">
-                                    <th class="text-light" style="">Kode</th>
+                                    <th class="text-light" style="">No</th>
                                     <th class="text-light" style="">Nama/Departemen</th>
-                                    <th class="text-light" style="">Project</th>
-                                    <th class="text-light" style="">Debit</th>
-                                    <th class="text-light" style="">Kredit</th>
-                                    <th class="text-light" style="">Refund</th>
+                                    <th class="text-light" style="">Nominal</th>
                                     <th class="text-light" style="">Total Pemakaian</th>
-                                    {{-- <th class="text-light" style="">Aksi</th> --}}
+                                    <th class="text-light" style="">Refund</th>
+                                    <th class="text-light" style="">Keterangan</th>
+                                    <th class="text-light" style="">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody id="ada">
                                 @foreach ($pengajuan as $data )
-                                <tr id="{{$data->id}}">
-                                    <td class="text-center"> {{$data->kode}}</td>
+                                <tr id="">
+                                    <td class="text-center"> {{$loop->iteration}}</td>
                                     <td class="">
-                                        <p class="text-xl font-weight-bold mb-0">{{$data->pegawai->nama}}</p>
-                                        <p class="text-xs text-secondary mb-0">{{$data->pegawai->departemen->nama}}</p>
+                                        <p class="text-xl font-weight-bold mb-0">{{$data->user->nama}}</p>
+                                        <p class="text-xs text-secondary mb-0">{{$data->user->departemen->nama}}</p>
                                     </td>
-                                    <td class="" style="width: 50px">{{ Str::words($data->project, 2,'....')}}</td>
 
-                                    @if ($data->type==false)
-                                    <td class="text-end">-</td>
-                                    <td class="text-end" id="kredit_">@rp($data->kredit)</td>
-                                    @elseif ($data->type==true)
-                                    <td class="text-end" id="debit_">@rp($data->debit)</td>
-                                    <td class="text-end">-</td>
-                                    @endif
+
+                                    <td class="text-end" id="debit">@rp($data->nominalAcc)</td>
+
 
                                     @if ($data->refund!=null)
                                         <td class="text-end">@rp($data->refund)</td>
@@ -100,23 +94,15 @@
                                         <td class="text-end">-</td>
                                     @endif
 
-                                    {{-- <td class="bg-info text-center">
+                                    <td class="" style="width: 50px">{{ Str::words($data->keterangan, 2,'....')}}</td>
+
+                                    <td class=" text-center">
                                         <div class="d-flex">
                                             <button class="btn btn-dark font-weight-bold m-auto" data-bs-toggle="modal"
                                                 data-bs-target="#data-{{$data->id}}-view"><i
                                                     class="bi bi-eye-fill"></i></button>
-                                            <button class="btn btn-success font-weight-bold m-auto"
-                                                data-bs-toggle="modal" data-bs-target="#data-{{$data->id}}"><i class="bi bi-plus-square-fill"></i></button>
-                                            <form action="/realisasi/{{$data->id}}" method="post">
-                                                @method('Delete')
-                                                @csrf
-                                                <button class="btn btn-danger font-weight-bold m-auto"
-                                                    type="submit"><i
-                                                        class="bi bi-trash3-fill"></i></button>
-
-                                            </form>
                                         </div>
-                                    </td> --}}
+                                    </td>
                                 </tr>
                                 @endforeach
                                 <!-- Tambahkan baris lainnya sesuai kebutuhan -->
@@ -125,7 +111,6 @@
                                 <tr>
                                     <th class="text-center" colspan="3">Total</th>
                                     <td class="text-end">@rp($debit)</td>
-                                    <td class="text-end">@rp($kredit)</td>
                                 </tr>
                             </tfoot> --}}
                         </table>
@@ -141,21 +126,11 @@
 
 
 <!-- CREATE -->
-@include('admin.realisasi.create')
-@include('admin.realisasi.view')
-@include('admin.realisasi.edit')
+{{-- @include('finance.realisasi.create') --}}
+{{-- @include('finance.realisasi.view') --}}
+{{-- @include('finance.realisasi.edit') --}}
 
 <script>
-    let totalKredit =''
-    $('#kredit_').each(function () {
-        let kredit = parseInt($(this).text())
-        totalKredit += kredit;
-    })
-
-    console.log(totalKredit)
-
-
-
     $(document).ready(function () {
 
 
@@ -201,19 +176,7 @@
 
     });
 
-    //  $('#btnHapus').on('click',function() {
-    //     hapus(id)
-    //  })
 
-    function Excel() {
-        var awal = $('#tanggal1').val()
-        var akhir = $('#tanggal2').val()
-        axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken
-        axios.post('web/cetak-excel',{
-            awal:awal,
-            akhir:akhir
-        })
-    }
 
     function hapus(id) {
 

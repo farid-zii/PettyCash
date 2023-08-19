@@ -53,7 +53,7 @@ class PengajuanPolicy
      */
     public function update(User $user, Pengajuan $pengajuan)
     {
-        //
+        
     }
 
     /**
@@ -65,7 +65,7 @@ class PengajuanPolicy
      */
     public function delete(User $user, Pengajuan $pengajuan)
     {
-        //
+        
     }
 
     /**

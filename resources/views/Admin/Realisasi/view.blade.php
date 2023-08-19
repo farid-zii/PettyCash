@@ -9,59 +9,32 @@
             </div>
 
             <div class="p-3">
-                <table style="border-spacing: 0 1em;">
+                <table style="border-spacing: 0 1em;" class="col-12 table table-striped">
                     <tr>
-                        <th style="width: 20%">Nama </th>
-                        <th > : </th>
-                        <th>{{$data->pegawai->nama}}</th>
+                        <th>Nama</th>
+                        <td>{{$data->user->nama}}</td>
                     </tr>
                     <tr>
-                        <th style="width: 20%">Departemen </th>
-                        <th > : </th>
-                        <td>{{$data->pegawai->departemen->nama}}</td>
-                    </tr>
-                    <tr style="">
-                        <th style="width: 20%"> Nominal </th>
-                        <th > : </th>
-                        <td>
-                            @if($data->kredit==null)
-                            @rp($data->debit)
-                            @else
-                            @rp($data->kredit)
-                            @endif
-                        </td>
-                        <th> Rekening </th>
-                        <th > : </th>
-                        <td>{{$data->norek }} ({{$data->bank}})</td>
+                        <th>Departemen</th>
+                        <td>{{$data->user->departemen->nama}}</td>
                     </tr>
                     <tr>
-                        <th style="width: 20%"> Project </th>
-                        <th > : </th>
-                        <td>{{$data->project}}</td>
+                        <th>Nominal</th>
+                        <td>Rp. @rp($data->nominalAcc)</td>
                     </tr>
                     <tr>
-                        <th style="width: 20%"> Uraian</th>
-                        <th > : </th>
+                        <th>Terpakai</th>
+                        <td>Rp. @rp($data->total)</td>
+                    </tr>
+                    <tr>
+                        <th>Keterengan</th>
                         <td>{{$data->keterangan}}</td>
                     </tr>
                     <tr>
-                        <th style="width: 20%"> Status Aprrove</th>
-                        <th > : </th>
-                        <td>{{$data->approveF}}</td>
-                        <td>@if ($data->approveF=='❌')
-                                        <div class="">{{$data->komenF}}</div>
-                                        @endif</td>
+                        <th>Bukti</th>
+                        <td> <img class="col-12" src="{{asset('img/bukti_pengajuan/'.$data->bukti)}}"></td>
                     </tr>
                 </table>
-                @php
-                   $gambars= $gambar->where('pengajuan_id','=',$data->id);
-                @endphp
-                @foreach ($gambars as $item)
-                <img src="../img/bukti_pengajuan/{{$item->gambar}}" class="col-3" style="border: 1px solid black" alt="">
-
-                @endforeach
-
-
             </div>
         </div>
     </div>

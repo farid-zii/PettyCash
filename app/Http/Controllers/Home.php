@@ -22,14 +22,14 @@ class Home extends Controller
     public function admin()
     {
         $saldo= Pengajuan::get();
-        
+
 
         if($saldo!=''){
         return view('admin2.index',[
             'title'=>'Dashboard',
             'active'=>'Dashboard',
             'saldo'=>0,
-            
+
         ]);
         }
 
@@ -37,7 +37,7 @@ class Home extends Controller
             'title' => 'Dashboard',
             'active' => 'Dashboard',
             'saldo' =>0,
-            
+
         ]);
     }
     public function hrd(Request $r)
@@ -64,7 +64,7 @@ class Home extends Controller
         $dataLabel = $datas->keys();
         $dataChart = $datas->values();
 
-        
+
         $saldo = saldo::get();
 
         if ($saldo != '') {
@@ -72,7 +72,6 @@ class Home extends Controller
                 'title' => 'Dashboard',
                 'active' => 'Dashboard',
                 'saldo' => 0,
-                
                 'dataChart' => $dataChart,
                 'dataLabel' => $dataLabel
             ]);
@@ -110,21 +109,21 @@ class Home extends Controller
         $dataLabel = $datas->keys();
         $dataChart = $datas->values();
 
-        
-        $saldo = saldo::get();
 
-        if ($saldo != '') {
-            return view('finance.index', [
-                'title' => 'Dashboard',
-                'active' => 'Dashboard',
-                'dataChart' => $dataChart,
-                'dataLabel' => $dataLabel
-            ]);
+        $saldo = saldo::latest()->first();
+        if($saldo!=null){
+            $data= $saldo->total;
         }
+        else {
+            $data= '0';
+        }
+
 
         return view('finance.index', [
             'title' => 'Dashboard',
             'active' => 'Dashboard',
+            'user' => User::get(),
+            'saldoTotal' => $data,
             'dataChart' => $dataChart,
             'dataLabel' => $dataLabel
 

@@ -13,13 +13,7 @@
 
                     <label class="text-xl text-dark font-weight-bolder col-6">Nama</label>
                     <div class="mb-2">
-                        <input type="text" class="form-control" id="nama" name="nama">
-                        {{-- <ul id="searchResult" class=""></ul> --}}
-                    </div>
-
-                    <label class="text-xl text-dark font-weight-bolder col-6">Project</label>
-                    <div class="mb-2">
-                        <input type="text" class="form-control" id="project" name="project" style="width: 200%">
+                        <input type="text" class="form-control " style="" id="nama" name="nama">
                         {{-- <ul id="searchResult" class=""></ul> --}}
                     </div>
 
@@ -33,17 +27,13 @@
                     <label class="text-xl text-dark font-weight-bolder">No. Rekening</label>
                     <div class="mb-2" style="display:flex;">
                         <select name="bank" id="bank" style="width: 20%;background: rgb(223, 219, 219);">
-                            <option value="BRI">BRI</option>
-                            <option value="Mandiri">Mandiri</option>
-                            <option value="BNI">BNI</option>
-                            <option value="BCA">BCA</option>
-                            <option value="BSI">BSI</option>
-                            <option value="BJB">BJB</option>
-                            <option value="Lainnya">Lain-lain</option>
+                            @foreach ($bank as $data)
+                            <option value="{{$data->id}}">{{$data->nama}}</option>
+                            @endforeach
                         </select>
-                        <input type="number" class="form-control" placeholder="300" name="norek" id="norek">
+                        <input type="number" class="form-control" placeholder="" name="norek" id="norek">
                     </div>
-                    <label class="text-xl text-dark font-weight-bolder">Uraian</label>
+                    <label class="text-xl text-dark font-weight-bolder">Keterangan</label>
                     <div class="mb-2">
                         <textarea class="form-control" name="keterangan" id="keterangan" onkeydown="addNumberOnEnter(event)"></textarea>
                     </div>
@@ -99,112 +89,7 @@
 
 
 <script>
-
-$(document).ready(function() {
-    // Initialize the Typeahead.js autocomplete
-    var namaInput = $('#nama');
-    var namaData = new Bloodhound({
-        datumTokenizer: Bloodhound.tokenizers.obj.whitespace('nama'),
-        queryTokenizer: Bloodhound.tokenizers.whitespace,
-        remote: {
-            url: '/api/searchNama?keyword=%QUERY',
-            wildcard: '%QUERY'
-        }
-    });
-
-    namaInput.typeahead(
-        {
-            hint: true,
-            highlight: true,
-            minLength: 1
-        },
-        {
-            name: 'nama-autocomplete',
-            display: 'nama',
-            source: namaData,
-            templates: {
-                suggestion: function(data) {
-                    return '<div class="custom-suggestion" style="z-index: 999; background: #c3bdbd; ; width: 120%;">' + data.nama + '</div>';
-                },
-            }
-        }
-    );
-
-    var projectInput = $('#project');
-    var projectData = new Bloodhound({
-        datumTokenizer: Bloodhound.tokenizers.obj.whitespace('project'),
-        queryTokenizer: Bloodhound.tokenizers.whitespace,
-        remote: {
-            url: '/api/get-project?q=%QUERY',
-            wildcard: '%QUERY'
-        }
-    });
-
-    projectInput.typeahead(
-        {
-            hint: true,
-            highlight: true,
-            minLength: 1
-        },
-        {
-            name: 'project-autocomplete',
-            display: 'project',
-            source: projectData,
-            templates: {
-                suggestion: function(data) {
-                    return '<div class="custom-suggestion" style="z-index: 999; background: #c3bdbd; ; width: 200%;">' + data.project + '</div>';
-                },
-            }
-        }
-    );
-
-    var projectInput = $('#norek');
-    var projectData = new Bloodhound({
-        datumTokenizer: Bloodhound.tokenizers.obj.whitespace('norek'),
-        queryTokenizer: Bloodhound.tokenizers.whitespace,
-        remote: {
-            url: '/api/get-norek?q=%QUERY',
-            wildcard: '%QUERY'
-        }
-    });
-
-    projectInput.typeahead(
-        {
-            hint: true,
-            highlight: true,
-            minLength: 1
-        },
-        {
-            name: 'norek-autocomplete',
-            display: 'norek',
-            source: norekData,
-            templates: {
-                suggestion: function(data) {
-                    return '<div class="custom-suggestion" style="z-index: 999; background: #c3bdbd; ; width: 200%;">' + data.norek + '</div>';
-                },
-            }
-        }
-    );
-});
-
-// Rest of your code
-$('#nama').on('typeahead:selected', function(event, suggestion, dataset) {
-    // Do something when a suggestion is selected
-    console.log(suggestion);
-});
-
-// Rest of your code
-$('#project').on('typeahead:selected', function(event, suggestion, dataset) {
-    // Do something when a suggestion is selected
-    console.log(suggestion);
-});
-$('#norek').on('typeahead:selected', function(event, suggestion, dataset) {
-    // Do something when a suggestion is selected
-    console.log(suggestion);
-});
-
-
-    var csrfToken = document.head.querySelector('meta[name="csrf-token"]').content;
+var csrfToken = document.head.querySelector('meta[name="csrf-token"]').content;
 
     // function simpan() {
     //     let nama = $('#nama').val();

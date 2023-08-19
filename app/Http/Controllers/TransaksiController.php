@@ -14,7 +14,11 @@ class TransaksiController extends Controller
      */
     public function index()
     {
-        //
+        return view('admin.history.index',[
+            'title'=>'History',
+            'active'=>'History',
+            'datas'=>transaksi::get()
+        ]);
     }
 
     /**

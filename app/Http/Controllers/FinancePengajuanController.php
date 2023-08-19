@@ -10,6 +10,7 @@ use App\Http\Requests\UpdatePengajuanRequest;
 use App\Models\Pegawai;
 use Illuminate\Http\Request;
 use App\Exports\PengajuanExport;
+use App\Models\bank;
 use App\Models\Saldo;
 use Maatwebsite\Excel\Facades\Excel;
 use DB;
@@ -23,28 +24,11 @@ class FinancePengajuanController extends Controller
      */
     public function index(Request $req)
     {
-
-        // $totalNominal=Pengajuan::where('type','=','penambahan')->latest()->get();
-
-        //Total Debit
-        $totalDebit = Pengajuan::select(DB::raw('SUM(debit) as total'))
-        // ->where('type', '=', false)
-        ->first();
-
-        // $totalKredit = Pengajuan::select('type', DB::raw('SUM(nominal) as total'))
-        // ->where('type', '=', null)
-        // ->groupBy('type')
-        // ->first();
-
-        // if($data->type=null){
-
-        // }
-
         $saldos = Saldo::latest()->first();
-        if ($saldos == null) {
-            $saldo = 0;
-        } else {
+        if ($saldos != null) {
             $saldo = $saldos->total;
+        } else {
+            $saldo = 0;
         }
 
         $awal = $req->input('awal');
@@ -57,23 +41,12 @@ class FinancePengajuanController extends Controller
             $data = Pengajuan::get();
         }
 
-        if ($totalDebit == null) {
-            return view('finance.pengajuan.index', [
-                'active' => 'Pengajuan',
-                'title' => 'Pengajuan',
-                'pengajuan' => $data,
-                'debit' => 0,
-                'saldo' => $saldo,
-                // 'tKredit'=>$ab
-            ]);
-        }
         return view('finance.pengajuan.index', [
             'active' => 'Pengajuan',
             'title' => 'Pengajuan',
             'pengajuan' => $data,
-            'debit' => $totalDebit->total,
+            'bank' => bank::get(),
             'saldo' => $saldo
-            // 'tKredit'=>$ab
         ]);
     }
 
@@ -113,17 +86,6 @@ class FinancePengajuanController extends Controller
             ]);
 
             return back();
-            // return response()->json($data, 200);
-        // }
-        // if ($r->type == 'tolak') {
-        //     $data = Pengajuan::where('id', $id)
-        //         ->update([
-        //             'approveF' => '✅',
-        //             'komenF' => $r->komen,
-        //         ]);
-        //     return back();
-        //     return response()->json($data, 200);
-        // }
     }
 
     /**
@@ -155,14 +117,25 @@ class FinancePengajuanController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(Request $r,$id)
     {
-        Pengajuan::where('id','=',$request->id)->update([
-            'approveF'=>'❌',
-            'komenF'=>$request->alasan,
-        ]);
+        if($r->tipe==1){
+            Pengajuan::find($id)->update([
+                'approve'=>'Setuju',
+                'nominalAcc'=>$r->nominalAcc,
+                'komen'=>$r->komen,
+            ]);
+            return back()->with('Success','Pengajuan telah di Setujui');
+        }
+        if($r->tipe==2){
+            Pengajuan::find($id)->update([
+                'approve'=>'Tolak',
+                'komen'=>$r->komen,
+            ]);
+            return back()->with('Success','Pengajuan telah di Setujui');
+        }
 
-        return back()->with('update','status berhasil ditambahkan');
+
     }
 
     /**

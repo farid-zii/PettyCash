@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Saldo;
 use App\Http\Requests\StoreSaldoRequest;
 use App\Http\Requests\UpdateSaldoRequest;
+use App\Models\transaksi;
 use DateTime;
 use Date;
 use Illuminate\Support\Facades\DB;
@@ -61,6 +62,11 @@ class SaldoController extends Controller
                 'saldo'=>$nominal,
                 'total' => $hasil,
                 'created_at'=>new DateTime(),
+            ]);
+
+            $saldo=Saldo::latest()->first();
+            transaksi::create([
+                'saldo_id'=>$saldo->id
             ]);
 
         return back()->with('success','Berhasil menambahkan data');

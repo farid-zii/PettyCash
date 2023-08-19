@@ -10,12 +10,9 @@ class bank extends Model
     use HasFactory;
 
     protected $guarded= [];
-    public function pegawai()
-    {
-        $this->hasMany(Pegawai::class);
-    }
     public function pengajuan()
     {
-        $this->hasMany(Pengajuan::class);
+       return $this->hasMany(Pengajuan::class);
     }
+    
 }

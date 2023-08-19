@@ -19,7 +19,7 @@
               </div>
               <div class="text-end pt-1">
                 <p class="text-sm mb-0 text-capitalize">PEGAWAI</p>
-                <h4 class="mb-0">{{$pegawai->count()}}</h4>
+                <h4 class="mb-0">{{$user->count()}}</h4>
               </div>
             </div>
             {{-- <hr class="dark horizontal my-0">
@@ -56,7 +56,7 @@
                 {{-- @php
                     $data = App\Models\Pengajuan::latest()->first();
                 @endphp --}}
-                <h4 class="mb-0">@rp($saldo[0]->total)</h4>
+                <h4 class="mb-0">@rp($saldoTotal)</h4>
               </div>
             </div>
             {{-- <hr class="dark horizontal my-0">

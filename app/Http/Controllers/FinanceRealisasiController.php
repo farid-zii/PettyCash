@@ -19,26 +19,17 @@ class FinanceRealisasiController extends Controller
     public function index(Request $req)
     {
 
-        // $totalNominal=Pengajuan::where('type','=','penambahan')->latest()->get();
 
-        //Total Debit
-        $totalDebit = Pengajuan::select(DB::raw('SUM(debit) as total'))->where('approveF', '=', '✅')
-            // ->where('type', '=', false)
-            ->first();
+        // //Total Debit
+        // $totalDebit = Pengajuan::select(DB::raw('SUM(debit) as total'))->where('approveF', '=', '✅')
+        //     // ->where('type', '=', false)
+        //     ->first();
 
-        //Total Kredit
-        $totalKredit = Pengajuan::select(DB::raw('SUM(kredit) as total'))
-        // ->where('type', '=', true)
-        ->first();
-
-        // $totalKredit = Pengajuan::select('type', DB::raw('SUM(nominal) as total'))
-        // ->where('type', '=', null)
-        // ->groupBy('type')
+        // //Total Kredit
+        // $totalKredit = Pengajuan::select(DB::raw('SUM(kredit) as total'))
+        // // ->where('type', '=', true)
         // ->first();
 
-        // if($data->type=null){
-
-        // }
         $saldos = saldo::latest()->first();
         if ($saldos == null) {
             $saldo = 0;
@@ -51,57 +42,16 @@ class FinanceRealisasiController extends Controller
 
         $data = '';
         if ($req->awal && $req->akhir) {
-            $data = Pengajuan::whereBetween('created_at', [$awal, $akhir])->where('approveF', '=', '✅')->get();
+            $data = Pengajuan::whereBetween('created_at', [$awal, $akhir])->where('approve', '=', 'Setuju')->get();
         } else {
-            $data = Pengajuan::where('approveF', '=', '✅')->get();
+            $data = Pengajuan::where('approve', '=', 'Setuju')->get();
         }
 
-        $gambar = realisasi::get();
-
-
-        if ($totalDebit == null && $totalKredit == null) {
-            return view('admin.realisasi.index', [
-                'active' => 'Realisasi',
-                'title' => 'Realisasi',
-                'pengajuan' => $data,
-                'debit' => 0,
-                'kredit' => 0,
-                'saldo' => $saldo,
-                'gambar' => $gambar,
-                // 'tKredit'=>$ab
-            ]);
-        }
-        if ($totalDebit == null) {
-            return view('admin.realisasi.index', [
-                'active' => 'Realisasi',
-                'title' => 'Realisasi',
-                'pengajuan' => $data,
-                'debit' => 0,
-                'saldo' => $saldo,
-                'kredit' => $totalKredit->total,
-                'gambar' => $gambar,
-                // 'tKredit'=>$ab
-            ]);
-        } elseif ($totalKredit == null) {
-            return view('admin.realisasi.index', [
-                'active' => 'Realisasi',
-                'title' => 'Realisasi',
-                'pengajuan' => $data,
-                'debit' => $totalDebit->total,
-                'kredit' => 0,
-                'gambar' => $gambar,
-                'saldo' => $saldo
-                // 'tKredit'=>$ab
-            ]);
-        }
-        return view('admin.realisasi.index', [
+        return view('finance.realisasi.index', [
             'active' => 'Realisasi',
             'title' => 'Realisasi',
             'pengajuan' => $data,
-            'debit' => $totalDebit->total,
-            'kredit' => $totalKredit->total,
             'saldo' => $saldo,
-            'gambar' => $gambar,
             // 'tKredit'=>$ab
         ]);
     }

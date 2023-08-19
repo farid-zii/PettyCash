@@ -16,17 +16,17 @@ class Pengajuan extends Model
     protected $guarded = [
     ];
 
-    public function pegawai()
+    public function user()
     {
-        return $this->belongsTo(Pegawai::class);
+        return $this->belongsTo(User::class);
     }
-    public function realisasi()
+    public function bank()
     {
-        return $this->belongsTo(Realisasi::class);
+        return $this->belongsTo(bank::class);
     }
     public function transaksi()
     {
-        $this->hasMany(transaksi::class);
+        return $this->hasMany(transaksi::class);
     }
 
 }

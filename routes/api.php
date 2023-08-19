@@ -2,10 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\PengajuanController;
 use App\Http\Controllers\UserController;
-use App\Models\Pegawai;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,7 +21,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::put('profile/{id}', [UserController::class,'PengaturanAkun']);
-Route::get('searchNama', [PegawaiController::class,'searchNama']);
+Route::get('searchNama', [UserController::class,'getNamaUser']);
 Route::get('get-project', [PengajuanController::class,'getProject']);
 Route::post('iPengajuan', [PengajuanController::class,'awal']);
 Route::resource('pengajuan-del', PengajuanController::class);

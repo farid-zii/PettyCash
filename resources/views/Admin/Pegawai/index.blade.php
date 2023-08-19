@@ -12,7 +12,7 @@
                     </div>
                 </div>
                 @include('Admin.notif')
-                
+
                                     <div class="mx-3">
                                         <button class="btn bg-gradient-info w-15 my-4 mb-2 float-sm-end" data-bs-toggle="modal"
                                             data-bs-target="#staticBackdrop">Entry <i class="bi bi-plus-square-fill"></i></button>
@@ -57,6 +57,11 @@
                                         <p class="align-middle"> {{$data->nip}}</p>
                                     </td>
                                     <td class="">
+                                        @php
+                                            $deptData = app\models\departemen::where('id','=',$data->id)->first();
+
+                                        @endphp
+                                        {{-- <p class="align-middle"> {{$deptData->nama}}</p> --}}
                                         <p class="align-middle"> {{$data->departemen->nama}}</p>
                                     </td>
                                     <td class="">
@@ -67,9 +72,6 @@
                                     </td> --}}
                                     <td class="">
                                         <div class="d-flex">
-                                            <button class="btn btn-dark font-weight-bold m-auto"
-                                                data-bs-toggle="modal" data-bs-target="#data-{{$data->id}}">
-                                                <i class="bi bi-eye-fill"></i></button>
                                             <button class="btn btn-warning font-weight-bold m-auto"
                                                 data-bs-toggle="modal" data-bs-target="#data-{{$data->id}}"><i
                                                     class="bi bi-pencil-square"></i></button>

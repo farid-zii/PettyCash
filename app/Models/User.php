@@ -33,6 +33,10 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Departemen::class);
     }
+    public function pengajuan()
+    {
+        return $this->hasMany(Pengajuan::class);
+    }
 
     /**
      * The attributes that should be cast.

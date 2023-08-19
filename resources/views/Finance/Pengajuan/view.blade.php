@@ -13,12 +13,12 @@
                     <tr>
                         <th style="width: 20%">Nama </th>
                         <th > : </th>
-                        <th>{{$data->pegawai->nama}}</th>
+                        <th>{{$data->user->nama}}</th>
                     </tr>
                     <tr>
                         <th style="width: 20%">Departemen </th>
                         <th > : </th>
-                        <td>{{$data->pegawai->departemen->nama}}</td>
+                        <td>{{$data->user->departemen->nama}}</td>
                     </tr>
                     <tr style="">
                         <th style="width: 20%"> Nominal </th>
@@ -26,23 +26,19 @@
                         <td>{{$data->debit}}</td>
                         <th> Rekening </th>
                         <th > : </th>
-                        <td>{{$data->norek }} ({{$data->bank}})</td>
+                        <td>{{$data->norek }} ({{$data->bank->nama}})</td>
                     </tr>
+
                     <tr>
-                        <th style="width: 20%"> Project </th>
-                        <th > : </th>
-                        <td>{{$data->project}}</td>
-                    </tr>
-                    <tr>
-                        <th style="width: 20%"> Uraian</th>
+                        <th style="width: 20%"> Keterangan</th>
                         <th > : </th>
                         <td>{{$data->keterangan}}</td>
                     </tr>
                     <tr>
                         <th style="width: 20%"> Status Aprrove</th>
                         <th > : </th>
-                        <td>{{$data->approveF}}</td>
-                        <td>@if ($data->approveF=='❌')
+                        <td>{{$data->approve}}</td>
+                        <td>@if ($data->approve=='❌')
                                         <div class=""><b>ALASAN :</b>{{$data->komenF}}</div>
                                         @endif</td>
                     </tr>

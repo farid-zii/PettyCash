@@ -15,6 +15,17 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class UserController extends Controller
 {
+    public function getNamaUser(Request $request)
+    {
+        $keyword = $request->input('keyword');
+
+        $result = User::where('nama', 'like', '%' . $keyword . '%')
+            ->get();
+
+        return response()->json($result);
+    }
+
+
     public function index()
     {
         return view('admin.pegawai.index',[

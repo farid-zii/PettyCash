@@ -14,24 +14,12 @@
                 <div class="modal-body">
                     <label class="text-xl text-dark font-weight-bolder col-6">Nama</label>
                     <div class="mb-2">
-                        <input type="text" class="form-control" id="namaa" name="kode" value="{{$data->kode}}" readonly>
-                        {{-- <ul id="searchResult" class=""></ul> --}}
-                    </div>
-                    <label class="text-xl text-dark font-weight-bolder col-6">Nama</label>
-                    <div class="mb-2">
-                        <input type="text" class="form-control" id="namaa" name="nama" value="{{$data->pegawai->nama}}" readonly>
+                        <input type="text" class="form-control" id="namaa" name="nama" value="{{$data->user->nama}}" readonly>
+                        <input type="hidden" class="form-control" id="id" name="id" value="{{$data->id}}" readonly>
                         {{-- <ul id="searchResult" class=""></ul> --}}
                     </div>
 
-                    <label class="text-xl text-dark font-weight-bolder col-6">Project</label>
-                    <div class="mb-2">
-                        <input type="text" class="form-control" name="project" value="{{$data->project}}" readonly>
-                        <input type="hidden" class="form-control" id="projecta" name="id" style="width: 200%" value="{{$data->id}}">
-                        {{-- <ul id="searchResult" class=""></ul> --}}
-                    </div>
-
-
-                    <label class="text-xl text-dark font-weight-bolder">Uraian</label>
+                    <label class="text-xl text-dark font-weight-bolder">Keterangan</label>
                     <div class="mb-2">
                         <textarea class="form-control" name="keterangan" id="keterangan" onkeydown="" readonly>{{$data->keterangan}}</textarea>
                     </div>
@@ -40,21 +28,12 @@
                     <label class="text-xl text-dark font-weight-bolder">Terpakai</label>
                     <div class="mb-2" style="display:flex;">
                         <div class="form-control text-center" disabled style="width: 7%;background: rgb(223, 219, 219);">Rp</div>
-                        <input type="number" class="form-control" placeholder="300" name="terpakai" id="nominal">
+                        <input type="number" class="form-control" placeholder="300" name="terpakai" id="nominal" value="{{$data->nominalAcc}}">
                         <div class="alert alert-danger mt-2 d-none" role="alert" id="alert-nominal"></div>
                     </div>
 
                     <label class="text-xl text-dark font-weight-bolder col-6">Bukti</label>
-                    <table id="tabelBukti" class="col-8">
-                        <tr>
-                            <td width="90%">
-                                <input type="file" class="form-control"  name="inputs[0][gambars]" multiple>
-                            </td>
-                            <td width="10%">
-                                <button type="button" id="add" >+</button>
-                            </td>
-                        </tr>
-                     </table>
+                    <input type="file" class="form-control"  name="bukti" multiple required>
 
 
                 </div>

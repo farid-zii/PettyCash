@@ -31,9 +31,7 @@
                     </div>
                     <button class="btn bg-gradient-info w-15 my-4 mb-2 col-2 float-sm-end" data-bs-toggle="modal"
                         data-bs-target="#staticBackdrop">Tambah <i class="bi bi-plus-square-fill"></i></button>
-                    <button class="btn bg-gradient-success w-15 my-4 mx-2 mb-2 col-2 float-sm-end" data-bs-toggle="modal"
-                        data-bs-target="#static-excel"><i class="bi bi-file-earmark-spreadsheet-fill"></i></button>
-                </div>
+                    </div>
 
 
 
@@ -62,38 +60,57 @@
                         <table id="myTable" style="" class="col-12 table table-striped display responsive nowrap">
                             <thead class="">
                                 <tr class="text-center bg-dark">
-                                    <th class="text-light" style="">Kode</th>
+                                    <th class="text-light" style="">No</th>
                                     <th class="text-light" style="">Nama/Departemen</th>
                                     <th class="text-light" style="">Rekening</th>
                                     <th class="text-light" style="">Nominal</th>
                                     <th class="text-light" style="">Keterangan</th>
-                                    <th class="text-light text-center" style="" colspan="">Aprrove</th>
+                                    <th class="text-light" style="" colspan="">Status</th>
                                     <th class="text-light" style="">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody id="">
                                 @foreach ($pengajuan as $data )
-                                <tr id="{{$data->id}}">
-                                    <td class="text-center"> {{$data->kode}}</td>
+                                <tr id="">
+                                    <td class="text-center"> {{$loop->iteration}}</td>
                                     <td class="">
-                                        <p class="text-xl font-weight-bold mb-0">{{$data->pegawai->nama}}</p>
-                                        <p class="text-xs text-secondary mb-0">{{$data->pegawai->departemen->nama}}</p>
+                                        <p class="text-xl font-weight-bold mb-0">{{$data->user->nama}}</p>
+                                        <p class="text-xs text-secondary mb-0">{{$data->user->departemen->nama}}</p>
                                     </td>
                                     <td class="">
-                                        <p class="text-xs font-weight-bold mb-0">{{$data->norek}}</p>
-                                        <p class="text-xs text-secondary mb-0">{{$data->bank}}</p>
+                                        <p class="text-xl font-weight-bold mb-0">{{$data->norek}}</p>
+                                        <p class="text-xs text-secondary mb-0">{{$data->bank->nama}}</p>
                                     </td>
 
 
-                                    <td class="text-end">@rp($data->debit)</td>
+                                    <td class="text-end">
+                                        @if ($data->nominalAcc !=null)
+                                            @rp($data->nominalAcc)
+                                        @else
+                                            @rp($data->nominal)
+                                        @endif
+                                    </td>
 
                                     {{--  --}}
                                     <td class="" style="width: 50px"> {{ Str::words($data->keterangan, 2,'....')}}</td>
                                     <td class="text-center">
-                                        {{$data->approveF}}
+                                        @if ($data->approve=='Menunggu')
+                                        <span class="bg-info p-2 fw-bold" style="border-radius:10px;color:white">{{$data->approve}}</span>
+                                        @elseif ($data->approve=='Setuju')
+                                        <form method="post" action="/hrd/pengajuan/{{$data->id}}">
+                                            @method('put')
+                                            @csrf
+                                            <input type="hidden" name="type" value="2">
+                                            <button class="bg-success fw-bold text-light p-2">Cairkan</button>
+                                        </form>
+                                        @elseif ($data->approve=='Dicairkan')
+                                        <span class="bg-success p-2 fw-bold text-light" style="border-radius:10px;">{{$data->approve}}</span>
+                                        @else
+                                        <span class="bg-danger p-2 fw-bold text-light" style="border-radius:10px;">{{$data->approve}}</span>
+
+                                        @endif
                                     </td>
-                                    {{--  --}}
-                                    {{--  --}}
+
                                     <td class=" text-center">
                                         <div class="d-flex">
                                             <button class="btn btn-dark font-weight-bold m-auto" data-bs-toggle="modal"
@@ -102,9 +119,14 @@
                                             <button class="btn btn-warning font-weight-bold m-auto"
                                                 data-bs-toggle="modal" data-bs-target="#data-{{$data->id}}"><i
                                                     class="bi bi-pencil-square"></i></button>
-                                            <button class="btn btn-danger font-weight-bold m-auto"
+                                            <form method="post" action="/hrd/pengajuan/{{$data->id}}" class="m-auto">
+                                                @method('Delete')
+                                                @csrf
+                                                <button class="btn btn-danger font-weight-bold m-auto" type="submit" onclick="return confirm('Yakin akan menghapus data ?')"><i class="bi bi-trash3-fill"></i></button>
+					                        </form>
+                                            {{-- <button class="btn btn-danger font-weight-bold m-auto"
                                                 onclick="hapus({{$data->id}})"><i
-                                                    class="bi bi-trash3-fill"></i></button>
+                                                    class="bi bi-trash3-fill"></i></button> --}}
                                         </div>
                                     </td>
                                 </tr>
@@ -131,10 +153,50 @@
 
 <!-- CREATE -->
 @include('admin.pengajuan.create')
-@include('admin.pengajuan.view')
+{{-- @include('admin.pengajuan.view') --}}
 @include('admin.pengajuan.edit')
 
+
 <script>
+$(document).ready(function() {
+    // Initialize the Typeahead.js autocomplete
+    var namaInput = $('#nama');
+    var namaData = new Bloodhound({
+        datumTokenizer: Bloodhound.tokenizers.obj.whitespace('nama'),
+        queryTokenizer: Bloodhound.tokenizers.whitespace,
+        remote: {
+            url: '/api/searchNama?keyword=%QUERY',
+            wildcard: '%QUERY'
+        }
+    });
+
+    namaInput.typeahead(
+        {
+            hint: true,
+            highlight: true,
+            minLength: 1
+        },
+        {
+            name: 'nama-autocomplete',
+            display: 'nama',
+            source: namaData,
+            templates: {
+                suggestion: function(data) {
+                    return '<div class="custom-suggestion" style="z-index: 999; background: #c3bdbd; ; width: 120%;">' + data.nama + '</div>';
+                },
+            }
+        }
+    );
+});
+
+// Rest of your code
+$('#nama').on('typeahead:selected', function(event, suggestion, dataset) {
+    // Do something when a suggestion is selected
+    console.log(suggestion);
+});
+
+
+
     $(document).ready(function () {
 
 
@@ -183,16 +245,6 @@
     //  $('#btnHapus').on('click',function() {
     //     hapus(id)
     //  })
-
-    function Excel() {
-        var awal = $('#tanggal1').val()
-        var akhir = $('#tanggal2').val()
-        axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken
-        axios.post('web/cetak-excel',{
-            awal:awal,
-            akhir:akhir
-        })
-    }
 
     function hapus(id) {
 

@@ -124,7 +124,7 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link text-white {{ ($active=='History') ? 'active bg-gradient-info' : '' }} "
-                    href="/hrd/pegawai">
+                    href="/hrd/history">
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="bi bi-clock-history" style="color: #ffffff;"></i>
                     </div>

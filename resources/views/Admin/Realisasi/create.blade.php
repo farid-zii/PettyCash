@@ -11,12 +11,6 @@
                 @csrf
                 <div class="modal-body">
 
-                    <div class="mb-1 col-4 float-sm-end">
-                        <select name="type" id='type' style="width: 100%;background: rgb(223, 219, 219);padding:5px;">
-                            <option value="1">Pengajuan</option>
-                            <option value="0">Penambahan</option>
-                        </select>
-                    </div>
                     <label class="text-xl text-dark font-weight-bolder col-6">Nama</label>
                     <div class="mb-2">
                         <input type="text" class="form-control" id="nama" name="nama">
