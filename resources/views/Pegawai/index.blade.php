@@ -1,4 +1,4 @@
-@extends('admin.layouts.main')
+@extends('pegawai.layouts.main')
 
 @section('isi')
 

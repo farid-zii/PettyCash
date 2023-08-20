@@ -41,7 +41,7 @@
         <ul class="navbar-nav">
             <li class="nav-item">
                 <a class="nav-link text-white {{ ($active=='Profile') ? 'active bg-gradient-info' : '' }}"
-                    href="/hrd/profile">
+                    href="/pimpinan/profile">
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="fa-solid fa-user" style="color: #ffffff;"></i>
                     </div>
@@ -50,7 +50,7 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link text-white {{ ($active=='Dashboard') ? 'active bg-gradient-info' : '' }}"
-                    href="/hrd/dashboard">
+                    href="/pimpinan/dashboard">
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="material-icons opacity-10">dashboard</i>
                     </div>
@@ -58,39 +58,21 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-white {{ ($active=='Saldo') ? 'active bg-gradient-info' : '' }}"
-                    href="/hrd/saldo">
-                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="fa-solid fa-money-bill-wave" style="color: #ffffff;"></i>
-                    </div>
-                    <span class="nav-link-text ms-1">Saldo</span>
-                </a>
-            </li>
-            <li class="nav-item">
                 <a class="nav-link text-white {{ ($active=='Pengajuan') ? 'active bg-gradient-info' : '' }}"
-                    href="/hrd/pengajuan">
+                    href="/pimpinan/pengajuan">
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="fa-sharp fa-solid fa-paper-plane" style="color: #ffffff;"></i>
                     </div>
-                    @php
-                    $pengajuan = App\Models\Pengajuan::all();
-                    $a=$pengajuan->where('approve','=','Ditolak')
-                                ->count();
-                    $b=$pengajuan->Where('approve','=','Setuju')
-                                ->count();
-                                
-                    $c=$a+$b;
-                    @endphp
                     <div class="nav-link-text ms-1">Pengajuan</div>
-                    @if ($c!=0)
+                    {{-- @if ($c!=0)
                     <div class="ms-7 position-relative" style="background: red;padding: 5px;border-radius: 1px">
                         {{$c}}</div>
-                    @endif
+                    @endif --}}
                 </a>
             </li>
-            <li class="nav-item">
+            {{-- <li class="nav-item">
                 <a class="nav-link text-white d-flex {{ ($active=='Realisasi') ? 'active bg-gradient-info' : '' }}"
-                    href="/hrd/realisasi">
+                    href="/pimpinan/realisasi">
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="fa-sharp fa-solid fa-hand-holding-dollar" style="color: #ffffff;"></i>
                     </div>
@@ -107,10 +89,10 @@
 
 
                 </a>
-            </li>
+            </li> --}}
             <li class="nav-item">
                 <a class="nav-link text-white {{ ($active=='Pegawai') ? 'active bg-gradient-info' : '' }} "
-                    href="/hrd/pegawai">
+                    href="/pimpinan/pegawai">
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="fa-solid fa-users" style="color: #ffffff;"></i>
                     </div>
@@ -119,68 +101,13 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link text-white {{ ($active=='History') ? 'active bg-gradient-info' : '' }} "
-                    href="/hrd/history">
+                    href="/pimpinan/history">
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="bi bi-clock-history" style="color: #ffffff;"></i>
                     </div>
                     <span class="nav-link-text ms-1">History</span>
                 </a>
             </li>
-            <li class="nav-item">
-                <a class="dropdown-btn nav-link text-white {{ ($active=='Jabatan') ? 'active bg-gradient-info' : '' }} "
-                    href="#">
-                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="fa-sharp fa-regular fa-list-dropdown" style="color: #ffffff;"></i>
-                        <i class="fa-solid fa-bars" style="color: #ffffff;"></i>
-                    </div>
-                    <span class="nav-link-text ms-1">Data </span>
-                    <div class="ms-8 position-relative end-0"><i class="fa fa-caret-down"></i></div>
-                </a>
-                <div class="dropdown-container">
-                    <ul style="" class="inDrop ms-2 me-3">
-                        <li class="mt-2"><a class="ms-3" href="/hrd/departemen">Departemen</a></li>
-                        <li class="mt-2"><a class="ms-3" href="/hrd/bank">Bank</a></li>
-                    </ul>
-                </div>
-            </li>
-
-            {{-- <li class="nav-item">
-          <a class="nav-link text-white {{ ($active=='Jabatan') ? 'active bg-gradient-info' : '' }}"
-            href="/admin/jabatan">
-            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                <i class="fa-solid fa-handshake" style="color: #ffffff;"></i>
-            </div>
-            <span class="nav-link-text ms-1">Jabatan</span>
-            </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-white {{ ($active=='Pangkat') ? 'active bg-gradient-info' : '' }}"
-                    href="/admin/pangkat">
-                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="fa-solid fa-ranking-star" style="color: #ffffff;"></i>
-                    </div>
-                    <span class="nav-link-text ms-1">Pangkat</span>
-                </a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link text-white {{ ($active=='Departemen') ? 'active bg-gradient-info' : '' }}"
-                    href="/admin/departemen">
-                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="fa-solid fa-building" style="color: #ffffff;"></i>
-                    </div>
-                    <span class="nav-link-text ms-1">Departemen</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-white {{ ($active=='Kategori') ? 'active bg-gradient-info' : '' }} "
-                    href="/admin/kategoriPgw">
-                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="fa-solid fa-sitemap" style="color: #ffffff;"></i>
-                    </div>
-                    <span class="nav-link-text ms-1">Kategori Pegawai</span>
-                </a>
-            </li>--}}
             <li class="nav-item ">
                 <a class="nav-link text-white bg-danger " href="/logout">
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">

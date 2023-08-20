@@ -40,7 +40,7 @@ class ProfileController extends Controller
             dd($a);
             return back()->with('success','Profile berhasil di edit');
         }
-        return back()->with('failed','Password berberda');
+        return back()->with('failed','Password berbeda');
 
     }
 }

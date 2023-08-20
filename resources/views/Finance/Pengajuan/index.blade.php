@@ -16,12 +16,6 @@
                 </div>
 
                 <div class="m-2" style="">
-                    {{-- <input type="text" class="form-control" style="width: 30%" id="filter_date" value="{{ date('m-Y') }}">
-                    --}}
-                    {{-- <button class="btn bg-gradient-success w-15 my-4 mb-2">Cetak Excel</button> --}}
-
-                    {{-- <a href="/finance/user/create"  class="btn bg-gradient-info w-15 my-4 mb-2 float-sm-end">Entry</a> --}}
-
                     <div class="bg-gradient-success  text-center my-4 mb-2 col-3 float-sm-start"
                         style="border-radius: 10px;color:white">
                         SALDO
@@ -59,9 +53,6 @@
                 </div>
 
                 <div class="card-body px-0 pb-2">
-
-
-
                     <div class="p-3" style="">
                         <table id="myTable" style="" class="col-12 table table-striped display responsive nowrap">
                             <thead class="">
@@ -71,7 +62,7 @@
                                     <th class="text-light" style="">Rekening</th>
                                     <th class="text-light" style="">Nominal</th>
                                     <th class="text-light" style="">Keterangan</th>
-                                    <th class="text-light text-center" style="" colspan="">Aprrove</th>
+                                    <th class="text-light text-center" style="" colspan="">Status</th>
                                 </tr>
                             </thead>
                             <tbody id="ada">

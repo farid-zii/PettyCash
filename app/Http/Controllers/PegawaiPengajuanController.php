@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\bank;
 use App\Models\Pengajuan;
-use App\Models\realisasi;
-use App\Models\saldo;
-use DB;
-use Illuminate\Support\Facades\Validator;
+use App\Models\Saldo;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
-class FinanceRealisasiController extends Controller
+class PegawaiPengajuanController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,23 +17,11 @@ class FinanceRealisasiController extends Controller
      */
     public function index(Request $req)
     {
-
-
-        // //Total Debit
-        // $totalDebit = Pengajuan::select(DB::raw('SUM(debit) as total'))->where('approveF', '=', '✅')
-        //     // ->where('type', '=', false)
-        //     ->first();
-
-        // //Total Kredit
-        // $totalKredit = Pengajuan::select(DB::raw('SUM(kredit) as total'))
-        // // ->where('type', '=', true)
-        // ->first();
-
-        $saldos = saldo::latest()->first();
-        if ($saldos == null) {
-            $saldo = 0;
-        } else {
+        $saldos = Saldo::latest()->first();
+        if ($saldos != null) {
             $saldo = $saldos->total;
+        } else {
+            $saldo = 0;
         }
 
         $awal = $req->input('awal');
@@ -42,23 +29,17 @@ class FinanceRealisasiController extends Controller
 
         $data = '';
         if ($req->awal && $req->akhir) {
-            $data = Pengajuan::whereBetween('created_at', [$awal, $akhir])->where('approve', '=', 'Dicairkan')
-                ->orWhere('approve', '=', 'Selesai')
-                ->get();
+            $data = Pengajuan::whereBetween('created_at', [$awal, $akhir])->where('user_id','=',Auth::user()->id)->get();
         } else {
-            $data = Pengajuan::where('approve', '=', 'Dicairkan')
-            ->orWhere('approve', '=', 'Selesai')
-            ->get();
+            $data = Pengajuan::where('user_id', '=', Auth::user()->id)->get();
         }
 
-
-
-        return view('finance.realisasi.index', [
-            'active' => 'Realisasi',
-            'title' => 'Realisasi',
+        return view('pegawai.pengajuan.index', [
+            'active' => 'Pengajuan',
+            'title' => 'Pengajuan',
             'pengajuan' => $data,
-            'saldo' => $saldo,
-            // 'tKredit'=>$ab
+            'bank' => bank::get(),
+            'saldo' => $saldo
         ]);
     }
 
@@ -80,7 +61,16 @@ class FinanceRealisasiController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Pengajuan::create([
+            'user_id'=>$request->user_id,
+            'nominal'=>$request->nominal,
+            'bank_id'=>$request->bank,
+            'norek'=>$request->norek,
+            'keterangan'=>$request->keterangan,
+            'approve'=>'Menunggu',
+        ]);
+
+        return back()->with('success','Data Pengajuan Berhasil Ditambahkan');
     }
 
     /**
@@ -114,7 +104,14 @@ class FinanceRealisasiController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        Pengajuan::find($id)->update([
+            'nominal' => $request->nominal,
+            'bank_id' => $request->bank,
+            'norek' => $request->norek,
+            'keterangan' => $request->keterangan,
+        ]);
+
+        return back()->with('success','Data Berhasil Di Edit');
     }
 
     /**
@@ -125,6 +122,8 @@ class FinanceRealisasiController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Pengajuan::destroy($id);
+
+        return back()->with('success', 'Data berhasil dihapus');
     }
 }

@@ -1,4 +1,4 @@
-@extends('finance.layouts.main')
+@extends('pegawai.layouts.main')
 
 @section('isi')
 <div class="container-fluid py-4">
@@ -12,28 +12,8 @@
                 </div>
 
                 <div class="m-2">
-                    @include('finance.notif')
+                    @include('pegawai.notif')
                 </div>
-
-                <div class="m-2" style="">
-                    {{-- <input type="text" class="form-control" style="width: 30%" id="filter_date" value="{{ date('m-Y') }}">
-                    --}}
-                    {{-- <button class="btn bg-gradient-success w-15 my-4 mb-2">Cetak Excel</button> --}}
-
-                    {{-- <a href="/finance/user/create"  class="btn bg-gradient-info w-15 my-4 mb-2 float-sm-end">Entry</a> --}}
-
-                    <div class="bg-gradient-success  text-center my-4 mb-2 col-3 float-sm-start"
-                        style="border-radius: 10px;color:white">
-                        SALDO
-                        <div>
-                            RP. @rp($saldo)
-                        </div>
-                    </div>
-                    {{-- <button class="btn bg-gradient-success w-15 my-4 mx-2 mb-2 col-2 float-sm-end" data-bs-toggle="modal"
-                        data-bs-target="#static-excel"><i class="bi bi-file-earmark-spreadsheet-fill"></i></button> --}}
-                </div>
-
-
 
                     <div class="ms-2" style="">
 
@@ -61,11 +41,10 @@
                             <thead class="">
                                 <tr class="text-center bg-dark">
                                     <th class="text-light" style="">No</th>
-                                    <th class="text-light" style="">Nama/Departemen</th>
+                                    <th class="text-light" style="">Keterangan</th>
                                     <th class="text-light" style="">Nominal</th>
                                     <th class="text-light" style="">Total Pemakaian</th>
                                     <th class="text-light" style="">Refund</th>
-                                    <th class="text-light" style="">Keterangan</th>
                                     <th class="text-light" style="">Aksi</th>
                                 </tr>
                             </thead>
@@ -73,34 +52,48 @@
                                 @foreach ($pengajuan as $data )
                                 <tr id="">
                                     <td class="text-center"> {{$loop->iteration}}</td>
-                                    <td class="">
+                                    {{-- <td class="">
                                         <p class="text-xl font-weight-bold mb-0">{{$data->user->nama}}</p>
                                         <p class="text-xs text-secondary mb-0">{{$data->user->departemen->nama}}</p>
-                                    </td>
+                                    </td> --}}
+
+                                    <td class="" style="width: 50px">{{ Str::words($data->keterangan, 2,'....')}}</td>
 
 
                                     <td class="text-end" id="debit">@rp($data->nominalAcc)</td>
 
 
-                                    @if ($data->refund!=null)
-                                        <td class="text-end">@rp($data->refund)</td>
-                                    @else
-                                        <td class="text-end">-</td>
-                                    @endif
+                                    <td class="text-end">
+                                        @if ($data->total!=null)
+                                            @rp($data->total)
+                                        @else
+                                            -
+                                        @endif
+                                        </td>
 
-                                    @if ($data->total!=null)
-                                        <td class="text-end">@rp($data->total)</td>
-                                    @else
-                                        <td class="text-end">-</td>
-                                    @endif
-
-                                    <td class="" style="width: 50px">{{ Str::words($data->keterangan, 2,'....')}}</td>
+                                    <td class="text-end">
+                                        @if ($data->refund!=null)
+                                            @rp($data->refund)
+                                        @else
+                                            -
+                                        @endif
+                                    </td>
 
                                     <td class=" text-center">
                                         <div class="d-flex">
                                             <button class="btn btn-dark font-weight-bold m-auto" data-bs-toggle="modal"
                                                 data-bs-target="#data-{{$data->id}}-view"><i
                                                     class="bi bi-eye-fill"></i></button>
+                                            @if ($data->approve!='Selesai')
+                                            <button class="btn btn-success font-weight-bold m-auto"
+                                                data-bs-toggle="modal" data-bs-target="#data-{{$data->id}}"><i class="bi bi-plus-square-fill"></i></button>
+                                                
+                                            @endif
+                                            {{-- <form method="post" action="/hrd/realisasi/{{$data->id}}" class="m-auto">
+                                                @method('Delete')
+                                                @csrf
+                                                <button class="btn btn-danger font-weight-bold m-auto" type="submit" onclick="return confirm('Yakin akan menghapus data ?')"><i class="bi bi-trash3-fill"></i></button>
+					                        </form> --}}
                                         </div>
                                     </td>
                                 </tr>
@@ -118,15 +111,14 @@
                 </div>
             </div>
         </div>
-        {{-- <div class="col-1" style="margin: 30% 0">
-                        <button class="btn btn-danger font-weight-bold m-auto" id="btnHapus" onclick="hapus(pilihId)"><i class="bi bi-trash3-fill"></i></button>
-                    </div> --}}
     </div>
 </div>
 
 
 <!-- CREATE -->
-@include('finance.realisasi.view')
+@include('pegawai.realisasi.create')
+@include('pegawai.realisasi.view')
+@include('pegawai.realisasi.edit')
 
 <script>
     $(document).ready(function () {
@@ -164,9 +156,14 @@
     var pilihId = ''
 
     $("#myTable tbody tr").on("click", function () {
+        // Menghapus kelas CSS pada semua baris
         $("#myTable tbody tr").removeClass("selected");
+
+        // Menambahkan kelas CSS pada baris yang dipilih
         $(this).addClass("selected");
+
         pilihId = $(this).attr("id");
+
     });
 
 

@@ -36,7 +36,7 @@
               </div>
               <div class="text-end pt-1">
                 <p class="text-sm mb-0 text-capitalize">UANG KELUAR</p>
-                <h4 class="mb-0">2.222</h4>
+                <h4 class="mb-0">@rp($uangKeluar)</h4>
               </div>
             </div>
             {{-- <hr class="dark horizontal my-0">

@@ -9,42 +9,30 @@
             </div>
 
             <div class="p-3">
-                <table style="border-spacing: 0 1em;">
+                <table style="border-spacing: 0 1em;" class="col-12 table table-striped">
                     <tr>
-                        <th style="width: 20%">Nama </th>
-                        <th > : </th>
-                        <th>{{$data->pegawai->nama}}</th>
+                        <th class="3">Nama</th>
+                        <td>{{$data->user->nama}}</td>
                     </tr>
                     <tr>
-                        <th style="width: 20%">Departemen </th>
-                        <th > : </th>
-                        <td>{{$data->pegawai->departemen->nama}}</td>
-                    </tr>
-                    <tr style="">
-                        <th style="width: 20%"> Nominal </th>
-                        <th > : </th>
-                        <td>{{$data->debit}}</td>
-                        <th> Rekening </th>
-                        <th > : </th>
-                        <td>{{$data->norek }} ({{$data->bank}})</td>
+                        <th class="3">Departemen</th>
+                        <td>{{$data->user->departemen->nama}}</td>
                     </tr>
                     <tr>
-                        <th style="width: 20%"> Project </th>
-                        <th > : </th>
-                        <td>{{$data->project}}</td>
+                        <th class="3">Nominal</th>
+                        <td>Rp. @rp($data->nominalAcc)</td>
                     </tr>
                     <tr>
-                        <th style="width: 20%"> Uraian</th>
-                        <th > : </th>
+                        <th class="3">Keterengan</th>
                         <td>{{$data->keterangan}}</td>
                     </tr>
                     <tr>
-                        <th style="width: 20%"> Status Aprrove</th>
-                        <th > : </th>
-                        <td>{{$data->approveF}}</td>
-                        <td>@if ($data->approveF=='❌')
-                                        <div class=""><b>ALASAN :</b>{{$data->komenF}}</div>
-                                        @endif</td>
+                        <th class="3">Status</th>
+                        <td>{{$data->approve}}</td>
+                    </tr>
+                    <tr>
+                        <th class="3">Catatan Finance</th>
+                        <td> {{$data->komen}}</td>
                     </tr>
                 </table>
             </div>

@@ -1,4 +1,4 @@
-@extends('admin.layouts.main')
+@extends('finance.layouts.main')
 
 @section('isi')
 <div class="container-fluid py-4">

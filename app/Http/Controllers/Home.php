@@ -42,45 +42,42 @@ class Home extends Controller
     }
     public function hrd(Request $r)
     {
+        $datas = '';
 
-        $datas='';
-
-        if($r->tahun!=null){
+        if ($r->tahun != null) {
             $datas = Pengajuan::select(\DB::raw("COUNT(*) as count"), DB::raw('MONTHNAME(created_at) as month_name'))
-            ->whereYear('created_at', $r->tahun)
-            ->groupBy(\DB::raw("MONTHNAME(created_at)"))
-            ->orderBy('created_at', 'asc')
-            ->pluck('count', 'month_name');
-        }
-        else{
-            $datas=Pengajuan::select(\DB::raw("COUNT(*) as count"), DB::raw('MONTHNAME(created_at) as month_name'))
-            ->whereYear('created_at', date('Y'))
-            ->groupBy(\DB::raw("MONTHNAME(created_at)"))
-            ->orderBy('created_at', 'asc')
-            ->pluck('count','month_name');
+                ->whereYear('created_at', $r->tahun)
+                ->groupBy(\DB::raw("MONTHNAME(created_at)"))
+                ->orderBy('created_at', 'asc')
+                ->pluck('count', 'month_name');
+        } else {
+            $datas = Pengajuan::select(\DB::raw("COUNT(*) as count"), DB::raw('MONTHNAME(created_at) as month_name'))
+                ->whereYear('created_at', date('Y'))
+                ->groupBy(\DB::raw("MONTHNAME(created_at)"))
+                ->orderBy('created_at', 'asc')
+                ->pluck('count', 'month_name');
         }
 
+        $uangKeluar = Pengajuan::select(DB::raw('SUM(total) as totals'))->first();
 
         $dataLabel = $datas->keys();
         $dataChart = $datas->values();
 
 
-        $saldo = saldo::get();
-
-        if ($saldo != '') {
-            return view('admin.index', [
-                'title' => 'Dashboard',
-                'active' => 'Dashboard',
-                'saldo' => 0,
-                'dataChart' => $dataChart,
-                'dataLabel' => $dataLabel
-            ]);
+        $saldo = saldo::latest()->first();
+        if ($saldo != null) {
+            $data = $saldo->total;
+        } else {
+            $data = '0';
         }
+
 
         return view('admin.index', [
             'title' => 'Dashboard',
             'active' => 'Dashboard',
-            'saldo'=>'',
+            'user' => User::get(),
+            'saldoTotal' => $data,
+            'uangKeluar' => $uangKeluar->totals,
             'dataChart' => $dataChart,
             'dataLabel' => $dataLabel
 
@@ -105,6 +102,7 @@ class Home extends Controller
                 ->pluck('count', 'month_name');
         }
 
+        $uangKeluar = Pengajuan::select(DB::raw('SUM(total) as totals'))->first();
 
         $dataLabel = $datas->keys();
         $dataChart = $datas->values();
@@ -124,6 +122,51 @@ class Home extends Controller
             'active' => 'Dashboard',
             'user' => User::get(),
             'saldoTotal' => $data,
+            'uangKeluar' => $uangKeluar->totals,
+            'dataChart' => $dataChart,
+            'dataLabel' => $dataLabel
+
+        ]);
+    }
+    public function pimpinan(Request $r)
+    {
+        $datas = '';
+
+        if ($r->tahun != null) {
+            $datas = Pengajuan::select(\DB::raw("COUNT(*) as count"), DB::raw('MONTHNAME(created_at) as month_name'))
+            ->whereYear('created_at', $r->tahun)
+                ->groupBy(\DB::raw("MONTHNAME(created_at)"))
+                ->orderBy('created_at', 'asc')
+                ->pluck('count', 'month_name');
+        } else {
+            $datas = Pengajuan::select(\DB::raw("COUNT(*) as count"), DB::raw('MONTHNAME(created_at) as month_name'))
+            ->whereYear('created_at', date('Y'))
+                ->groupBy(\DB::raw("MONTHNAME(created_at)"))
+                ->orderBy('created_at', 'asc')
+                ->pluck('count', 'month_name');
+        }
+
+        $uangKeluar = Pengajuan::select(DB::raw('SUM(total) as totals'))->first();
+
+        $dataLabel = $datas->keys();
+        $dataChart = $datas->values();
+
+
+        $saldo = saldo::latest()->first();
+        if($saldo!=null){
+            $data= $saldo->total;
+        }
+        else {
+            $data= '0';
+        }
+
+
+        return view('pimpinan.index', [
+            'title' => 'Dashboard',
+            'active' => 'Dashboard',
+            'user' => User::get(),
+            'saldoTotal' => $data,
+            'uangKeluar' => $uangKeluar->totals,
             'dataChart' => $dataChart,
             'dataLabel' => $dataLabel
 

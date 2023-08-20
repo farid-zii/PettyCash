@@ -50,9 +50,13 @@ class RealisasiController extends Controller
 
         $data = '';
         if ($req->awal && $req->akhir) {
-            $data = Pengajuan::whereBetween('created_at', [$awal, $akhir])->where('approve', '=', 'Dicairkan')->get();
+            $data = Pengajuan::whereBetween('created_at', [$awal, $akhir])->where('approve', '=', 'Dicairkan')
+            ->orWhere('approve', '=', 'Selesai')
+            ->get();
         } else {
-            $data = Pengajuan::where('approve', '=', 'Dicairkan')->get();
+            $data = Pengajuan::where('approve', '=', 'Dicairkan')
+            ->orWhere('approve', '=', 'Selesai')
+            ->get();
         }
 
 
@@ -102,6 +106,7 @@ class RealisasiController extends Controller
 
                 $refund= $pengajuan->nominalAcc - $r->terpakai;
                 Pengajuan::find($r->id)->update([
+                    'approve'=>'Selesai',
                     'bukti' => $nama,
                     'refund' => $refund,
                     'total' => $r->terpakai,
@@ -219,13 +224,8 @@ class RealisasiController extends Controller
      */
     public function destroy($id)
     {
-
-        realisasi::where('pengajuan_id','=',$id)->delete();
-        // realisasi::destroy($id);
         Pengajuan::where('id','=',$id)->update([
-            'realisasi_id'=>null,
-            'refund'=>null,
-            'total'=>null,
+            'bukti'=>null,
         ]);
 
         return back();

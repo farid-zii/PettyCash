@@ -11,28 +11,32 @@
             <div class="p-3">
                 <table style="border-spacing: 0 1em;" class="col-12 table table-striped">
                     <tr>
-                        <th>Nama</th>
+                        <th class="col-3">Nama</th>
                         <td>{{$data->user->nama}}</td>
                     </tr>
                     <tr>
-                        <th>Departemen</th>
+                        <th class="col-3">Departemen</th>
                         <td>{{$data->user->departemen->nama}}</td>
                     </tr>
                     <tr>
-                        <th>Nominal</th>
+                        <th class="col-3">Nominal</th>
                         <td>Rp. @rp($data->nominalAcc)</td>
                     </tr>
                     <tr>
-                        <th>Terpakai</th>
-                        <td>Rp. @rp($data->total)</td>
-                    </tr>
-                    <tr>
-                        <th>Keterengan</th>
+                        <th class="col-3">Keterengan</th>
                         <td>{{$data->keterangan}}</td>
                     </tr>
                     <tr>
+                        <th class="col-3">Status</th>
+                        <td>{{$data->approve}}</td>
+                    </tr>
+                    <tr>
+                        <th class="col-3">Catatan Finance</th>
+                        <td> {{$data->komen}}</td>
+                    </tr>
+                    <tr>
                         <th>Bukti</th>
-                        <td> <img class="col-12" src="{{asset('img/bukti_pengajuan/'.$data->bukti)}}"></td>
+                        <td> <img class="col-9" src="{{asset('img/bukti_pengajuan/'.$data->bukti)}}"></td>
                     </tr>
                 </table>
             </div>

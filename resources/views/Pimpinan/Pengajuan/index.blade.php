@@ -1,4 +1,4 @@
-@extends('finance.layouts.main')
+@extends('pimpinan.layouts.main')
 
 @section('isi')
 <div class="container-fluid py-4">
@@ -11,27 +11,27 @@
                     </div>
                 </div>
 
-                <div class="m-2">
-                    @include('finance.notif')
-                </div>
+                {{-- <div class="m-2">
+                    @include('pimpinan.notif')
+                </div> --}}
 
                 <div class="m-2" style="">
                     {{-- <input type="text" class="form-control" style="width: 30%" id="filter_date" value="{{ date('m-Y') }}">
                     --}}
                     {{-- <button class="btn bg-gradient-success w-15 my-4 mb-2">Cetak Excel</button> --}}
 
-                    {{-- <a href="/finance/user/create"  class="btn bg-gradient-info w-15 my-4 mb-2 float-sm-end">Entry</a> --}}
+                    {{-- <a href="/pimpinan/user/create"  class="btn bg-gradient-info w-15 my-4 mb-2 float-sm-end">Entry</a> --}}
 
                     <div class="bg-gradient-success  text-center my-4 mb-2 col-3 float-sm-start"
                         style="border-radius: 10px;color:white">
                         SALDO
-                        <div>
+                        <div class="fw-bold" style="color: black;font-size: 17px" >
                             RP. @rp($saldo)
                         </div>
                     </div>
-                    {{-- <button class="btn bg-gradient-success w-15 my-4 mx-2 mb-2 col-2 float-sm-end" data-bs-toggle="modal"
-                        data-bs-target="#static-excel"><i class="bi bi-file-earmark-spreadsheet-fill"></i></button> --}}
-                </div>
+                    {{-- <button class="btn bg-gradient-info w-15 my-4 mb-2 col-2 float-sm-end" data-bs-toggle="modal"
+                        data-bs-target="#staticBackdrop">Tambah <i class="bi bi-plus-square-fill"></i></button>
+                    </div> --}}
 
 
 
@@ -62,14 +62,14 @@
                                 <tr class="text-center bg-dark">
                                     <th class="text-light" style="">No</th>
                                     <th class="text-light" style="">Nama/Departemen</th>
+                                    <th class="text-light" style="">Rekening</th>
                                     <th class="text-light" style="">Nominal</th>
-                                    <th class="text-light" style="">Total Pemakaian</th>
-                                    <th class="text-light" style="">Refund</th>
                                     <th class="text-light" style="">Keterangan</th>
+                                    <th class="text-light" style="" colspan="">Status</th>
                                     <th class="text-light" style="">Aksi</th>
                                 </tr>
                             </thead>
-                            <tbody id="ada">
+                            <tbody id="">
                                 @foreach ($pengajuan as $data )
                                 <tr id="">
                                     <td class="text-center"> {{$loop->iteration}}</td>
@@ -77,24 +77,41 @@
                                         <p class="text-xl font-weight-bold mb-0">{{$data->user->nama}}</p>
                                         <p class="text-xs text-secondary mb-0">{{$data->user->departemen->nama}}</p>
                                     </td>
+                                    <td class="">
+                                        <p class="text-xl font-weight-bold mb-0">{{$data->norek}}</p>
+                                        <p class="text-xs text-secondary mb-0">{{$data->bank->nama}}</p>
+                                    </td>
 
 
-                                    <td class="text-end" id="debit">@rp($data->nominalAcc)</td>
+                                    <td class="text-end">
+                                        @if ($data->nominalAcc !=null)
+                                            @rp($data->nominalAcc)
+                                        @else
+                                            @rp($data->nominal)
+                                        @endif
+                                    </td>
 
+                                    {{--  --}}
+                                    <td class="" style="width: 50px"> {{ Str::words($data->keterangan, 2,'....')}}</td>
+                                    <td class="text-center">
+                                        @if ($data->approve=='Menunggu')
+                                        <span class="bg-info p-2 fw-bold" style="border-radius:10px;color:white">{{$data->approve}}</span>
+                                        @elseif ($data->approve=='Setuju')
+                                        <form method="post" action="/hrd/pengajuan/{{$data->id}}">
+                                            @method('put')
+                                            @csrf
+                                            <input type="hidden" name="type" value="2">
+                                            <button class="bg-success fw-bold text-light p-2">Cairkan</button>
+                                        </form>
+                                        @elseif ($data->approve=='Dicairkan')
+                                        <span class="bg-success p-2 fw-bold text-light" style="border-radius:10px;">{{$data->approve}}</span>
+                                        @elseif ($data->approve=='Selesai')
+                                        <span class="bg-primaryp-2 fw-bold text-light" style="border-radius:10px;">{{$data->approve}}</span>
+                                        @else
+                                        <span class="bg-danger p-2 fw-bold text-light" style="border-radius:10px;">{{$data->approve}}</span>
 
-                                    @if ($data->refund!=null)
-                                        <td class="text-end">@rp($data->refund)</td>
-                                    @else
-                                        <td class="text-end">-</td>
-                                    @endif
-
-                                    @if ($data->total!=null)
-                                        <td class="text-end">@rp($data->total)</td>
-                                    @else
-                                        <td class="text-end">-</td>
-                                    @endif
-
-                                    <td class="" style="width: 50px">{{ Str::words($data->keterangan, 2,'....')}}</td>
+                                        @endif
+                                    </td>
 
                                     <td class=" text-center">
                                         <div class="d-flex">
@@ -107,28 +124,61 @@
                                 @endforeach
                                 <!-- Tambahkan baris lainnya sesuai kebutuhan -->
                             </tbody>
-                            {{-- <tfoot>
-                                <tr>
-                                    <th class="text-center" colspan="3">Total</th>
-                                    <td class="text-end">@rp($debit)</td>
-                                </tr>
-                            </tfoot> --}}
                         </table>
                     </div>
                 </div>
             </div>
         </div>
-        {{-- <div class="col-1" style="margin: 30% 0">
-                        <button class="btn btn-danger font-weight-bold m-auto" id="btnHapus" onclick="hapus(pilihId)"><i class="bi bi-trash3-fill"></i></button>
-                    </div> --}}
     </div>
 </div>
 
 
 <!-- CREATE -->
-@include('finance.realisasi.view')
+{{-- @include('pimpinan.pengajuan.create') --}}
+@include('pimpinan.pengajuan.view')
+{{-- @include('pimpinan.pengajuan.edit') --}}
+
 
 <script>
+$(document).ready(function() {
+    // Initialize the Typeahead.js autocomplete
+    var namaInput = $('#nama');
+    var namaData = new Bloodhound({
+        datumTokenizer: Bloodhound.tokenizers.obj.whitespace('nama'),
+        queryTokenizer: Bloodhound.tokenizers.whitespace,
+        remote: {
+            url: '/api/searchNama?keyword=%QUERY',
+            wildcard: '%QUERY'
+        }
+    });
+
+    namaInput.typeahead(
+        {
+            hint: true,
+            highlight: true,
+            minLength: 1
+        },
+        {
+            name: 'nama-autocomplete',
+            display: 'nama',
+            source: namaData,
+            templates: {
+                suggestion: function(data) {
+                    return '<div class="custom-suggestion" style="z-index: 999; background: #c3bdbd; ; width: 120%;">' + data.nama + '</div>';
+                },
+            }
+        }
+    );
+});
+
+// Rest of your code
+$('#nama').on('typeahead:selected', function(event, suggestion, dataset) {
+    // Do something when a suggestion is selected
+    console.log(suggestion);
+});
+
+
+
     $(document).ready(function () {
 
 
@@ -164,12 +214,19 @@
     var pilihId = ''
 
     $("#myTable tbody tr").on("click", function () {
+        // Menghapus kelas CSS pada semua baris
         $("#myTable tbody tr").removeClass("selected");
+
+        // Menambahkan kelas CSS pada baris yang dipilih
         $(this).addClass("selected");
+
         pilihId = $(this).attr("id");
+
     });
 
-
+    //  $('#btnHapus').on('click',function() {
+    //     hapus(id)
+    //  })
 
     function hapus(id) {
 

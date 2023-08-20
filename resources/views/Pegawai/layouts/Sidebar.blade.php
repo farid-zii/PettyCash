@@ -1,25 +1,25 @@
 <style>
     .dropdown-container {
         display: none;
-         /* background-color:rgba(199, 199, 199, 0.2); */
+        /* background-color:rgba(199, 199, 199, 0.2); */
         padding-left: 8px;
 
     }
 
-    .dropdown-container a{
+    .dropdown-container a {
         color: white;
         text-decoration: none;
     }
 
-    .inDrop{
+    .inDrop {
         list-style-type: none;
-        background-color:rgba(199, 199, 199, 0.2);
+        background-color: rgba(199, 199, 199, 0.2);
         border-radius: 0px 0px 10px 10px;
         padding-bottom: 8px;
         padding-top: 8px;
     }
 
-    li a:hover{
+    li a:hover {
         text-decoration: none;
         color: white;
     }
@@ -41,7 +41,7 @@
         <ul class="navbar-nav">
             <li class="nav-item">
                 <a class="nav-link text-white {{ ($active=='Profile') ? 'active bg-gradient-info' : '' }}"
-                    href="/{{auth()->user()->level}}/profile">
+                    href="/pegawai/profile">
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="fa-solid fa-user" style="color: #ffffff;"></i>
                     </div>
@@ -49,71 +49,54 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-white {{ ($active=='Dashboard') ? 'active bg-gradient-info' : '' }}"
-                    href="/{{auth()->user()->level}}/dashboard">
-                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="material-icons opacity-10">dashboard</i>
-                    </div>
-                    <span class="nav-link-text ms-1">Dashboard</span>
-                </a>
-            </li>
-            <li class="nav-item">
                 <a class="nav-link text-white {{ ($active=='Pengajuan') ? 'active bg-gradient-info' : '' }}"
-                    href="/finance/pengajuan">
+                    href="/pegawai/pengajuan">
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="fa-sharp fa-solid fa-paper-plane" style="color: #ffffff;"></i>
                     </div>
                     @php
-                        $pengajuan = App\Models\Pengajuan::all();
-                        $a=$pengajuan->where('approve','=','Menunggu')->count();
+                    $pengajuan = App\Models\Pengajuan::all();
+
+                    $idUser = auth()->user()->id;
+                    $a=$pengajuan->where('approve','=','Ditolak')->where('user_id','=',$idUser)
+                                ->count();
+                    $b=$pengajuan->Where('approve','=','Dicairkan')->where('user_id','=',$idUser)
+                                ->count();
+                    // $c=$a+$b;
                     @endphp
-                    <div class="nav-link-text ms-1 ps-2">Pengajuan</div>
+                    <div class="nav-link-text ms-1">Pengajuan</div>
                     @if ($a!=0)
-                    <div class="ms-7 position-relative end-0" style="background: red;padding: 5px;border-radius: 1px">{{$a}}</div>
+                    <div class="ms-7 position-relative" style="background: red;padding: 5px;border-radius: 1px">
+                        {{$a}}</div>
                     @endif
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-white {{ ($active=='Realisasi') ? 'active bg-gradient-info' : '' }}"
-                    href="/finance/realisasi">
+                <a class="nav-link text-white d-flex {{ ($active=='Realisasi') ? 'active bg-gradient-info' : '' }}"
+                    href="/pegawai/realisasi">
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="fa-sharp fa-solid fa-hand-holding-dollar" style="color: #ffffff;"></i>
                     </div>
-                    <span class="nav-link-text ms-1">Realisasi</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-white {{ ($active=='Saldo') ? 'active bg-gradient-info' : '' }}"
-                    href="/finance/saldo">
-                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="fa-solid fa-money-bill-wave" style="color: #ffffff;"></i>
+                    @php
+                    $pengajuan = App\Models\Pengajuan::all();
+                    $a=$pengajuan->where('approve','=','Dicairkan')
+                                ->where('bukti','=',null)
+                                ->where('user_id','=',$idUser)
+                                ->count();
+                    @endphp
+                    <div class="nav-link-text ms-1 ps-2">Realisasi
                     </div>
-                    <span class="nav-link-text ms-1">Saldo</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-white {{ ($active=='Pegawai') ? 'active bg-gradient-info' : '' }} "
-                    href="/finance/pegawai">
-                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="fa-solid fa-users" style="color: #ffffff;"></i>
-                    </div>
-                    <span class="nav-link-text ms-1">Pegawai</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-white {{ ($active=='History') ? 'active bg-gradient-info' : '' }} "
-                    href="/finance/history">
-                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="bi bi-clock-history" style="color: #ffffff;"></i>
-                    </div>
-                    <span class="nav-link-text ms-1">History</span>
+                    @if ($a!=0)
+                    <div class="ms-7 position-relative" style="background: red;padding: 5px;border-radius: 1px">
+                        {{$a}}</div>
+                    @endif
                 </a>
             </li>
             <li class="nav-item ">
-                <a class="nav-link text-white bg-danger "
-                    href="/logout">
+                <a class="nav-link text-white bg-danger " href="/logout">
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="bi bi-box-arrow-right" style="color: #ffffff;"></i>
+                        {{-- <i class=""></i> --}}
                     </div>
                     <span class="nav-link-text ms-1">Log Out</span>
                 </a>

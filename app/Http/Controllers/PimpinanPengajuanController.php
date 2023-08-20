@@ -2,19 +2,44 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\bank;
+use App\Models\Pengajuan;
+use App\Models\Saldo;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
-class LoginController extends Controller
+class PimpinanPengajuanController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $req)
     {
-        return view('login');
+        $saldos = Saldo::latest()->first();
+        if ($saldos != null) {
+            $saldo = $saldos->total;
+        } else {
+            $saldo = 0;
+        }
+
+        $awal = $req->input('awal');
+        $akhir = $req->input('akhir');
+
+        $data = '';
+        if ($req->awal && $req->akhir) {
+            $data = Pengajuan::whereBetween('created_at', [$awal, $akhir])->get();
+        } else {
+            $data = Pengajuan::get();
+        }
+
+        return view('pimpinan.pengajuan.index', [
+            'active' => 'Pengajuan',
+            'title' => 'Pengajuan',
+            'pengajuan' => $data,
+            'bank' => bank::get(),
+            'saldo' => $saldo
+        ]);
     }
 
     /**
@@ -22,33 +47,9 @@ class LoginController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function login(Request $request)
+    public function create()
     {
-        $credentials = $request->validate([
-            'email'=>'required',
-            'password'=>'required'
-        ]);
-
-        if(Auth::attempt($credentials)){
-            // if(Auth::user()->level=='admin'){
-            //     return redirect('/profile');
-            // }
-            if(Auth::user()->level=='hrd'){
-                return redirect('/hrd/dashboard');
-            }
-            if(Auth::user()->level=='finance'){
-                return redirect('/finance/dashboard');
-            }
-            if(Auth::user()->level=='pimpinan'){
-                return redirect('/pimpinan/dashboard');
-            }
-            if(Auth::user()->level=='pegawai'){
-                return redirect('/pegawai/profile');
-            }
-        }
-        else {
-            return back()->with('error','Email atau Password salah');
-        }
+        //
     }
 
     /**
@@ -57,18 +58,9 @@ class LoginController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function logout(Request $request)
-    {
-        Auth::logout();
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-
-        return redirect('login');
-
-    }
     public function store(Request $request)
     {
-
+        //
     }
 
     /**

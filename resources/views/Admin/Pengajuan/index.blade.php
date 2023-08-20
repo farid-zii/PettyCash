@@ -105,6 +105,8 @@
                                         </form>
                                         @elseif ($data->approve=='Dicairkan')
                                         <span class="bg-success p-2 fw-bold text-light" style="border-radius:10px;">{{$data->approve}}</span>
+                                        @elseif ($data->approve=='Selesai')
+                                        <span class="bg-primaryp-2 fw-bold text-light" style="border-radius:10px;">{{$data->approve}}</span>
                                         @else
                                         <span class="bg-danger p-2 fw-bold text-light" style="border-radius:10px;">{{$data->approve}}</span>
 
@@ -133,27 +135,18 @@
                                 @endforeach
                                 <!-- Tambahkan baris lainnya sesuai kebutuhan -->
                             </tbody>
-                            <tfoot>
-                                <tr>
-                                    <th class="text-center" colspan="4">Total</th>
-                                    <td class="text-end">@rp(111)</td>
-                                </tr>
-                            </tfoot>
                         </table>
                     </div>
                 </div>
             </div>
         </div>
-        {{-- <div class="col-1" style="margin: 30% 0">
-                        <button class="btn btn-danger font-weight-bold m-auto" id="btnHapus" onclick="hapus(pilihId)"><i class="bi bi-trash3-fill"></i></button>
-                    </div> --}}
     </div>
 </div>
 
 
 <!-- CREATE -->
 @include('admin.pengajuan.create')
-{{-- @include('admin.pengajuan.view') --}}
+@include('admin.pengajuan.view')
 @include('admin.pengajuan.edit')
 
 

@@ -1,4 +1,4 @@
-@extends('finance.layouts.main')
+@extends('admin.layouts.main')
 
 @section('isi')
 <div class="container-fluid py-4">
@@ -12,7 +12,7 @@
                 </div>
 
                 <div class="m-2">
-                    @include('finance.notif')
+                    @include('admin.notif')
                 </div>
 
                 <div class="m-2" style="">
@@ -20,7 +20,7 @@
                     --}}
                     {{-- <button class="btn bg-gradient-success w-15 my-4 mb-2">Cetak Excel</button> --}}
 
-                    {{-- <a href="/finance/user/create"  class="btn bg-gradient-info w-15 my-4 mb-2 float-sm-end">Entry</a> --}}
+                    {{-- <a href="/admin/user/create"  class="btn bg-gradient-info w-15 my-4 mb-2 float-sm-end">Entry</a> --}}
 
                     <div class="bg-gradient-success  text-center my-4 mb-2 col-3 float-sm-start"
                         style="border-radius: 10px;color:white">
@@ -82,17 +82,23 @@
                                     <td class="text-end" id="debit">@rp($data->nominalAcc)</td>
 
 
-                                    @if ($data->refund!=null)
-                                        <td class="text-end">@rp($data->refund)</td>
-                                    @else
-                                        <td class="text-end">-</td>
-                                    @endif
+                                    <td class="text-end">
+                                        @if ($data->total!=null)
+                                            @rp($data->total)
+                                        @else
+                                            -
+                                        @endif
+                                        </td>
 
-                                    @if ($data->total!=null)
-                                        <td class="text-end">@rp($data->total)</td>
-                                    @else
-                                        <td class="text-end">-</td>
-                                    @endif
+                                    <td class="text-end">
+                                        @if ($data->refund!=null)
+                                            @rp($data->refund)
+                                        @else
+                                            -
+                                        @endif
+                                    </td>
+
+
 
                                     <td class="" style="width: 50px">{{ Str::words($data->keterangan, 2,'....')}}</td>
 
@@ -101,6 +107,13 @@
                                             <button class="btn btn-dark font-weight-bold m-auto" data-bs-toggle="modal"
                                                 data-bs-target="#data-{{$data->id}}-view"><i
                                                     class="bi bi-eye-fill"></i></button>
+                                            <button class="btn btn-success font-weight-bold m-auto"
+                                                data-bs-toggle="modal" data-bs-target="#data-{{$data->id}}"><i class="bi bi-plus-square-fill"></i></button>
+                                            <form method="post" action="/hrd/realisasi/{{$data->id}}" class="m-auto">
+                                                @method('Delete')
+                                                @csrf
+                                                <button class="btn btn-danger font-weight-bold m-auto" type="submit" onclick="return confirm('Yakin akan menghapus data ?')"><i class="bi bi-trash3-fill"></i></button>
+					                        </form>
                                         </div>
                                     </td>
                                 </tr>
@@ -126,7 +139,9 @@
 
 
 <!-- CREATE -->
-@include('finance.realisasi.view')
+@include('admin.realisasi.create')
+@include('admin.realisasi.view')
+@include('admin.realisasi.edit')
 
 <script>
     $(document).ready(function () {
@@ -164,9 +179,14 @@
     var pilihId = ''
 
     $("#myTable tbody tr").on("click", function () {
+        // Menghapus kelas CSS pada semua baris
         $("#myTable tbody tr").removeClass("selected");
+
+        // Menambahkan kelas CSS pada baris yang dipilih
         $(this).addClass("selected");
+
         pilihId = $(this).attr("id");
+
     });
 
 
