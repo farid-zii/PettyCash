@@ -33,6 +33,14 @@
                             <div class="col-3 mx-2">
                                 <button type="submit" class="btn bg-gradient-info w-15 my-4 mb-2 col-2"><i class="bi bi-search"></i></button>
                             </div>
+
+                            <div class="col-3 mt-4">
+                                <a class="btn btn-primary btn-sm btn-default mx-2"
+                                href="{{ route('cetakhistory', ['startDate' => request('start_date'), 'endDate' => request('end_date')]) }}"
+                                target="_blank" style="color: white;">
+                                cetak history
+                            </a>
+                            </div>
                         </form>
                     </div>
 

@@ -21,7 +21,7 @@ use App\Http\Controllers\PimpinanPegawaiController;
 use App\Http\Controllers\PimpinanPengajuanController;
 use App\Http\Controllers\RealisasiController;
 use App\Http\Controllers\TransaksiController;
-
+use App\Http\Controllers\CetakHistoryController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -60,6 +60,7 @@ Route::middleware(['auth', 'checkLevel:hrd'])->group(function () {
     Route::resource('/hrd/history', TransaksiController::class);
     Route::get('/hrd/profile', [ProfileController::class, 'admin']);
     Route::post('/hrd/profile', [ProfileController::class, 'update']);
+    Route::get('/hrd/cetakhistory', [CetakHistoryController::class, 'cetakhistory'])->name('cetakhistory');
 });
 
 /////////////////////////////////
