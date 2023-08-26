@@ -116,6 +116,7 @@
                                         <th class="text-light" style="">Pihak Terkait</th>
                                         <th class="text-light" style="">Debit</th>
                                         <th class="text-light" style="">Kredit</th>
+                                        <th class="text-light" style="">Saldo</th>
                                     </tr>
                                 </thead>
                                 <tbody id="">
@@ -141,6 +142,9 @@
                                                 <td>
                                                     <p class="text-xl  mb-0">-</p>
                                                 </td>
+                                                <td>
+                                                    <p class="text-xl  mb-0 text-end"> @rp($data->total)</p>
+                                                </td>
                                             </tr>
                                         @else
                                             <tr>
@@ -163,10 +167,20 @@
                                                 <td>
                                                     <p class="text-xl mb-0 text-end"> @rp($data->saldo->saldo)</p>
                                                 </td>
+                                                <td>
+                                                    <p class="text-xl mb-0 text-end"> @rp($data->total)</p>
+                                                </td>
                                             </tr>
                                         @endif
                                     @endforeach
                                 </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td colspan='4' style="text-align: center">Jumlah</td>
+                                        <td style="text-align: right">{{$pengajuan->totalPengajuan}}</td>
+                                        <td style="text-align: right">{{$saldo->totalSaldo}}</td>
+                                    </tr>
+                                </tfoot>
                             </table>
                         </div>
                     </div>

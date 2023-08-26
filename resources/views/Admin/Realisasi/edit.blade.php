@@ -28,12 +28,14 @@
                     <label class="text-xl text-dark font-weight-bolder">Terpakai</label>
                     <div class="mb-2" style="display:flex;">
                         <div class="form-control text-center" disabled style="width: 7%;background: rgb(223, 219, 219);">Rp</div>
-                        <input type="number" class="form-control" placeholder="300" name="terpakai" id="nominal" value="{{$data->nominalAcc}}">
+                        <input type="number" class="form-control" placeholder="300" name="terpakai" max="{{$data->nominalAcc}}" id="nominal" value="{{$data->nominalAcc}}">
                         <div class="alert alert-danger mt-2 d-none" role="alert" id="alert-nominal"></div>
                     </div>
 
-                    <label class="text-xl text-dark font-weight-bolder col-6">Bukti</label>
-                    <input type="file" class="form-control"  name="bukti" multiple required>
+                    <label class="text-xl text-dark font-weight-bolder col-6">Bukti Pemakaian</label>
+                    <input type="file" class="form-control"  name="bukti_pakai" multiple required>
+                    <label class="text-xl text-dark font-weight-bolder col-6">Bukti Pengembalian</label>
+                    <input type="file" class="form-control"  name="bukti_refund" multiple>
 
 
                 </div>

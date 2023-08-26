@@ -78,7 +78,7 @@ Route::middleware(['auth', 'checkLevel:finance'])->group(function () {
     Route::get('/finance/pengajuan-index', [PengajuanController::class,'index_finance']);
     Route::resource('finance/departemen', DepartemenController::class);
     Route::get('/finance/profile', [ProfileController::class, 'finance']);
-    Route::post('/profile-edit', [UserController::class, 'pengaturanAkun']);
+    Route::post('/profile-edit', [ProfileController::class, 'update']);
 });
 
 /////////////////////////////////
@@ -87,13 +87,11 @@ Route::middleware(['auth', 'checkLevel:finance'])->group(function () {
 Route::middleware(['auth', 'checkLevel:pimpinan'])->group(function () {
     Route::get('pimpinan/dashboard', [Home::class, 'pimpinan'
     ]);
-    // Route::resource('/finance/saldo', SaldoController::class);
-    // Route::resource('/finance/realisasi', FinanceRealisasiController::class);
     Route::resource('/pimpinan/history', PimpinanHistoryController::class);
     Route::resource('/pimpinan/pengajuan', PimpinanPengajuanController::class);
     Route::resource('/pimpinan/pegawai', PimpinanPegawaiController::class);
     Route::get('/pimpinan/profile', [ProfileController::class, 'pimpinan']);
-    Route::post('/profile-edit', [UserController::class, 'pengaturanAkun']);
+    Route::post('/profile-edit', [ProfileController::class, 'update']);
 });
 
 Route::middleware(['auth', 'checkLevel:pegawai'])->group(function () {
@@ -101,6 +99,6 @@ Route::middleware(['auth', 'checkLevel:pegawai'])->group(function () {
     Route::resource('/pegawai/history', pegawaiHistoryController::class);
     Route::resource('/pegawai/pengajuan', PegawaiPengajuanController::class);
     Route::get('/pegawai/profile', [ProfileController::class, 'pegawai']);
-    Route::post('/profile-edit', [UserController::class, 'pengaturanAkun']);
+    Route::post('/profile-edit', [ProfileController::class, 'update']);
 });
 

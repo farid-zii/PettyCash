@@ -15,7 +15,7 @@ class PimpinanHistoryController extends Controller
     public function index()
     {
         return view('pimpinan.history.index', [
-            'datas' => transaksi::get(),
+            'datas' => transaksi::latest()->get(),
             'title' => 'History',
             'active' => 'History',
         ]);

@@ -12,25 +12,37 @@
                 </div>
                 <div class="card-body px-0 pb-2">
 
-                    @include('admin.notif')
+                    @include('pegawai.notif')
 
                     <div class="mx-5" style="display: grid;grid-template-columns: repeat(2,1fr);grid-column-gap: 10%">
                         <div class="my-3 text-center">
                             {{-- <h1>halo {{auth()->user()->name}}</h1> --}}
                             <img src="https://images.glints.com/unsafe/glints-dashboard.s3.amazonaws.com/company-banner-pic/16e4d6351c7f12f357daab99625b1457.jpg" style="width: 100%;border-radius: 10px;box-shadow:3px 3px 2px 1px black;">
                         </div>
-                        <form class="my-3" method="put" action="/hrd/profile">
+                        <form class="my-3" method="post" action="/pegawai/profile" enctype="multipart/form-data">
                             @csrf
                             <h4>SETTING</h4>
-
+                            <div class="mb-4 col-12">
+                                <img class="mx-auto d-block" style="border-radius: 50%; height: 150px;width: 150px;border: 4px solid" src="{{asset('Storage/foto_profile/'.auth()->user()->foto)}}">
+                            </div>
+                            <div class="mb-2 col-12">
+                                <label class="text-xl text-dark font-weight-bolder">Foto</label>
+                                    <input type="file" name="gambar" class="form-control" id="" value="">
+                            </div>
                             <div class="mb-2 col-12">
                                 <label class="text-xl text-dark font-weight-bolder">Nama</label>
                                 <input type="text" class="form-control" required name="nama" id="nama" value="{{auth()->user()->nama}}">
                                 <input type="hidden" class="form-control" required name="id" id='userId' value="{{auth()->user()->id}}">
                             </div>
-                            <div class="mb-2 col-12">
-                                <label class="text-xl text-dark font-weight-bolder">NIP</label>
-                                <input type="text" name="nip" class="form-control" id="" value="{{auth()->user()->nip}}">
+                            <div class="mb-2 col-12 d-flex">
+                                <div class="col-6">
+                                    <label class="text-xl text-dark font-weight-bolder">Username</label>
+                                    <input type="text" name="username" class="form-control" id="" value="{{auth()->user()->username}}">
+                                </div>
+                                <div class="col-6 ms-2">
+                                    <label class="text-xl text-dark font-weight-bolder">NIP</label>
+                                    <input type="text" name="nip" class="form-control" id="" value="{{auth()->user()->nip}}">
+                                </div>
                             </div>
                             <div class="mb-2 col-12">
                                 <label class="text-xl text-dark font-weight-bolder">Email</label>
@@ -45,14 +57,14 @@
                                 {{-- <input type="password" name="password" class="form-control" id="password1"> --}}
                                 <input type="password" name="password" class="form-control" id="password1">
                             </div>
-                            <label class="text-xl text-dark font-weight-bolder">Konfirmasi PAssword</label>
+                            <label class="text-xl text-dark font-weight-bolder">Konfirmasi Password</label>
                             <div class="mb-2">
                                 <input type="password" name="password2" class="form-control" id="password2">
                                 <span id="passwordMessage"></span>
                             </div>
 
-                        <div class="footer px-4 mb-2">
-                            <button type="submit" onclick="" class="btn btn-warning float-sm-start col-md-2 mt-4">Edit</button>
+                        <div class="footer mb-2 col-12">
+                            <button type="submit" onclick="" class="btn btn-primary float-sm-start col-md-12 mt-4">Save</button>
                         </div>
                     </form>
                     </div>

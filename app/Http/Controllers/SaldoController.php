@@ -9,6 +9,8 @@ use App\Models\transaksi;
 use DateTime;
 use Date;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use PhpParser\Node\Expr\Cast\Double;
 
 class SaldoController extends Controller
@@ -57,17 +59,31 @@ class SaldoController extends Controller
 
         // DB::insert('insert into saldos (saldo, nominal, hasil) values (?, ?, ?)', [$saldo, $nominal,$hasil]);
             $hasil = $saldo + $nominal;
-            $tanggal=new DateTime();
+
+            if($request->hasFile('bukti')){
+
+            $nama = time() . '_' . $request->bukti->getClientOriginalName();
+            $request->bukti->move(public_path('Storage/bukti_Top_up'), $nama);
+
             DB::table('saldos')->insert([
-                'saldo'=>$nominal,
+                'nominal' => $nominal,
+                'bukti_tp' => $nominal,
+                'saldo' => $hasil,
+                'user_id' => auth()->user()->id,
                 'total' => $hasil,
-                'created_at'=>new DateTime(),
+                'created_at' => new DateTime(),
             ]);
 
-            $saldo=Saldo::latest()->first();
+            // dd($A);
+
+            $saldo = Saldo::latest()->first();
             transaksi::create([
-                'saldo_id'=>$saldo->id
+                'saldo_id' => $saldo->id,
+                'total' => $hasil,
             ]);
+
+            }
+
 
         return back()->with('success','Berhasil menambahkan data');
     }

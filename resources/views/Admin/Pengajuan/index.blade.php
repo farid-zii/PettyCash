@@ -61,6 +61,7 @@
                             <thead class="">
                                 <tr class="text-center bg-dark">
                                     <th class="text-light" style="">No</th>
+                                    <th class="text-light" style="">Tanggal</th>
                                     <th class="text-light" style="">Nama/Departemen</th>
                                     <th class="text-light" style="">Rekening</th>
                                     <th class="text-light" style="">Nominal</th>
@@ -73,6 +74,7 @@
                                 @foreach ($pengajuan as $data )
                                 <tr id="">
                                     <td class="text-center"> {{$loop->iteration}}</td>
+                                    <td class="text-end"> {{$data->created_at->format('d-M-Y')}}</td>
                                     <td class="">
                                         <p class="text-xl font-weight-bold mb-0">{{$data->user->nama}}</p>
                                         <p class="text-xs text-secondary mb-0">{{$data->user->departemen->nama}}</p>
@@ -97,16 +99,18 @@
                                         @if ($data->approve=='Menunggu')
                                         <span class="bg-info p-2 fw-bold" style="border-radius:10px;color:white">{{$data->approve}}</span>
                                         @elseif ($data->approve=='Setuju')
-                                        <form method="post" action="/hrd/pengajuan/{{$data->id}}">
+                                        <button class="btn btn-success font-weight-bold m-auto"
+                                                data-bs-toggle="modal" data-bs-target="#data-{{$data->id}}-cair">Cairkan</i></button>
+                                        {{-- <form method="post" action="/hrd/pengajuan/{{$data->id}}-cair">
                                             @method('put')
                                             @csrf
                                             <input type="hidden" name="type" value="2">
                                             <button class="bg-success fw-bold text-light p-2">Cairkan</button>
-                                        </form>
+                                        </form> --}}
                                         @elseif ($data->approve=='Dicairkan')
                                         <span class="bg-success p-2 fw-bold text-light" style="border-radius:10px;">{{$data->approve}}</span>
                                         @elseif ($data->approve=='Selesai')
-                                        <span class="bg-primaryp-2 fw-bold text-light" style="border-radius:10px;">{{$data->approve}}</span>
+                                        <span class="bg-primary p-2 fw-bold text-light" style="border-radius:10px;">{{$data->approve}}</span>
                                         @else
                                         <span class="bg-danger p-2 fw-bold text-light" style="border-radius:10px;">{{$data->approve}}</span>
 

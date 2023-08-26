@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('saldo_id')->nullable();
             $table->foreignId('pengajuan_id')->nullable();
+            $table->double('total');
             $table->timestamps();
         });
     }

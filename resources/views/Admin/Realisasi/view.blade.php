@@ -32,7 +32,7 @@
                     </tr>
                     <tr>
                         <th>Bukti</th>
-                        <td> <img class="col-12" src="{{asset('img/bukti_pengajuan/'.$data->bukti)}}"></td>
+                        <td> <img class="col-12" src="{{asset('Storage/bukti_pakai/'.$data->bukti_pakai)}}"></td>
                     </tr>
                 </table>
             </div>

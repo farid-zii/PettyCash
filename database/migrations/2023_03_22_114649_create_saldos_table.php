@@ -15,8 +15,11 @@ return new class extends Migration
     {
         Schema::create('saldos', function (Blueprint $table) {
             $table->id();
-            $table->double('saldo');
+            $table->foreignId('user_id');
+            $table->double('nominal');
+            $table->text('bukti_tp');
             $table->double('total');
+            $table->double('saldo');
             $table->timestamps();
         });
     }

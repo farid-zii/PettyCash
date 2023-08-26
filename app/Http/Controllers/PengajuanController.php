@@ -63,22 +63,12 @@ class PengajuanController extends Controller
 
         $data = '';
         if($req->awal && $req->akhir){
-             $data = Pengajuan::whereBetween('created_at',[$awal,$akhir])->get();
+             $data = Pengajuan::whereBetween('created_at',[$awal,$akhir])->latest()->get();
         }
         else {
-            $data = Pengajuan::get();
+            $data = Pengajuan::latest()->get();
         }
 
-
-        // if($totalDebit == null){
-        //     return view('admin.pengajuan.index', [
-        //         'active' => 'Pengajuan',
-        //         'title' => 'Pengajuan',
-        //         'pengajuan' => $data,
-        //         'debit' => 0,
-        //         'saldo' => $saldo,
-        //     ]);
-        // }
 
         return view('admin.pengajuan.index',[
             'active' => 'Pengajuan',
@@ -139,13 +129,17 @@ class PengajuanController extends Controller
 
     }
 
-    public function update($id)
+    public function update(Request $req,$id)
     {
+
+            $nama=time().'_'.$req->bukti_tf->getClientOriginalName();
+            $req->bukti_tf->move(public_path('Storage/bukti_pencairan'), $nama);
+
             $data=Pengajuan::where('id','=',$id)->first();
             Pengajuan::where('id','=',$id)->update([
-                'approve'=>'Dicairkan'
+                'approve'=>'Dicairkan',
+                'bukti_tf'=>$nama
             ]);
-
 
             $saldo=Saldo::latest()->first();
             $hasil = $saldo->total - $data->nominalAcc;

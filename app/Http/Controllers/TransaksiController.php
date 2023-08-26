@@ -17,7 +17,7 @@ class TransaksiController extends Controller
         return view('admin.history.index',[
             'title'=>'History',
             'active'=>'History',
-            'datas'=>transaksi::get()
+            'datas'=>transaksi::latest()->get()
         ]);
     }
 

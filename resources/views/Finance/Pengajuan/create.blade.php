@@ -19,7 +19,7 @@
                     <label class="text-xl text-dark font-weight-bolder">Nominal</label>
                     <div class="mb-2" style="display:flex;">
                         <div class="form-control text-center" disabled style="width: 7%;background: rgb(223, 219, 219);">Rp</div>
-                        <input type="number" class="form-control"  name="nominalAcc" id="nominal" value="{{$data->nominal}}">
+                        <input type="number" class="form-control"  name="nominalAcc" id="nominal" max="{{$saldo}}" value="{{$data->nominal}}">
                     </div>
                     <label class="text-xl text-dark font-weight-bolder">Keterangan Approve</label>
                     <div class="mb-2">

@@ -29,9 +29,11 @@ class PegawaiPengajuanController extends Controller
 
         $data = '';
         if ($req->awal && $req->akhir) {
-            $data = Pengajuan::whereBetween('created_at', [$awal, $akhir])->where('user_id','=',Auth::user()->id)->get();
+            $data = Pengajuan::whereBetween('created_at', [$awal, $akhir])->where('user_id','=',Auth::user()->id)
+            ->latest()
+            ->get();
         } else {
-            $data = Pengajuan::where('user_id', '=', Auth::user()->id)->get();
+            $data = Pengajuan::where('user_id', '=', Auth::user()->id)->latest()->get();
         }
 
         return view('pegawai.pengajuan.index', [

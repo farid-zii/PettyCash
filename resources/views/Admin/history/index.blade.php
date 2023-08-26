@@ -19,30 +19,33 @@
 
 
 
-                    <div class="ms-2" style="">
+                <div class="ms-2" style="">
 
-                        <form action="/pengajuan" method="get" style="display: flex">
-                            <div class="col-2">
-                                <label class="text-xl text-dark font-weight-bolder col-6">Tanggal Akhir</label>
-                                <input type="date" id="tanggal" class="form-control ms-1" style="height: 30px" name="awal" placeholder="dd-mm-yy" value="{{ request('awal') }}">
-                            </div>
-                            <div class="col-2 ms-1">
-                                <label class="text-xl text-dark font-weight-bolder col-6">Tanggal Akhir</label>
-                                <input type="date" id="tanggal2" style="height: 30px" class="form-control ms-1" name="akhir" placeholder="dd-mm-yy" value="{{ request('akhir') }}">
-                            </div>
-                            <div class="col-3 mx-2">
-                                <button type="submit" class="btn bg-gradient-info w-15 my-4 mb-2 col-2"><i class="bi bi-search"></i></button>
-                            </div>
+                    <form action="/pengajuan" method="get" style="display: flex">
+                        {{-- <div class="col-2">
+                            <label class="text-xl text-dark font-weight-bolder col-6">Tanggal Akhir</label>
+                            <input type="date" id="tanggal" class="form-control ms-1" style="height: 30px" name="awal"
+                                placeholder="dd-mm-yy" value="{{ request('awal') }}">
+                        </div>
+                        <div class="col-2 ms-1">
+                            <label class="text-xl text-dark font-weight-bolder col-6">Tanggal Akhir</label>
+                            <input type="date" id="tanggal2" style="height: 30px" class="form-control ms-1" name="akhir"
+                                placeholder="dd-mm-yy" value="{{ request('akhir') }}">
+                        </div>
+                        <div class="col-3 ms-2">
+                            <button type="submit" class="btn bg-gradient-info w-15 my-4 mb-2 col-2"><i
+                                    class="bi bi-search"></i></button>
+                        </div> --}}
 
-                            <div class="col-3 mt-4">
-                                <a class="btn btn-primary btn-sm btn-default mx-2"
+                        <div class="col-12">
+                            <a class="btn mt-3 me-5 btn-primary btn-sm btn-default float-sm-end"
                                 href="{{ route('cetakhistory', ['startDate' => request('start_date'), 'endDate' => request('end_date')]) }}"
                                 target="_blank" style="color: white;">
                                 cetak history
                             </a>
-                            </div>
-                        </form>
-                    </div>
+                        </div>
+                    </form>
+                </div>
 
                 <div class="card-body px-0 pb-2">
 
@@ -58,53 +61,60 @@
                                     <th class="text-light" style="">Pihak Terkait</th>
                                     <th class="text-light" style="">Debit</th>
                                     <th class="text-light" style="">Kredit</th>
+                                    <th class="text-light" style="">Saldo</th>
                                 </tr>
                             </thead>
                             <tbody id="">
                                 @foreach ($datas as $data )
-                                    @if($data->pengajuan_id!=null)
-                                        <tr>
-                                            <td>
-                                                <p class="text-xl  mb-0">{{$loop->iteration}}</p>
-                                            </td>
-                                            <td>
-                                                <p class="text-xl  mb-0 text-end">{{$data->created_at->format('Y-m-d')}}</p>
-                                            </td>
-                                            <td>
-                                                <p class="text-xl  mb-0">{{$data->pengajuan->keterangan}}</p>
-                                            </td>
-                                            <td>
-                                                <p class="text-xl  mb-0">{{$data->pengajuan->user->nama}}</p>
-                                            </td>
-                                            <td>
-                                                <p class="text-xl  mb-0 text-end">@rp($data->pengajuan->total)</p>
-                                            </td>
-                                            <td>
-                                                <p class="text-xl  mb-0">-</p>
-                                            </td>
-                                        </tr>
-                                    @else
-                                        <tr>
-                                            <td>
-                                                <p class="text-xl  mb-0">{{$loop->iteration}}</p>
-                                            </td>
-                                            <td>
-                                                <p class="text-xl text-end mb-0">{{$data->created_at->format('Y-m-d')}}</p>
-                                            </td>
-                                            <td>
-                                                <p class="text-xl mb-0">Top Up</p>
-                                            </td>
-                                            <td>
-                                                <p class="text-xl mb-0">Finance</p>
-                                            </td>
-                                            <td>
-                                                <p class="text-xl mb-0">-</p>
-                                            </td>
-                                            <td>
-                                                <p class="text-xl mb-0 text-end">@rp($data->saldo->saldo)</p>
-                                            </td>
-                                        </tr>
-                                    @endif
+                                @if($data->pengajuan_id!=null)
+                                <tr>
+                                    <td>
+                                        <p class="text-xl  mb-0">{{$loop->iteration}}</p>
+                                    </td>
+                                    <td>
+                                        <p class="text-xl  mb-0 text-end">{{$data->created_at->format('Y-m-d')}}</p>
+                                    </td>
+                                    <td>
+                                        <p class="text-xl  mb-0">{{$data->pengajuan->keterangan}}</p>
+                                    </td>
+                                    <td>
+                                        <p class="text-xl  mb-0">{{$data->pengajuan->user->nama}}</p>
+                                    </td>
+                                    <td>
+                                        <p class="text-xl  mb-0 text-end">@rp($data->pengajuan->total)</p>
+                                    </td>
+                                    <td>
+                                        <p class="text-xl  mb-0">-</p>
+                                    </td>
+                                    <td>
+                                        <p class="text-xl  mb-0 text-end">@rp($data->total)</p>
+                                    </td>
+                                </tr>
+                                @else
+                                <tr>
+                                    <td>
+                                        <p class="text-xl  mb-0">{{$loop->iteration}}</p>
+                                    </td>
+                                    <td>
+                                        <p class="text-xl text-end mb-0">{{$data->created_at->format('Y-m-d')}}</p>
+                                    </td>
+                                    <td>
+                                        <p class="text-xl mb-0">Top Up</p>
+                                    </td>
+                                    <td>
+                                        <p class="text-xl mb-0">Finance</p>
+                                    </td>
+                                    <td>
+                                        <p class="text-xl mb-0">-</p>
+                                    </td>
+                                    <td>
+                                        <p class="text-xl mb-0 text-end">@rp($data->saldo->saldo)</p>
+                                    </td>
+                                    <td>
+                                        <p class="text-xl  mb-0 text-end">@rp($data->total)</p>
+                                    </td>
+                                </tr>
+                                @endif
                                 @endforeach
                             </tbody>
                         </table>
@@ -116,7 +126,7 @@
 </div>
 
 <script>
-$(document).ready(function () {
+    $(document).ready(function () {
 
 
         $('#myTable').DataTable({
@@ -145,6 +155,7 @@ $(document).ready(function () {
 
 
     });
+
 </script>
 
 @endsection

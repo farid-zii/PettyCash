@@ -28,9 +28,9 @@ class PimpinanPengajuanController extends Controller
 
         $data = '';
         if ($req->awal && $req->akhir) {
-            $data = Pengajuan::whereBetween('created_at', [$awal, $akhir])->get();
+            $data = Pengajuan::whereBetween('created_at', [$awal, $akhir])->latest()->get();
         } else {
-            $data = Pengajuan::get();
+            $data = Pengajuan::latest()->get();
         }
 
         return view('pimpinan.pengajuan.index', [

@@ -61,6 +61,7 @@
                             <thead class="">
                                 <tr class="text-center bg-dark">
                                     <th class="text-light" style="">No</th>
+                                    <th class="text-light" style="">Tanggal</th>
                                     <th class="text-light" style="">Nama/Departemen</th>
                                     <th class="text-light" style="">Nominal</th>
                                     <th class="text-light" style="">Total Pemakaian</th>
@@ -73,6 +74,7 @@
                                 @foreach ($pengajuan as $data )
                                 <tr id="">
                                     <td class="text-center"> {{$loop->iteration}}</td>
+                                    <td class="text-end"> {{$data->created_at->format('d-M-Y')}}</td>
                                     <td class="">
                                         <p class="text-xl font-weight-bold mb-0">{{$data->user->nama}}</p>
                                         <p class="text-xs text-secondary mb-0">{{$data->user->departemen->nama}}</p>

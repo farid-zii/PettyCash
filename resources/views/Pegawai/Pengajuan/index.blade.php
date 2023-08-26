@@ -29,9 +29,14 @@
                             RP. @rp($saldo)
                         </div>
                     </div> --}}
+                    @if ($pengajuan->first()->approve != 'Selesai')
+                        <button class="btn bg-gradient-info w-15 my-4 mb-2 col-2 float-sm-end" onclick="alert('Selesaikan duluan pengajuan sebelumnya')">Tambah <i class="bi bi-plus-square-fill"></i></button>
+                        </div>
+                    @else
                     <button class="btn bg-gradient-info w-15 my-4 mb-2 col-2 float-sm-end" data-bs-toggle="modal"
                         data-bs-target="#staticBackdrop">Tambah <i class="bi bi-plus-square-fill"></i></button>
                     </div>
+                    @endif
 
 
 
@@ -61,6 +66,7 @@
                             <thead class="">
                                 <tr class="text-center bg-dark">
                                     <th class="text-light" style="">No</th>
+                                    <th class="text-light" style="">Tanggal</th>
                                     <th class="text-light" style="">Keterangan</th>
                                     <th class="text-light" style="">Rekening</th>
                                     <th class="text-light" style="">Nominal</th>
@@ -72,6 +78,7 @@
                                 @foreach ($pengajuan as $data )
                                 <tr id="">
                                     <td class="text-center"> {{$loop->iteration}}</td>
+                                    <td class="text-end"> {{$data->created_at->format('d-M-Y')}}</td>
                                     {{-- <td class="">
                                         <p class="text-xl font-weight-bold mb-0">{{$data->user->nama}}</p>
                                         <p class="text-xs text-secondary mb-0">{{$data->user->departemen->nama}}</p>
@@ -81,8 +88,6 @@
                                         <p class="text-xl font-weight-bold mb-0">{{$data->norek}}</p>
                                         <p class="text-xs text-secondary mb-0">{{$data->bank->nama}}</p>
                                     </td>
-
-
                                     <td class="text-end">
                                         @if ($data->nominalAcc !=null)
                                             @rp($data->nominalAcc)
@@ -98,7 +103,7 @@
                                         @elseif ($data->approve=='Dicairkan')
                                         <span class="bg-success p-2 fw-bold text-light" style="border-radius:10px;">{{$data->approve}}</span>
                                         @elseif ($data->approve=='Selesai')
-                                        <span class="bg-primaryp-2 fw-bold text-light" style="border-radius:10px;">{{$data->approve}}</span>
+                                        <span class="bg-primary p-2 fw-bold text-light" style="border-radius:10px;">{{$data->approve}}</span>
                                         @else
                                         <span class="bg-danger p-2 fw-bold text-light" style="border-radius:10px;">{{$data->approve}}</span>
                                         @endif
@@ -119,7 +124,7 @@
                                                 @csrf
                                                 <button class="btn btn-danger font-weight-bold m-auto" type="submit" onclick="return confirm('Yakin akan menghapus data ?')"><i class="bi bi-trash3-fill"></i></button>
 					                        </form>
-                                                
+
                                             @endif
                                         </div>
                                     </td>

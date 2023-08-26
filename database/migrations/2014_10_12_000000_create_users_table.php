@@ -20,8 +20,9 @@ return new class extends Migration
             $table->string('nip');
             $table->string('phone');
             $table->string('jenisKelamin');
+            $table->text('foto')->nullable();
             $table->enum('level',['hrd','pimpinan','pegawai','finance'])->default('pegawai');
-            $table->foreignId('departemen_id')->nullable();
+            $table->foreignId('departemen_id');
             $table->string('email')->unique()->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');

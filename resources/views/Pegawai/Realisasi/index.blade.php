@@ -41,6 +41,7 @@
                             <thead class="">
                                 <tr class="text-center bg-dark">
                                     <th class="text-light" style="">No</th>
+                                    <th class="text-light" style="">Tanggal</th>
                                     <th class="text-light" style="">Keterangan</th>
                                     <th class="text-light" style="">Nominal</th>
                                     <th class="text-light" style="">Total Pemakaian</th>
@@ -52,6 +53,7 @@
                                 @foreach ($pengajuan as $data )
                                 <tr id="">
                                     <td class="text-center"> {{$loop->iteration}}</td>
+                                    <td class="text-end"> {{$data->created_at->format('d-M-Y')}}</td>
                                     {{-- <td class="">
                                         <p class="text-xl font-weight-bold mb-0">{{$data->user->nama}}</p>
                                         <p class="text-xs text-secondary mb-0">{{$data->user->departemen->nama}}</p>
@@ -87,7 +89,7 @@
                                             @if ($data->approve!='Selesai')
                                             <button class="btn btn-success font-weight-bold m-auto"
                                                 data-bs-toggle="modal" data-bs-target="#data-{{$data->id}}"><i class="bi bi-plus-square-fill"></i></button>
-                                                
+
                                             @endif
                                             {{-- <form method="post" action="/hrd/realisasi/{{$data->id}}" class="m-auto">
                                                 @method('Delete')
@@ -116,7 +118,7 @@
 
 
 <!-- CREATE -->
-@include('pegawai.realisasi.create')
+{{-- @include('pegawai.realisasi.create') --}}
 @include('pegawai.realisasi.view')
 @include('pegawai.realisasi.edit')
 

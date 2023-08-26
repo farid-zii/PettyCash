@@ -19,11 +19,13 @@ return new class extends Migration
             $table->foreignId('bank_id');
             $table->string('norek');
             $table->double('nominal',12);
+            $table->double('nominalAcc',12)->nullable();
             $table->text('keterangan');
-            $table->text('bukti')->nullable();
+            $table->text('bukti_pakai')->nullable();
+            $table->text('bukti_tf')->nullable();
+            $table->text('bukti_refund')->nullable();
             $table->string('approve')->nullable();
             $table->text('komen')->nullable();
-            $table->double('nominalAcc',12)->nullable();
             $table->double('refund',12)->nullable();
             $table->double('total',10)->nullable();
             $table->timestamps();

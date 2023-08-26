@@ -52,13 +52,14 @@ class RealisasiController extends Controller
         if ($req->awal && $req->akhir) {
             $data = Pengajuan::whereBetween('created_at', [$awal, $akhir])->where('approve', '=', 'Dicairkan')
             ->orWhere('approve', '=', 'Selesai')
+            ->latest()
             ->get();
         } else {
             $data = Pengajuan::where('approve', '=', 'Dicairkan')
             ->orWhere('approve', '=', 'Selesai')
+            ->latest()
             ->get();
         }
-
 
         return view('admin.realisasi.index', [
             'active' => 'Realisasi',

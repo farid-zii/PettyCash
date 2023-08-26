@@ -6,7 +6,7 @@
                 <h1 class="modal-title fs-5" id="staticBackdropLabel">Entry Data {{$title}}</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form method="post" action="/hrd/saldo">
+            <form method="post" action="/hrd/saldo" enctype="multipart/form-data">
                 @method('POST')
                 @csrf
                 <div class="modal-body">
@@ -21,6 +21,8 @@
                         <input type="number" class="form-control " placeholder="" id='nominal' required name="nominal"
                             value="">
                     </div>
+                    <label class="text-xl text-dark font-weight-bolder ">Bukti Top Up</label>
+                    <input type="file" class="form-control " accept="image/*"  name="bukti"  id='bukti' required >
                 </div>
                 <div class="footer px-4 mb-2">
                     <button type="submit" class="btn btn-primary float-sm-start col-md-2 mt-4">Entry</button>
