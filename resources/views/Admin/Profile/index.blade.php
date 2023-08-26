@@ -17,13 +17,17 @@
                     <div class="mx-5" style="display: grid;grid-template-columns: repeat(2,1fr);grid-column-gap: 10%">
                         <div class="my-3 text-center">
                             {{-- <h1>halo {{auth()->user()->name}}</h1> --}}
-                            <img src="" style="width: 100%;border-radius: 10px;box-shadow:3px 3px 2px 1px black;">
+                            <img src="https://images.glints.com/unsafe/glints-dashboard.s3.amazonaws.com/company-banner-pic/16e4d6351c7f12f357daab99625b1457.jpg" style="width: 100%;border-radius: 10px;box-shadow:3px 3px 2px 1px black;">
                         </div>
                         <form class="my-3" method="post" action="/hrd/profile" enctype="multipart/form-data">
                             @csrf
                             <h4>SETTING</h4>
                             <div class="mb-4 col-12">
-                                <img class="mx-auto d-block" style="border-radius: 50%; height: 150px;width: 150px;border: 4px solid" src="{{asset('Storage/foto_profile/'.auth()->user()->foto)}}">
+                                @if (Auth::user()->foto!=null)
+                                <img class="mx-auto d-block" style="border-radius: 50%; height: 150px;width: 150px;border: 4px solid" src="{{asset('Storage/foto_profile/'.Auth::user()->foto)}}">
+                                @else
+                                <img class="mx-auto d-block" style="border-radius: 50%; height: 150px;width: 150px;border: 4px solid" src="https://th.bing.com/th/id/OIP.8Yl8Nz8E2KXWphZvbLqDmwHaHo?pid=ImgDet&rs=1">
+                                @endif
                             </div>
                             <div class="mb-2 col-12">
                                 <label class="text-xl text-dark font-weight-bolder">Foto</label>

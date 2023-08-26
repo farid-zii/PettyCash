@@ -46,7 +46,7 @@
                                         <p class="text-start"> {{$loop->iteration}}</p>
                                     </td>
                                     <td class="">
-                                        <p class="">Saldo ditambahakan sebanyak Rp. <span class="fw-bold">@rp($data->saldo)</span> pada tanggal {{$data->created_at->format('d-M-Y')}} </p>
+                                        <p class="">Saldo ditambahakan sebanyak Rp. <span class="fw-bold">@rp($data->nominal)</span> pada tanggal {{$data->created_at->format('d-M-Y')}} </p>
                                     </td>
                                     <td class="">
                                         <p class="text-start"> @rp($data->total)</p>

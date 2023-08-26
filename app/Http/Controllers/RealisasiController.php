@@ -90,46 +90,63 @@ class RealisasiController extends Controller
      */
     public function store(Request $r)
     {
-            $validator = Validator::make($r->all(), [
-                'bukti' => 'required',
-            ]);
+        // $validator = Validator::make($r->all(), [
+        //     'bukti' => 'required',
+        // ]);
 
-            if ($validator->fails()) {
-                return back()->with('error','GAGAL');
-            }
+        // if ($validator->fails()) {
+        //     return back()->with('error', 'GAGAL');
+        // }
 
-            $pengajuan=Pengajuan::where('id','=',$r->id)->first();
-            // dd($pengajuan->nominalAcc);
-            if ($r->hasFile('bukti')) {
-                    $nama = time() . '_' . $r->bukti->getClientOriginalName();
-                    $r->bukti->move(public_path('img/bukti_pengajuan'), $nama);
+        $pengajuan = Pengajuan::where('id', '=', $r->id)->first();
+        // dd($pengajuan->nominalAcc);
 
+        if ($r->hasFile('bukti_pakai')) {
+            $nama = time() . '_' . $r->bukti_pakai->getClientOriginalName();
+            $r->bukti_pakai->move(public_path('Storage/bukti_pakai'), $nama);
 
-                $refund= $pengajuan->nominalAcc - $r->terpakai;
+            //jika terpkai tidak sama dengan nominal yg diberikan
+            if ($r->terpakai != $pengajuan->nominalAcc) {
+                $refund = $pengajuan->nominalAcc - $r->terpakai;
+                //jika bukti refund tidak kosong maka
+                if ($r->bukti_refund != null) {
+                    $namaRefund = time() . '_' . $r->bukti_refund->getClientOriginalName();
+                    $r->bukti_refund->move(public_path('Storage/bukti_refund'), $nama);
+
+                    Pengajuan::find($r->id)->update([
+                        'approve' => 'Selesai',
+                        'bukti_pakai' => $nama,
+                        'bukti_refund' => $namaRefund,
+                        'refund' => $refund,
+                        'total' => $r->terpakai,
+                    ]);
+                } else {
+                    return back()->with('failed', 'Masukkan bukti refund / pengembalian kas');
+                }
+            } else {
+                $refund = $pengajuan->nominalAcc - $r->terpakai;
                 Pengajuan::find($r->id)->update([
-                    'approve'=>'Selesai',
-                    'bukti' => $nama,
+                    'approve' => 'Selesai',
+                    'bukti_pakai' => $nama,
                     'refund' => $refund,
                     'total' => $r->terpakai,
                 ]);
-
-                $saldo=Saldo::latest()->first();
-                $totalSaldo =$saldo->total + $refund;
-                // dd($totalSaldo);
-                Saldo::where('id','=',$saldo->id)->update([
-                    'total'=>$totalSaldo
-                ]);
-
-                transaksi::create([
-                    'pengajuan_id'=>$r->id
-                ]);
             }
 
+            $saldo = Saldo::latest()->first();
+            $totalSaldo = $saldo->total + $refund;
+            // dd($totalSaldo);
+            Saldo::where('id', '=', $saldo->id)->update([
+                'total' => $totalSaldo
+            ]);
 
+            transaksi::create([
+                'pengajuan_id' => $r->id,
+                'total' => $totalSaldo
+            ]);
+        }
         return back()->with('success', 'Bukti Berhasil di Tambakan');
-
-
-}
+    }
     public function storeCadangan(Request $request)
     {
             $validator = Validator::make($request->all(), [

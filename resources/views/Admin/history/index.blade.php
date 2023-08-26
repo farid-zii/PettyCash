@@ -108,7 +108,7 @@
                                         <p class="text-xl mb-0">-</p>
                                     </td>
                                     <td>
-                                        <p class="text-xl mb-0 text-end">@rp($data->saldo->saldo)</p>
+                                        <p class="text-xl mb-0 text-end">@rp($data->saldo->nominal)</p>
                                     </td>
                                     <td>
                                         <p class="text-xl  mb-0 text-end">@rp($data->total)</p>

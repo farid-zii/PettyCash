@@ -67,7 +67,7 @@ class SaldoController extends Controller
 
             DB::table('saldos')->insert([
                 'nominal' => $nominal,
-                'bukti_tp' => $nominal,
+                'bukti_tp' => $nama,
                 'saldo' => $hasil,
                 'user_id' => auth()->user()->id,
                 'total' => $hasil,
