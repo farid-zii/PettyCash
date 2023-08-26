@@ -16,30 +16,17 @@
                 </div>
 
                 <div class="m-2" style="">
-                    {{-- <input type="text" class="form-control" style="width: 30%" id="filter_date" value="{{ date('m-Y') }}">
-                    --}}
-                    {{-- <button class="btn bg-gradient-success w-15 my-4 mb-2">Cetak Excel</button> --}}
 
-                    {{-- <a href="/admin/user/create"  class="btn bg-gradient-info w-15 my-4 mb-2 float-sm-end">Entry</a> --}}
+                    @if ($cek=='Selesai')
 
-                    {{-- <div class="bg-gradient-success  text-center my-4 mb-2 col-3 float-sm-start"
-                        style="border-radius: 10px;color:white">
-                        SALDO
-                        <div class="fw-bold" style="color: black;font-size: 17px" >
-                            RP. @rp($saldo)
-                        </div>
-                    </div> --}}
-                    @if ($pengajuan->first()->approve != 'Selesai')
                         <button class="btn bg-gradient-info w-15 my-4 mb-2 col-2 float-sm-end" onclick="alert('Selesaikan duluan pengajuan sebelumnya')">Tambah <i class="bi bi-plus-square-fill"></i></button>
-                        </div>
                     @else
-                    <button class="btn bg-gradient-info w-15 my-4 mb-2 col-2 float-sm-end" data-bs-toggle="modal"
-                        data-bs-target="#staticBackdrop">Tambah <i class="bi bi-plus-square-fill"></i></button>
+                        <button class="btn bg-gradient-info w-15 my-4 mb-2 col-2 float-sm-end" data-bs-toggle="modal"
+                            data-bs-target="#staticBackdrop">Tambah <i class="bi bi-plus-square-fill"></i></button>
+
+
+                      @endif
                     </div>
-                    @endif
-
-
-
                     <div class="ms-2" style="">
 
                         <form action="/pegawai/pengajuan" method="get" style="display: flex">
@@ -219,6 +206,23 @@
             }
         })
     }
+
+    function formatNumber(input) {
+    // Remove non-numeric characters
+    input.value = input.value.replace(/\D/g, '');
+
+    let formattedValue = '';
+    let value = input.value;
+
+    for (let i = 0; i < value.length; i++) {
+      if (i > 0 && i % 4 === 0) {
+        formattedValue += ' ';
+      }
+      formattedValue += value[i];
+    }
+
+    input.value = formattedValue;
+  }
 </script>
 
 @endsection

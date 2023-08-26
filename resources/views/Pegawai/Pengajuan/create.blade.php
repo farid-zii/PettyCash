@@ -13,16 +13,9 @@
 
                     <label class="text-xl text-dark font-weight-bolder col-6">Nama</label>
                     <div class="mb-2">
-                        @php
 
-                           $user= $pengajuan
-                        //    ->where('user_id','=',Auth::user()->id)
-                           ->first();
-                        //    dd($user->user->nama);
-                           
-                        @endphp
-                        <input type="text" class="form-control " style="" value="{{$user->user->nama}}" name="nama" readonly>
-                        <input type="hidden" class="form-control " style="" value="{{$user->user->id}}" name="user_id" readonly>
+                        <input type="text" class="form-control " style="" value="{{auth()->user()->nama}}" name="nama" readonly>
+                        <input type="hidden" class="form-control " style="" value="{{auth()->user()->id}}" name="user_id" readonly>
                     </div>
 
                     <label class="text-xl text-dark font-weight-bolder">Nominal</label>
@@ -39,11 +32,11 @@
                             <option value="{{$data->id}}">{{$data->nama}}</option>
                             @endforeach
                         </select>
-                        <input type="number" class="form-control" placeholder="" name="norek" id="norek">
+                        <input type="text" oninput="formatNumber(this)" maxlength="19" class="form-control" required placeholder="" name="norek" id="norek">
                     </div>
                     <label class="text-xl text-dark font-weight-bolder">Keterangan</label>
                     <div class="mb-2">
-                        <textarea class="form-control" name="keterangan" id="keterangan" onkeydown="addNumberOnEnter(event)"></textarea>
+                        <textarea class="form-control" name="keterangan" id="keterangan" onkeydown="addNumberOnEnter(event)" required></textarea>
                     </div>
                     {{-- <label class="text-xl text-dark font-weight-bolder">Jumlah</label>
                     <div class="mb-2">

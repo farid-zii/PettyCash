@@ -20,7 +20,7 @@
                     <label class="text-xl text-dark font-weight-bolder">Nominal</label>
                     <div class="mb-2" style="display:flex;">
                         <div class="form-control text-center" disabled style="width: 7%;background: rgb(223, 219, 219);">Rp</div>
-                        <input type="number" class="form-control" placeholder="300" name="nominal" id="nominal">
+                        <input type="number" class="form-control" placeholder="300" name="nominal" id="nominal" required>
                         <div class="alert alert-danger mt-2 d-none" role="alert" id="alert-nominal"></div>
                     </div>
 
@@ -31,11 +31,11 @@
                             <option value="{{$data->id}}">{{$data->nama}}</option>
                             @endforeach
                         </select>
-                        <input type="number" class="form-control" placeholder="" name="norek" id="norek">
+                    <input type="text" oninput="formatNumber(this)" maxlength="19" required class="form-control" placeholder="" name="norek" id="norek">
                     </div>
                     <label class="text-xl text-dark font-weight-bolder">Keterangan</label>
                     <div class="mb-2">
-                        <textarea class="form-control" name="keterangan" id="keterangan" onkeydown="addNumberOnEnter(event)"></textarea>
+                        <textarea class="form-control" required name="keterangan" id="keterangan" onkeydown="addNumberOnEnter(event)"></textarea>
                     </div>
                     {{-- <label class="text-xl text-dark font-weight-bolder">Jumlah</label>
                     <div class="mb-2">

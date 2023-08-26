@@ -36,12 +36,20 @@ class PegawaiPengajuanController extends Controller
             $data = Pengajuan::where('user_id', '=', Auth::user()->id)->latest()->get();
         }
 
+        if($data->count()!=0){
+            $cek = $data->first()->approve;
+        }
+        else{
+            $cek =$data;
+        }
+
         return view('pegawai.pengajuan.index', [
             'active' => 'Pengajuan',
             'title' => 'Pengajuan',
             'pengajuan' => $data,
             'bank' => bank::get(),
-            'saldo' => $saldo
+            'saldo' => $saldo,
+            'cek'=>$cek
         ]);
     }
 
