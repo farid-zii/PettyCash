@@ -95,8 +95,7 @@
                     <div class="card-header p-0 position-relative">
                         <img src="../public/img/logo.jfif" alt="" width="18%">
                         <h6 style="margin-top: -3px;">PT. Jasamedika Saranatama</h6>
-                        <h6 style="margin-top: -30px;">BUKU KAS UMUM</h6>
-                        <h6 style="margin-top: -30px;">KAS KECIL</h6>
+                        <h6 style="margin-top: -30px;">DATA PENGAJUAN</h6>
                     </div>
                     <hr>
                     <div class="m-2" style="">
