@@ -1,161 +1,163 @@
 @extends('admin.layouts.main')
 
 @section('isi')
-<div class="container-fluid py-4">
-    <div class="row">
-        <div class="col-12">
-            <div class="card my-4">
-                <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
-                    <div class="bg-success shadow-primary border-radius-lg pt-4 pb-3">
-                        <h6 class="text-white text-uppercase ps-3">Data {{$title}}</h6>
+    <div class="container-fluid py-4">
+        <div class="row">
+            <div class="col-12">
+                <div class="card my-4">
+                    <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+                        <div class="bg-success shadow-primary border-radius-lg pt-4 pb-3">
+                            <h6 class="text-white text-uppercase ps-3">Data {{ $title }}</h6>
+                        </div>
                     </div>
-                </div>
 
-                <div class="m-2" style="">
+                    <div class="m-2" style="">
 
-                    {{-- <button class="btn bg-gradient-success w-15 my-4 mx-2 mb-2 col-2 float-sm-end" data-bs-toggle="modal"
+                        {{-- <button class="btn bg-gradient-success w-15 my-4 mx-2 mb-2 col-2 float-sm-end" data-bs-toggle="modal"
                         data-bs-target="#static-excel"><i class="bi bi-file-earmark-spreadsheet-fill"></i></button> --}}
-                </div>
+                    </div>
 
 
 
-                <div class="ms-2" style="">
+                    <div class="ms-2" style="">
 
-                    <form action="/pengajuan" method="get" style="display: flex">
-                        {{-- <div class="col-2">
-                            <label class="text-xl text-dark font-weight-bolder col-6">Tanggal Akhir</label>
-                            <input type="date" id="tanggal" class="form-control ms-1" style="height: 30px" name="awal"
-                                placeholder="dd-mm-yy" value="{{ request('awal') }}">
-                        </div>
-                        <div class="col-2 ms-1">
-                            <label class="text-xl text-dark font-weight-bolder col-6">Tanggal Akhir</label>
-                            <input type="date" id="tanggal2" style="height: 30px" class="form-control ms-1" name="akhir"
-                                placeholder="dd-mm-yy" value="{{ request('akhir') }}">
-                        </div>
-                        <div class="col-3 ms-2">
-                            <button type="submit" class="btn bg-gradient-info w-15 my-4 mb-2 col-2"><i
-                                    class="bi bi-search"></i></button>
-                        </div> --}}
+                        <form action="/hrd/history" method="get" style="display: flex">
 
-                        <div class="col-12">
-                            <a class="btn mt-3 me-5 btn-primary btn-sm btn-default float-sm-end"
-                                href="{{ route('cetakhistory', ['startDate' => request('start_date'), 'endDate' => request('end_date')]) }}"
+                            <div class="col-9 mx-2" style="display: flex;">
+                                <label for="bulan" class="mx-3 mt-4">Pilih Bulan</label>
+
+                                <div class="form-group mt-4 mx-2">
+                                    <input type="month" class="form-control" id="bulan" name="bulan"
+                                        value="{{ request('bulan') }}">
+                                </div>
+
+
+                                <button type="submit" class="btn bg-gradient-info  my-4 mb-2"><i
+                                        class="bi bi-search"></i></button>
+
+                            </div>
+
+                            <div class="mt-3">
+                                <a class="btn mt-4 me-5 btn-primary btn-sm btn-default float-sm-end"
+                                href="{{ route('cetakhistory', ['bulan' => request('bulan')]) }}"
                                 target="_blank" style="color: white;">
                                 cetak history
                             </a>
+                            </div>
+                        </form>
+
+                    </div>
+
+                    <div class="card-body px-0 pb-2">
+
+
+
+                        <div class="p-3" style="">
+                            <table id="myTable" style=""
+                                class="col-12 table table-striped display responsive nowrap">
+                                <thead class="">
+                                    <tr class="text-center bg-dark">
+                                        <th class="text-light" style="">No</th>
+                                        <th class="text-light" style="">Tanggal</th>
+                                        <th class="text-light" style="">Keterangan</th>
+                                        <th class="text-light" style="">Pihak Terkait</th>
+                                        <th class="text-light" style="">Debit</th>
+                                        <th class="text-light" style="">Kredit</th>
+                                        <th class="text-light" style="">Saldo</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="">
+                                    @foreach ($datas as $data)
+                                        @if ($data->pengajuan_id != null)
+                                            <tr>
+                                                <td>
+                                                    <p class="text-xl  mb-0">{{ $loop->iteration }}</p>
+                                                </td>
+                                                <td>
+                                                    <p class="text-xl  mb-0 text-end">
+                                                        {{ $data->created_at->format('Y-m-d') }}</p>
+                                                </td>
+                                                <td>
+                                                    <p class="text-xl  mb-0">{{ $data->pengajuan->keterangan }}</p>
+                                                </td>
+                                                <td>
+                                                    <p class="text-xl  mb-0">{{ $data->pengajuan->user->nama }}</p>
+                                                </td>
+                                                <td>
+                                                    <p class="text-xl  mb-0 text-end">@rp($data->pengajuan->total)</p>
+                                                </td>
+                                                <td>
+                                                    <p class="text-xl  mb-0">-</p>
+                                                </td>
+                                                <td>
+                                                    <p class="text-xl  mb-0 text-end">@rp($data->total)</p>
+                                                </td>
+                                            </tr>
+                                        @else
+                                            <tr>
+                                                <td>
+                                                    <p class="text-xl  mb-0">{{ $loop->iteration }}</p>
+                                                </td>
+                                                <td>
+                                                    <p class="text-xl text-end mb-0">
+                                                        {{ $data->created_at->format('Y-m-d') }}</p>
+                                                </td>
+                                                <td>
+                                                    <p class="text-xl mb-0">Top Up</p>
+                                                </td>
+                                                <td>
+                                                    <p class="text-xl mb-0">Finance</p>
+                                                </td>
+                                                <td>
+                                                    <p class="text-xl mb-0">-</p>
+                                                </td>
+                                                <td>
+                                                    <p class="text-xl mb-0 text-end">@rp($data->saldo->nominal)</p>
+                                                </td>
+                                                <td>
+                                                    <p class="text-xl  mb-0 text-end">@rp($data->total)</p>
+                                                </td>
+                                            </tr>
+                                        @endif
+                                    @endforeach
+                                </tbody>
+                            </table>
                         </div>
-                    </form>
-                </div>
-
-                <div class="card-body px-0 pb-2">
-
-
-
-                    <div class="p-3" style="">
-                        <table id="myTable" style="" class="col-12 table table-striped display responsive nowrap">
-                            <thead class="">
-                                <tr class="text-center bg-dark">
-                                    <th class="text-light" style="">No</th>
-                                    <th class="text-light" style="">Tanggal</th>
-                                    <th class="text-light" style="">Keterangan</th>
-                                    <th class="text-light" style="">Pihak Terkait</th>
-                                    <th class="text-light" style="">Debit</th>
-                                    <th class="text-light" style="">Kredit</th>
-                                    <th class="text-light" style="">Saldo</th>
-                                </tr>
-                            </thead>
-                            <tbody id="">
-                                @foreach ($datas as $data )
-                                @if($data->pengajuan_id!=null)
-                                <tr>
-                                    <td>
-                                        <p class="text-xl  mb-0">{{$loop->iteration}}</p>
-                                    </td>
-                                    <td>
-                                        <p class="text-xl  mb-0 text-end">{{$data->created_at->format('Y-m-d')}}</p>
-                                    </td>
-                                    <td>
-                                        <p class="text-xl  mb-0">{{$data->pengajuan->keterangan}}</p>
-                                    </td>
-                                    <td>
-                                        <p class="text-xl  mb-0">{{$data->pengajuan->user->nama}}</p>
-                                    </td>
-                                    <td>
-                                        <p class="text-xl  mb-0 text-end">@rp($data->pengajuan->total)</p>
-                                    </td>
-                                    <td>
-                                        <p class="text-xl  mb-0">-</p>
-                                    </td>
-                                    <td>
-                                        <p class="text-xl  mb-0 text-end">@rp($data->total)</p>
-                                    </td>
-                                </tr>
-                                @else
-                                <tr>
-                                    <td>
-                                        <p class="text-xl  mb-0">{{$loop->iteration}}</p>
-                                    </td>
-                                    <td>
-                                        <p class="text-xl text-end mb-0">{{$data->created_at->format('Y-m-d')}}</p>
-                                    </td>
-                                    <td>
-                                        <p class="text-xl mb-0">Top Up</p>
-                                    </td>
-                                    <td>
-                                        <p class="text-xl mb-0">Finance</p>
-                                    </td>
-                                    <td>
-                                        <p class="text-xl mb-0">-</p>
-                                    </td>
-                                    <td>
-                                        <p class="text-xl mb-0 text-end">@rp($data->saldo->nominal)</p>
-                                    </td>
-                                    <td>
-                                        <p class="text-xl  mb-0 text-end">@rp($data->total)</p>
-                                    </td>
-                                </tr>
-                                @endif
-                                @endforeach
-                            </tbody>
-                        </table>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
-<script>
-    $(document).ready(function () {
+    <script>
+        $(document).ready(function() {
 
 
-        $('#myTable').DataTable({
-            paging: true,
-            pageLength: 10,
-            // scrollX:true,
-            lengthMenu: [
-                [10, 25, 50, -1],
-                [10, 25, 50, "All"]
-            ],
-            language: {
-                info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
-                infoEmpty: "Menampilkan 0 sampai 0 dari 0 data",
-                infoFiltered: "(disaring dari _MAX_ total data)",
-                lengthMenu: "Tampilkan _MENU_ data per halaman",
-                zeroRecords: "Tidak ada data yang cocok",
-                search: "Cari:",
-                paginate: {
-                    first: "Pertama",
-                    last: "Terakhir",
-                    next: ">",
-                    previous: "<"
+            $('#myTable').DataTable({
+                paging: true,
+                pageLength: 10,
+                // scrollX:true,
+                lengthMenu: [
+                    [10, 25, 50, -1],
+                    [10, 25, 50, "All"]
+                ],
+                language: {
+                    info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+                    infoEmpty: "Menampilkan 0 sampai 0 dari 0 data",
+                    infoFiltered: "(disaring dari _MAX_ total data)",
+                    lengthMenu: "Tampilkan _MENU_ data per halaman",
+                    zeroRecords: "Tidak ada data yang cocok",
+                    search: "Cari:",
+                    paginate: {
+                        first: "Pertama",
+                        last: "Terakhir",
+                        next: ">",
+                        previous: "<"
+                    }
                 }
-            }
+            });
+
+
         });
-
-
-    });
-
-</script>
-
+    </script>
 @endsection

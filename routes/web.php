@@ -61,6 +61,8 @@ Route::middleware(['auth', 'checkLevel:hrd'])->group(function () {
     Route::get('/hrd/profile', [ProfileController::class, 'admin']);
     Route::post('/hrd/profile', [ProfileController::class, 'update']);
     Route::get('/hrd/cetakhistory', [CetakHistoryController::class, 'cetakhistory'])->name('cetakhistory');
+    Route::get('/hrd/cetakpengajuan', [CetakHistoryController::class, 'cetakpengajuan'])->name('cetakpengajuan');
+
 });
 
 /////////////////////////////////
