@@ -1,1 +1,1 @@
-<canvas id="chart-bars" class="chart-canvas" height="500"></canvas>
+<canvas id="myChart" class="chart-canvas" height="500"></canvas>
