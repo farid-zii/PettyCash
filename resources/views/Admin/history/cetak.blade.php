@@ -128,7 +128,7 @@
                                                 </td>
                                                 <td>
                                                     <p class="text-xl  mb-0 text-end">
-                                                        {{ $data->created_at->format('Y-m-d') }}</p>
+                                                        {{ $data->created_at->format('d-m-Y') }}</p>
                                                 </td>
                                                 <td>
                                                     <p class="text-xl  mb-0">{{ $data->pengajuan->keterangan }}</p>
@@ -176,9 +176,10 @@
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <td colspan='4' style="text-align: center">Jumlah</td>
-                                        <td style="text-align: right">{{$pengajuan->totalPengajuan}}</td>
-                                        <td style="text-align: right">{{$saldo->totalSaldo}}</td>
+                                        <td colspan='4' style="text-align: center"><strong>Jumlah</strong></td>
+                                        <td style="text-align: right">@rp($pengajuan->totalPengajuan)</td>
+                                        <td style="text-align: right">@rp($saldo->totalSaldo)</td>
+                                        <td>-</td>
                                     </tr>
                                 </tfoot>
                             </table>
