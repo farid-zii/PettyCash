@@ -3,7 +3,7 @@
     aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <div class="modal-header bg-warning">
+            <div class="modal-header bg-primary">
                 <h1 class="modal-title fs-5" id="staticBackdropLabel">Tambah Bukti</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
@@ -41,7 +41,7 @@
 
                 </div>
                 <div class="footer px-4 mb-2">
-                    <button type="submit" class="btn btn-info float-sm-start col-md-2 mt-4">Tambah</button>
+                    <button type="submit" class="btn btn-primary float-sm-start col-md-2 mt-4">Save</button>
                     <button type="button" class="btn btn-danger float-sm-end col-md-2 mt-4"
                         data-bs-dismiss="modal">Close</button>
                 </div>

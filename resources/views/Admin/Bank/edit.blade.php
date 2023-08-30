@@ -3,7 +3,7 @@
     aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header bg-warning">
+            <div class="modal-header bg-primary">
                 <h1 class="modal-title fs-5" id="staticBackdropLabel">Edit Data {{$title}}</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
@@ -18,7 +18,7 @@
 
                 </div>
                 <div class="footer px-4 mb-2">
-                    <button type="submit" class="btn btn-warning float-sm-start col-md-2 mt-4">Edit</button>
+                    <button type="submit" class="btn btn-primary float-sm-start col-md-2 mt-4">Save</button>
                     <button type="button" class="btn btn-danger float-sm-end col-md-2 mt-4"
                         data-bs-dismiss="modal">Close</button>
                 </div>

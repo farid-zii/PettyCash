@@ -64,11 +64,37 @@
     </div>
 </div>
 
-<div class="">
+<div class="row mt-4">
+        <div class="col-lg-12 col-md-12 mt-4 mb-4">
+          <div class="card z-index-2 ">
+            {{-- <form action="/hrd/dashboard" method="get" style="display: flex">
+    <div class="col-4">
+        <label class="text-xl text-dark font-weight-bolder col-6">Tahun</label>
+        <input type="month" id="tanggal" class="form-control ms-1" style="height: 30px" name="tahun"
+            placeholder="dd-mm-yy" value="{{ request('tahun') }}">
+    </div>
+    <div class="col-4 mx-4">
+        <button type="submit" class="btn bg-gradient-info col-10 w-15 my-4 mb-2">C</button>
+    </div>
+</form> --}}
+            {{-- <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2 bg-transparent"> --}}
+              <div class="bg-light shadow-primary border-radius-lg py-3 pe-1">
+                <div class="chart">
+                    <canvas id="myChart"></canvas>
+
+                </div>
+              </div>
+            {{-- </div> --}}
+
+          </div>
+        </div>
+</div>
+
+{{-- <div class="">
 <form action="/hrd/dashboard" method="get" style="display: flex">
     <div class="col-4">
         <label class="text-xl text-dark font-weight-bolder col-6">Tahun</label>
-        <input type="number" id="tanggal" class="form-control ms-1" style="height: 30px" name="tahun"
+        <input type="month" id="tanggal" class="form-control ms-1" style="height: 30px" name="tahun"
             placeholder="dd-mm-yy" value="{{ request('tahun') }}">
     </div>
     <div class="col-4 mx-4">
@@ -78,7 +104,7 @@
 
 
 <canvas id="myChart"></canvas>
-</div>
+</div> --}}
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
@@ -88,12 +114,28 @@
     new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-            datasets: [{
+            labels: @json($dataLabel),
+            datasets: [
+                {
                 label: 'Pengajuan',
-                data: [12, 19, 3, 5, 2, 3],
-                borderWidth: 1
-            }]
+                data: @json($dataChart),
+                borderWidth: 1,
+                backgroundColor: [
+                'rgb(255, 99, 132)',
+                'rgb(54, 162, 235)',
+                'rgb(255, 205, 86)'
+                ],
+            },
+            //     {
+            //     label: 'Saldo',
+            //     data: @json($dataChart),
+            //     borderWidth: 1,
+            //     backgroundColor: [
+            //     'rgb(54, 162, 235)',
+            //     'rgb(255, 205, 86)'
+            //     ],
+            // },
+        ]
         },
         options: {
             scales: {
@@ -106,16 +148,5 @@
 
 </script>
 </div>
-</div>
-</div>
-<script>
-    var dataChart = {
-        {
-            json_encode($dataChart)
-        }
-    }
-    var dataLabel = @json($dataLabel)
-
-</script>
 
 @endsection
